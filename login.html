@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sanad — Log In</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ── Navbar ─────────────────────────────────────────────── -->
+<nav class="sn-nav">
+  <div class="sn-container">
+    <div class="sn-nav__inner">
+      <a href="../index.html" class="sn-nav__logo">
+        <img class="sn-nav__logo-img" src="images/slogo.png" alt="Sanad logo">
+        <span class="sn-nav__logo-name">Sanad</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── Main ───────────────────────────────────────────────── -->
+<main class="sn-main login-page">
+  <div class="sn-container">
+    <div class="login-box">
+
+      <!-- Brand above card -->
+      <div class="login-brand">
+        <div class="login-brand__logo">
+          <img src="images/slogo.png" alt="Sanad logo" class="login-brand__logo-img">
+          <span class="login-brand__logo-name">Sanad</span>
+        </div>
+        <p class="login-brand__tagline">Connecting patients with pharmacies across Riyadh</p>
+      </div>
+
+      <!-- Card -->
+      <div class="login-card">
+        <h1 class="login-card__title">Welcome back</h1>
+        <p class="login-card__subtitle">Sign in to your account to continue</p>
+
+        <!-- Error alert -->
+        <div id="login-alert" style="display:none; background:#fde8e8; color:#8b2020; padding:12px 16px; border-radius:10px; font-size:14px; margin-bottom:20px;">
+          Invalid email or password.
+        </div>
+
+        <form id="login-form" novalidate>
+
+          <div class="login-field">
+            <label for="login-email">Email address</label>
+            <input type="email" id="login-email" name="email" placeholder="you@example.com" autocomplete="email">
+            <span id="login-email-error" style="display:none; font-size:12px; color:#8b2020; margin-top:4px;">Please enter a valid email address.</span>
+          </div>
+
+          <div class="login-field">
+            <label for="login-password">Password</label>
+            <div class="login-pw-wrap">
+              <input type="password" id="login-password" name="password" placeholder="Your password" autocomplete="current-password">
+              <button type="button" id="login-pw-toggle" aria-label="Toggle password visibility">👁</button>
+            </div>
+            <span id="login-password-error" style="display:none; font-size:12px; color:#8b2020; margin-top:4px;">Password is required.</span>
+          </div>
+
+          <button type="submit" id="login-submit-btn" class="login-submit-btn">
+            <span class="login-btn-spinner"></span>
+            <span class="login-btn-text">Sign in</span>
+          </button>
+
+        </form>
+
+        <p class="login-register-link">
+          Don't have an account? <a href="register.html">Register here</a>
+        </p>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<!-- ── Footer ─────────────────────────────────────────────── -->
+<footer class="sn-footer">
+  <div class="sn-container">
+    <div class="sn-footer__inner">
+      <div class="sn-footer__logo">
+        <img class="sn-footer__logo-img" src="images/slogo.png" alt="Sanad logo">
+        <span class="sn-footer__logo-name">Sanad</span>
+      </div>
+      <span class="sn-footer__copy">© 2025 Sanad. Riyadh, Saudi Arabia.</span>
+      <div class="sn-footer__links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Help</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/login.js"></script>
+
+</body>
+</html>
