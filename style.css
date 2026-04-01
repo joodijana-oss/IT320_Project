@@ -1,0 +1,431 @@
+/* ============================================================
+   SANAD — Shared Stylesheet
+   
+   This file contains ONLY what is shared across all pages:
+   1. Fonts & Design Tokens
+   2. Reset & Base
+   3. Navbar
+   4. Footer
+
+   
+   Do not change sections 1–4 without telling the group.
+   ============================================================ */
+
+
+/* ============================================================
+   1. FONTS & DESIGN TOKENS
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap');
+
+:root {
+  --sn-bg:           #f5f2ec;
+  --sn-surface:      #faf9f6;
+  --sn-surface-alt:  #f0ede6;
+
+  --sn-primary:      #1f2f46;
+  --sn-primary-hover:#162338;
+  --sn-accent:       #4a7fa5;
+  --sn-accent-light: #e8f0f7;
+
+  --sn-text:         #1f2f46;
+  --sn-text-muted:   #6b7280;
+  --sn-text-faint:   #b0b7c0;
+
+  --sn-border:       #e5e1d8;
+
+  --sn-shadow-xs:    0 1px 3px rgba(31,47,70,0.06);
+  --sn-shadow-sm:    0 2px 8px rgba(31,47,70,0.08);
+  --sn-shadow-md:    0 4px 20px rgba(31,47,70,0.10);
+
+  --sn-radius-sm:    6px;
+  --sn-radius:       10px;
+  --sn-radius-lg:    16px;
+  --sn-radius-xl:    24px;
+
+  --sn-font-body:    'Outfit', sans-serif;
+  --sn-font-display: 'Playfair Display', serif;
+}
+
+
+/* ============================================================
+   2. RESET & BASE
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--sn-font-body);
+  background: var(--sn-bg);
+  color: var(--sn-text);
+  font-size: 15px;
+  line-height: 1.65;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.sn-main      { flex: 1; padding: 40px 0; }
+.sn-container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+@media (max-width: 480px) {
+  .sn-container { padding: 0 16px; }
+  .sn-main      { padding: 28px 0; }
+}
+
+
+/* ============================================================
+   3. NAVBAR  (shared — all pages)
+   ============================================================ */
+
+.sn-nav {
+  background: var(--sn-surface);
+  border-bottom: 1px solid var(--sn-border);
+  box-shadow: var(--sn-shadow-xs);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.sn-nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+
+/* Logo: image + site name */
+.sn-nav__logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+.sn-nav__logo:hover  { text-decoration: none; }
+
+.sn-nav__logo-img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.sn-nav__logo-name {
+  font-family: var(--sn-font-display);
+  font-size: 20px;
+  color: var(--sn-primary);
+  line-height: 1;
+}
+
+/* Nav links — used on pages after login */
+.sn-nav__links {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  list-style: none;
+}
+
+.sn-nav__links a {
+  display: block;
+  padding: 7px 13px;
+  border-radius: var(--sn-radius-sm);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--sn-text-muted);
+  text-decoration: none;
+  transition: color 0.15s, background 0.15s;
+}
+
+.sn-nav__links a:hover           { color: var(--sn-primary); background: var(--sn-surface-alt); text-decoration: none; }
+.sn-nav__links a.sn-nav--active  { color: var(--sn-primary); background: var(--sn-accent-light); font-weight: 500; }
+.sn-nav__links a.sn-nav--logout  { color: #8b2020; }
+.sn-nav__links a.sn-nav--logout:hover { background: #fde8e8; }
+
+@media (max-width: 768px) {
+  .sn-nav__links a { padding: 6px 9px; font-size: 13px; }
+}
+
+@media (max-width: 480px) {
+  .sn-nav__inner     { height: 56px; }
+  .sn-nav__logo-name { font-size: 18px; }
+}
+
+
+/* ============================================================
+   4. FOOTER  (shared — all pages)
+   ============================================================ */
+
+.sn-footer {
+  background: var(--sn-surface);
+  border-top: 1px solid var(--sn-border);
+  padding: 28px 0;
+  margin-top: auto;
+}
+
+.sn-footer__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.sn-footer__logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sn-footer__logo-img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
+.sn-footer__logo-name {
+  font-family: var(--sn-font-display);
+  font-size: 16px;
+  color: var(--sn-primary);
+}
+
+.sn-footer__copy {
+  font-size: 13px;
+  color: var(--sn-text-muted);
+  font-weight: 300;
+}
+
+.sn-footer__links {
+  display: flex;
+  gap: 20px;
+}
+
+.sn-footer__links a {
+  font-size: 13px;
+  color: var(--sn-text-muted);
+  font-weight: 300;
+  text-decoration: none;
+}
+
+.sn-footer__links a:hover { color: var(--sn-primary); }
+
+@media (max-width: 600px) {
+  .sn-footer__inner  { flex-direction: column; align-items: center; text-align: center; }
+  .sn-footer__links  { justify-content: center; }
+}
+
+
+/* ============================================================
+   MEMBER 1 — Home, User Dashboard, View Requests
+   ============================================================ */
+
+
+
+/* ============================================================
+   MEMBER 2 — Register, Submit Request, Request Details
+   ============================================================ */
+
+
+
+/* ============================================================
+   MEMBER 3 — Login, Profile, My Requests
+   ============================================================ */
+
+/* -- Login page -- */
+.login-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-box {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.login-brand {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.login-brand__logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.login-brand__logo-img {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+}
+
+.login-brand__logo-name {
+  font-family: var(--sn-font-display);
+  font-size: 30px;
+  color: var(--sn-primary);
+  line-height: 1;
+}
+
+.login-brand__tagline {
+  font-size: 14px;
+  color: var(--sn-text-muted);
+  font-weight: 300;
+}
+
+.login-card {
+  background: var(--sn-surface);
+  border: 1px solid var(--sn-border);
+  border-radius: var(--sn-radius-xl);
+  box-shadow: var(--sn-shadow-md);
+  padding: 40px;
+}
+
+.login-card__title {
+  font-family: var(--sn-font-display);
+  font-size: 22px;
+  color: var(--sn-primary);
+  margin-bottom: 6px;
+}
+
+.login-card__subtitle {
+  font-size: 14px;
+  color: var(--sn-text-muted);
+  font-weight: 300;
+  margin-bottom: 28px;
+}
+
+.login-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.login-field label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--sn-text);
+  margin-bottom: 7px;
+}
+
+.login-field input {
+  padding: 11px 14px;
+  background: var(--sn-surface);
+  border: 1.5px solid var(--sn-border);
+  border-radius: var(--sn-radius);
+  font-family: var(--sn-font-body);
+  font-size: 14px;
+  color: var(--sn-text);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.login-field input::placeholder { color: var(--sn-text-faint); }
+
+.login-field input:focus {
+  border-color: var(--sn-accent);
+  box-shadow: 0 0 0 3px rgba(74,127,165,0.12);
+}
+
+.login-pw-wrap {
+  position: relative;
+}
+
+.login-pw-wrap input {
+  width: 100%;
+  padding-right: 44px;
+}
+
+.login-pw-wrap button {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: var(--sn-text-faint);
+  padding: 4px;
+  line-height: 1;
+  transition: color 0.15s;
+}
+
+.login-pw-wrap button:hover { color: var(--sn-primary); }
+
+.login-submit-btn {
+  width: 100%;
+  padding: 12px;
+  background: var(--sn-primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--sn-radius);
+  font-family: var(--sn-font-body);
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.15s, transform 0.1s;
+  margin-top: 8px;
+}
+
+.login-submit-btn:hover:not(:disabled) {
+  background: var(--sn-primary-hover);
+  transform: translateY(-1px);
+}
+
+.login-submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.login-btn-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255,255,255,0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: login-spin 0.65s linear infinite;
+  display: none;
+}
+
+.login-btn--loading .login-btn-spinner { display: block; }
+.login-btn--loading .login-btn-text    { display: none; }
+
+@keyframes login-spin { to { transform: rotate(360deg); } }
+
+.login-register-link {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 13px;
+  color: var(--sn-text-muted);
+  font-weight: 300;
+}
+
+.login-register-link a {
+  font-weight: 500;
+  color: var(--sn-accent);
+}
+
+@media (max-width: 480px) {
+  .login-card            { padding: 28px 20px; }
+  .login-brand__logo-name { font-size: 26px; }
+  .login-brand__logo-img  { width: 40px; height: 40px; }
+}
+
+
+
+/* ============================================================
+   MEMBER 4 — Pharmacy Dashboard, Reports, Offers
+   ============================================================ */
+
+
+
+/* ============================================================
+   MEMBER 5 — Admin Dashboard, Review Requests, Manage Users
+   ============================================================ */
