@@ -669,6 +669,279 @@ body {
 
 
 
+
+
+/* =========================
+   USER DASHBOARD PAGE
+   ========================= */
+
+.user-dashboard-page .sn-container {
+  max-width: 1200px;
+}
+
+.user-dash-hero {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--sn-radius-xl);
+  min-height: 320px;
+  display: flex;
+  align-items: center;
+  padding: 56px;
+  margin-bottom: 28px;
+  background:
+    linear-gradient(135deg, rgba(31,47,70,0.92), rgba(74,127,165,0.72)),
+    url("images/IMG_4806.jpg") center/cover no-repeat;
+  box-shadow: var(--sn-shadow-md);
+}
+
+.user-dash-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top right, rgba(255,255,255,0.16), transparent 35%);
+}
+
+.user-dash-hero__content {
+  position: relative;
+  z-index: 2;
+  max-width: 720px;
+  color: #fff;
+}
+
+.user-dash-hero__badge {
+  display: inline-block;
+  margin-bottom: 16px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.14);
+  border: 1px solid rgba(255,255,255,0.18);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-size: 13px;
+}
+
+.user-dash-hero__title {
+  font-family: var(--sn-font-display);
+  font-size: clamp(36px, 5vw, 58px);
+  line-height: 1.08;
+  margin-bottom: 16px;
+}
+
+.user-dash-hero__text {
+  font-size: 16px;
+  line-height: 1.85;
+  color: rgba(255,255,255,0.92);
+  max-width: 620px;
+}
+
+/* cards */
+.user-dash-actions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+.user-dash-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  background: var(--sn-surface);
+  border: 1px solid var(--sn-border);
+  border-radius: var(--sn-radius-xl);
+  padding: 28px 24px;
+  box-shadow: var(--sn-shadow-sm);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.user-dash-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--sn-shadow-md);
+  border-color: rgba(74,127,165,0.28);
+  text-decoration: none;
+}
+
+.user-dash-card__icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  font-size: 26px;
+  background: var(--sn-accent-light);
+  margin-bottom: 18px;
+}
+
+.user-dash-card__title {
+  font-family: var(--sn-font-display);
+  font-size: 26px;
+  color: var(--sn-primary);
+  margin-bottom: 12px;
+}
+
+.user-dash-card__text {
+  font-size: 14px;
+  color: var(--sn-text-muted);
+  line-height: 1.8;
+  margin-bottom: 18px;
+}
+
+.user-dash-card__link {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--sn-accent);
+}
+
+/* responsive */
+@media (max-width: 900px) {
+  .user-dash-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .user-dash-hero {
+    padding: 38px 28px;
+    min-height: auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .user-dash-hero__title {
+    font-size: 34px;
+  }
+
+  .user-dash-hero__text {
+    font-size: 14px;
+  }
+}
+
+
+
+/* =========================
+   User Dashboard - small beauty touches
+   ========================= */
+
+/* Hero soft glow */
+.user-dash-hero::after {
+  content: "";
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  top: -60px;
+  right: -40px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.18), transparent 70%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* subtle line under hero title */
+.user-dash-hero__title {
+  position: relative;
+}
+
+.user-dash-hero__title::after {
+  content: "";
+  display: block;
+  width: 88px;
+  height: 4px;
+  margin-top: 16px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.75);
+}
+
+/* Card polish */
+.user-dash-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.user-dash-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--sn-accent), rgba(74,127,165,0.18));
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.user-dash-card:hover::before {
+  opacity: 1;
+}
+
+.user-dash-card:hover {
+  transform: translateY(-10px);
+}
+
+/* icon movement */
+.user-dash-card__icon {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.user-dash-card:hover .user-dash-card__icon {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 10px 22px rgba(74,127,165,0.18);
+}
+
+/* link gets slightly stronger on hover */
+.user-dash-card__link {
+  transition: letter-spacing 0.2s ease, color 0.2s ease;
+}
+
+.user-dash-card:hover .user-dash-card__link {
+  letter-spacing: 0.3px;
+  color: var(--sn-primary);
+}
+
+/* soft entrance animation */
+.user-dash-hero {
+  animation: fadeUpHero 0.8s ease;
+}
+
+.user-dash-card {
+  animation: fadeUpCard 0.8s ease;
+}
+
+.user-dash-card:nth-child(2) {
+  animation-delay: 0.08s;
+}
+
+.user-dash-card:nth-child(3) {
+  animation-delay: 0.16s;
+}
+
+@keyframes fadeUpHero {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeUpCard {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+
+
+
+
+
+
+
+
 /* ============================================================
    MEMBER 2 — Register, Submit Request, Request Details
    ============================================================ */
