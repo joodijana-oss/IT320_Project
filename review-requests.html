@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sanad | Review Requests</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="sn-nav">
+    <div class="sn-container sn-nav__inner">
+      <a href="admin-dashboard.html" class="sn-nav__logo">
+        <img src="images/slogo.png" alt="Sanad Logo" class="sn-nav__logo-img" />
+        <span class="sn-nav__logo-name">Sanad</span>
+      </a>
+
+      <ul class="sn-nav__links">
+        <li><a href="admin-dashboard.html">Dashboard</a></li>
+        <li><a href="review-requests.html" class="sn-nav--active">Review Requests</a></li>
+        <li><a href="manage-users.html">Manage Users</a></li>
+        <li><a href="index.html" class="sn-nav--logout">Log out</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="sn-main review-requests-page">
+    <div class="sn-container">
+
+      <section class="admin-page-head">
+        <span class="admin-page-head__badge">Request moderation</span>
+        <h1 class="admin-page-head__title">Review Medication Requests</h1>
+        <p class="admin-page-head__text">
+          Review pending requests, check the key information, and open the full request details
+          before making a decision.
+        </p>
+      </section>
+
+      <section class="admin-filter-bar">
+        <div class="admin-filter-group">
+          <label for="statusFilter">Status</label>
+          <select id="statusFilter">
+            <option>Pending</option>
+            <option>Approved</option>
+            <option>Rejected</option>
+          </select>
+        </div>
+
+        <div class="admin-filter-group">
+          <label for="priorityFilter">Priority</label>
+          <select id="priorityFilter">
+            <option>All Priorities</option>
+            <option>High</option>
+            <option>Medium</option>
+            <option>Low</option>
+          </select>
+        </div>
+
+        <div class="admin-filter-group admin-filter-group--search">
+          <label for="searchRequest">Search</label>
+          <input type="text" id="searchRequest" placeholder="Search by medication or request ID" />
+        </div>
+      </section>
+
+      <section class="request-list">
+        <article class="request-card">
+          <div class="request-card__top">
+            <div>
+              <span class="request-card__id">Request #1024</span>
+              <h2 class="request-card__title">Augmentin 625mg</h2>
+            </div>
+            <span class="request-card__status request-card__status--pending">Pending</span>
+          </div>
+
+          <div class="request-card__meta">
+            <span><strong>Patient:</strong> Sarah Ahmed</span>
+            <span><strong>Priority:</strong> High</span>
+            <span><strong>Submitted:</strong> 27 Mar 2026</span>
+          </div>
+
+          <p class="request-card__text">
+            Prescription uploaded successfully. The patient marked the request as urgent.
+          </p>
+
+          <div class="request-card__actions">
+            <a href="request-details.html" class="admin-btn admin-btn--primary">View Details</a>
+          </div>
+        </article>
+
+        <article class="request-card">
+          <div class="request-card__top">
+            <div>
+              <span class="request-card__id">Request #1025</span>
+              <h2 class="request-card__title">Panadol Extra</h2>
+            </div>
+            <span class="request-card__status request-card__status--approved">Approved</span>
+          </div>
+
+          <div class="request-card__meta">
+            <span><strong>Patient:</strong> Rashed Ali</span>
+            <span><strong>Priority:</strong> Medium</span>
+            <span><strong>Submitted:</strong> 26 Mar 2026</span>
+          </div>
+
+          <p class="request-card__text">
+            Request was reviewed and approved. It is currently visible to pharmacies in the assigned area.
+          </p>
+
+          <div class="request-card__actions">
+            <a href="request-details.html" class="admin-btn admin-btn--secondary">View Details</a>
+          </div>
+        </article>
+
+        <article class="request-card">
+          <div class="request-card__top">
+            <div>
+              <span class="request-card__id">Request #1026</span>
+              <h2 class="request-card__title">Ventolin Inhaler</h2>
+            </div>
+            <span class="request-card__status request-card__status--rejected">Rejected</span>
+          </div>
+
+          <div class="request-card__meta">
+            <span><strong>Patient:</strong> Huda Saad</span>
+            <span><strong>Priority:</strong> High</span>
+            <span><strong>Submitted:</strong> 25 Mar 2026</span>
+          </div>
+
+          <p class="request-card__text">
+            This request was rejected due to an expired prescription.
+          </p>
+
+          <div class="request-card__actions">
+            <a href="request-details.html" class="admin-btn admin-btn--secondary">View Details</a>
+          </div>
+        </article>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="sn-footer">
+    <div class="sn-container">
+      <div class="sn-footer__inner">
+        <div class="sn-footer__logo">
+          <img class="sn-footer__logo-img" src="images/slogo.png" alt="Sanad logo">
+          <span class="sn-footer__logo-name">Sanad</span>
+        </div>
+
+        <span class="sn-footer__copy">© 2026 Sanad. Riyadh, Saudi Arabia.</span>
+
+        <div class="sn-footer__links">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Help</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

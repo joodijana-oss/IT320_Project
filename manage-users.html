@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sanad | Manage Users</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="sn-nav">
+    <div class="sn-container sn-nav__inner">
+      <a href="admin-dashboard.html" class="sn-nav__logo">
+        <img src="images/slogo.png" alt="Sanad Logo" class="sn-nav__logo-img" />
+        <span class="sn-nav__logo-name">Sanad</span>
+      </a>
+
+      <ul class="sn-nav__links">
+        <li><a href="admin-dashboard.html">Dashboard</a></li>
+        <li><a href="review-requests.html">Review Requests</a></li>
+        <li><a href="manage-users.html" class="sn-nav--active">Manage Users</a></li>
+        <li><a href="index.html" class="sn-nav--logout">Log out</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="sn-main manage-users-page">
+    <div class="sn-container">
+
+      <section class="admin-page-head">
+        <span class="admin-page-head__badge">User management</span>
+        <h1 class="admin-page-head__title">Manage Users</h1>
+        <p class="admin-page-head__text">
+          View registered patients, monitor their account status, and block or unblock them when necessary.
+        </p>
+      </section>
+
+      <section class="users-table-wrap">
+        <table class="users-table">
+          <thead>
+            <tr>
+              <th>User ID</th>
+              <th>Full Name</th>
+              <th>Email</th>
+              <th>City</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>#201</td>
+              <td>Sarah Ahmed</td>
+              <td>sarah@example.com</td>
+              <td>Riyadh</td>
+              <td><span class="user-status user-status--active">Active</span></td>
+              <td><button class="admin-btn admin-btn--danger admin-btn--sm">Block</button></td>
+            </tr>
+
+            <tr>
+              <td>#202</td>
+              <td>Rashed Ali</td>
+              <td>rashed@example.com</td>
+              <td>Riyadh</td>
+              <td><span class="user-status user-status--blocked">Blocked</span></td>
+              <td><button class="admin-btn admin-btn--secondary admin-btn--sm">Unblock</button></td>
+            </tr>
+
+            <tr>
+              <td>#203</td>
+              <td>Huda Saad</td>
+              <td>huda@example.com</td>
+              <td>Riyadh</td>
+              <td><span class="user-status user-status--active">Active</span></td>
+              <td><button class="admin-btn admin-btn--danger admin-btn--sm">Block</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="sn-footer">
+    <div class="sn-container">
+      <div class="sn-footer__inner">
+        <div class="sn-footer__logo">
+          <img class="sn-footer__logo-img" src="images/slogo.png" alt="Sanad logo">
+          <span class="sn-footer__logo-name">Sanad</span>
+        </div>
+
+        <span class="sn-footer__copy">© 2026 Sanad. Riyadh, Saudi Arabia.</span>
+
+        <div class="sn-footer__links">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Help</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

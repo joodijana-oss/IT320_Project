@@ -1,0 +1,90 @@
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sanad | Admin Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="sn-nav">
+    <div class="sn-container sn-nav__inner">
+      <a href="admin-dashboard.html" class="sn-nav__logo">
+        <img src="images/slogo.png" alt="Sanad Logo" class="sn-nav__logo-img" />
+        <span class="sn-nav__logo-name">Sanad</span>
+      </a>
+
+      <ul class="sn-nav__links">
+        <li><a href="admin-dashboard.html" class="sn-nav--active">Dashboard</a></li>
+        <li><a href="review-requests.html">Review Requests</a></li>
+        <li><a href="manage-users.html">Manage Users</a></li>
+        <li><a href="index.html" class="sn-nav--logout">Log out</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="sn-main admin-dashboard-page">
+    <div class="sn-container">
+
+      <section class="admin-hero">
+        <div class="admin-hero__overlay"></div>
+        <div class="admin-hero__content">
+          <span class="admin-hero__badge">Administrative overview</span>
+          <h1 class="admin-hero__title">Manage requests and keep the platform safe.</h1>
+          <p class="admin-hero__text">
+            Review submitted medication requests, approve valid cases, reject unsuitable ones,
+            and manage patient accounts through one clear administrative workspace.
+          </p>
+        </div>
+      </section>
+
+      <section class="admin-overview">
+        <article class="admin-summary-card">
+          <div class="admin-summary-card__icon">📋</div>
+          <h2 class="admin-summary-card__title">Review Requests</h2>
+          <p class="admin-summary-card__text">
+            Access submitted medication requests, review prescription details, and make approval
+            or rejection decisions based on the request information.
+          </p>
+          <a href="review-requests.html" class="admin-summary-card__link">More</a>
+        </article>
+
+        <article class="admin-summary-card">
+          <div class="admin-summary-card__icon">👤</div>
+          <h2 class="admin-summary-card__title">Manage Users</h2>
+          <p class="admin-summary-card__text">
+            View all registered patients, monitor their account status, and block or unblock users
+            when needed to maintain platform safety.
+          </p>
+          <a href="manage-users.html" class="admin-summary-card__link">More</a>
+        </article>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="sn-footer">
+    <div class="sn-container">
+      <div class="sn-footer__inner">
+        <div class="sn-footer__logo">
+          <img class="sn-footer__logo-img" src="images/slogo.png" alt="Sanad logo">
+          <span class="sn-footer__logo-name">Sanad</span>
+        </div>
+
+        <span class="sn-footer__copy">© 2026 Sanad. Riyadh, Saudi Arabia.</span>
+
+        <div class="sn-footer__links">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Help</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

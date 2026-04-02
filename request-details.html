@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sanad | Request Details</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="sn-nav">
+    <div class="sn-container sn-nav__inner">
+      <a href="admin-dashboard.html" class="sn-nav__logo">
+        <img src="images/slogo.png" alt="Sanad Logo" class="sn-nav__logo-img" />
+        <span class="sn-nav__logo-name">Sanad</span>
+      </a>
+
+      <ul class="sn-nav__links">
+        <li><a href="admin-dashboard.html">Dashboard</a></li>
+        <li><a href="review-requests.html" class="sn-nav--active">Review Requests</a></li>
+        <li><a href="manage-users.html">Manage Users</a></li>
+        <li><a href="index.html" class="sn-nav--logout">Log out</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="sn-main request-details-page">
+    <div class="sn-container">
+
+      <section class="admin-page-head admin-page-head--small">
+        <span class="admin-page-head__badge">Request details</span>
+        <h1 class="admin-page-head__title">Medication Request #1024</h1>
+        <p class="admin-page-head__text">
+          Review the request information carefully before making a final decision.
+        </p>
+      </section>
+
+      <section class="request-details-layout">
+        <div class="request-details-card">
+          <h2 class="request-details-card__title">Request Information</h2>
+
+          <div class="request-details-grid">
+            <div class="request-details-item">
+              <span class="request-details-item__label">Medication Name</span>
+              <span class="request-details-item__value">Augmentin 625mg</span>
+            </div>
+
+            <div class="request-details-item">
+              <span class="request-details-item__label">Priority</span>
+              <span class="request-details-item__value">High</span>
+            </div>
+
+            <div class="request-details-item">
+              <span class="request-details-item__label">Status</span>
+              <span class="request-details-item__value">Pending</span>
+            </div>
+
+            <div class="request-details-item">
+              <span class="request-details-item__label">Patient Name</span>
+              <span class="request-details-item__value">Sarah Ahmed</span>
+            </div>
+
+            <div class="request-details-item request-details-item--full">
+              <span class="request-details-item__label">Notes</span>
+              <span class="request-details-item__value">
+                The patient mentioned that the medication is urgently needed and requested a fast response.
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="request-details-card">
+          <h2 class="request-details-card__title">Prescription</h2>
+
+          <div class="request-prescription-box">
+            <img src="images/prescription-sample.jpg" alt="Uploaded Prescription" class="request-prescription-box__img" />
+          </div>
+
+          <div class="request-details-actions">
+            <button class="admin-btn admin-btn--approve">Approve</button>
+            <button class="admin-btn admin-btn--reject">Reject</button>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="sn-footer">
+    <div class="sn-container">
+      <div class="sn-footer__inner">
+        <div class="sn-footer__logo">
+          <img class="sn-footer__logo-img" src="images/slogo.png" alt="Sanad logo">
+          <span class="sn-footer__logo-name">Sanad</span>
+        </div>
+
+        <span class="sn-footer__copy">© 2026 Sanad. Riyadh, Saudi Arabia.</span>
+
+        <div class="sn-footer__links">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Help</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
