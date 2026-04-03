@@ -1,107 +1,108 @@
+
 const form = document.getElementById("register-form");
 
-form.addEventListener("submit", function (e) {
-  e.preventDefault();
+if (form) {
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
 
-  // inputs
-  const name = form.querySelector("input[type='text']");
-  const email = form.querySelector("input[type='email']");
-  const phone = form.querySelector("input[type='tel']");
-  const region = document.getElementById("region");
-  const password = form.querySelectorAll("input[type='password']")[0];
-  const confirmPassword = form.querySelectorAll("input[type='password']")[1];
-  const checkbox = form.querySelector("input[type='checkbox']");
+    const name = form.querySelector("input[type='text']");
+    const email = form.querySelector("input[type='email']");
+    const phone = form.querySelector("input[type='tel']");
+    const region = document.getElementById("region");
+    const password = form.querySelectorAll("input[type='password']")[0];
+    const confirmPassword = form.querySelectorAll("input[type='password']")[1];
+    const checkbox = document.getElementById("terms");
 
-  // errors
-  let valid = true;
+    let valid = true;
 
-  function setError(id, msg) {
-    document.getElementById(id).textContent = msg;
-    valid = false;
-  }
+    function setError(id, msg) {
+      document.getElementById(id).textContent = msg;
+      valid = false;
+    }
 
-  function clearErrors() {
-    document.querySelectorAll(".error-msg").forEach(e => e.textContent = "");
-  }
+    function clearErrors() {
+      document.querySelectorAll(".error-msg").forEach(e => e.textContent = "");
+    }
 
-  clearErrors();
+    clearErrors();
 
-  // Name
-  if (name.value.trim().length < 3) {
-    setError("name-error", "Enter a valid full name.");
-  }
+    if (name.value.trim().length < 3) {
+      setError("name-error", "Enter a valid full name.");
+    }
 
-  // Email
-  if (!email.value.includes("@")) {
-    setError("email-error", "Invalid email.");
-  }
+    if (!email.value.includes("@")) {
+      setError("email-error", "Invalid email.");
+    }
 
-  // Phone (Saudi format)
-  if (!/^05\d{8}$/.test(phone.value)) {
-    setError("phone-error", "Phone must start with 05 and be 10 digits.");
-  }
+    if (!/^05\d{8}$/.test(phone.value)) {
+      setError("phone-error", "Phone must start with 05 and be 10 digits.");
+    }
 
-  // Region
-  if (region.value === "") {
-    setError("region-error", "Please select a region.");
-  }
+    if (region.value === "") {
+      setError("region-error", "Please select a region.");
+    }
 
-  // Password
-  if (password.value.length < 6) {
-    setError("password-error", "Password must be at least 6 characters.");
-  }
+    if (password.value.length < 6) {
+      setError("password-error", "Password must be at least 6 characters.");
+    }
 
-  // Confirm password
-  if (password.value !== confirmPassword.value) {
-    setError("confirm-error", "Passwords do not match.");
-  }
+    if (password.value !== confirmPassword.value) {
+      setError("confirm-error", "Passwords do not match.");
+    }
 
-  // Terms
-  if (!checkbox.checked) {
-    alert("You must agree to terms.");
-    valid = false;
-  }
+    if (!checkbox.checked) {
+      setError("terms-error", "You must agree to terms.");
+    }
 
-  if (valid) {
-    alert("Account created successfully 🎉");
-    form.reset();
-  }
-});
-
-
-document.getElementById("requestForm").addEventListener("submit", function(e) {
-  let valid = true;
-
-  const med = document.getElementById("medication");
-  const priority = document.getElementById("priority");
-  const file = document.getElementById("file");
-
-  clearErrors();
-
-  if (med.value.trim() === "") {
-    showError(med, "Medication required");
-    valid = false;
-  }
-
-  if (priority.value === "") {
-    showError(priority, "Select priority");
-    valid = false;
-  }
-
-  const zone = document.getElementById("zone");
-
-if (zone.value === "") {
-  showError(zone, "Select your zone");
-  valid = false;
+    if (valid) {
+      localStorage.setItem("successMessage", "Account created successfully 🎉");
+      window.location.href = "login.html";
+    }
+  });
 }
 
-  if (file.files.length === 0) {
-    showError(file, "Upload prescription");
-    valid = false;
-  }
 
-  if (!valid) e.preventDefault();
-});
+const requestForm = document.getElementById("requestForm");
+
+if (requestForm) {
+  requestForm.addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    let valid = true;
+
+    const med = document.getElementById("medication");
+    const priority = document.getElementById("priority");
+    const file = document.getElementById("file");
+    const zone = document.getElementById("zone");
+
+    clearErrors();
+
+    if (med.value.trim() === "") {
+      showError(med, "Medication required");
+      valid = false;
+    }
+
+    if (priority.value === "") {
+      showError(priority, "Select priority");
+      valid = false;
+    }
+
+    if (zone.value === "") {
+      showError(zone, "Select your zone");
+      valid = false;
+    }
+
+    if (file.files.length === 0) {
+      showError(file, "Upload prescription");
+      valid = false;
+    }
+
+    if (valid) {
+      localStorage.setItem("requestSuccess", "Request submitted successfully ✅");
+      window.location.href = "my-requests.html";
+    }
+  });
+}
 
 function showError(input, message) {
   const error = input.nextElementSibling;
@@ -111,7 +112,6 @@ function showError(input, message) {
 function clearErrors() {
   document.querySelectorAll(".error-msg").forEach(e => e.textContent = "");
 }
-
 
 // SAVE CHANGES
 document.getElementById("editRequestForm").addEventListener("submit", function(e) {

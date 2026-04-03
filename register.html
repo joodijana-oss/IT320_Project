@@ -97,9 +97,12 @@
           </div>
 
           <!-- Terms -->
-          <div class="login-field" style="flex-direction:row; align-items:center; gap:8px;">
-            <input type="checkbox">
-            <label style="margin:0;">I agree to Terms & Privacy</label>
+          <div class="login-field" style="flex-direction:column; align-items:flex-start; gap:5px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <input type="checkbox" id="terms">
+              <label for="terms" style="margin:0;">I agree to Terms & Privacy</label>
+            </div>
+            <span class="error-msg" id="terms-error"></span>
           </div>
 
           <!-- Submit -->

@@ -4093,3 +4093,23 @@ body {
   background: linear-gradient(135deg, #3f536e 0%, #7ea3c1 100%);
   box-shadow: var(--sn-shadow-md);
 }
+
+.success-box {
+  background: #16a34a;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.success-box {
+  background: #e6f9ef;
+  color: #1f7a4d;
+  border: 1px solid #b6f0d2;
+  padding: 14px 18px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  font-weight: 500;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}

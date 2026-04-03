@@ -126,3 +126,34 @@
   window.confirmDelete    = confirmDelete;
 
 })();
+
+window.addEventListener("load", function () {
+  const msg = localStorage.getItem("successMessage");
+
+  if (msg) {
+    const box = document.getElementById("success-box");
+    box.textContent = msg;
+    box.style.display = "block";
+
+    localStorage.removeItem("successMessage");
+  }
+});
+
+window.addEventListener("DOMContentLoaded", () => {
+  const message = localStorage.getItem("requestSuccess");
+
+  if (message) {
+    const box = document.getElementById("success-box");
+    box.textContent = message;
+    box.style.display = "block";
+
+    // نحذف الرسالة بعد عرضها
+    localStorage.removeItem("requestSuccess");
+
+    // (اختياري) تختفي بعد 4 ثواني
+    setTimeout(() => {
+      box.style.display = "none";
+    }, 10000);
+  }
+});
+
