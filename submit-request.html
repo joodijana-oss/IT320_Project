@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Submit Request</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="sn-nav">
+    <div class="sn-container sn-nav__inner">
+      <a href="index.html" class="sn-nav__logo">
+        <img src="images/slogo.png" alt="Sanad Logo" class="sn-nav__logo-img" />
+        <span class="sn-nav__logo-name">Sanad</span>
+      </a>
+
+      <ul class="sn-nav__links">
+        <li><a href="user-dashboard.html">Dashboard</a></li>
+        <li><a href="profile.html">Profile</a></li>
+        <li><a href="submit-request.html" class="sn-nav--active">Submit Request</a></li>
+        <li><a href="my-requests.html">My Requests</a></li>
+        <li><a href="index.html" class="sn-nav--logout">Log out</a></li>
+      </ul>
+    </div>
+  </header>
+  
+
+<main class="sn-main submit-request-page">
+  <div class="sn-container">
+
+    <section class="admin-page-head admin-page-head--small">
+      <span class="admin-page-head__badge">New Request</span>
+      <h1 class="admin-page-head__title">Submit Medication Request</h1>
+      <p class="admin-page-head__text">
+        Fill all required fields and upload prescription.
+      </p>
+    </section>
+
+    <form id="requestForm" class="submit-card">
+
+      <div class="form-grid">
+
+        <div class="form-field">
+          <label>Medication Name</label>
+          <input type="text" id="medication" required>
+          <span class="error-msg"></span>
+        </div>
+
+        <div class="form-field">
+          <label>Priority</label>
+          <select id="priority" required>
+            <option value="">Select</option>
+            <option>High</option>
+            <option>Medium</option>
+            <option>Low</option>
+          </select>
+          <span class="error-msg"></span>
+        </div>
+
+        <div class="form-field">
+            <label>Zone</label>
+            <select id="zone" required>
+              <option value="">Select Zone</option>
+              <option>North Riyadh</option>
+              <option>South Riyadh</option>
+              <option>East Riyadh</option>
+              <option>West Riyadh</option>
+            </select>
+            <span class="error-msg"></span>
+          </div>
+
+        <div class="form-field form-full">
+          <label>Notes</label>
+          <textarea id="notes" rows="4"></textarea>
+        </div>
+
+        <div class="form-field form-full">
+          <label>Upload Prescription</label>
+          <input type="file" id="file" accept="image/*,.pdf" required>
+          <span class="error-msg"></span>
+        </div>
+
+      </div>
+
+      <button type="submit" class="admin-btn admin-btn--primary">
+        Submit Request
+      </button>
+
+    </form>
+
+  </div>
+</main>
+
+<!-- ── Footer ── -->
+<footer class="sn-footer">
+    <div class="sn-container">
+      <div class="sn-footer__inner">
+        <div class="sn-footer__logo">
+          <img class="sn-footer__logo-img" src="images/slogo.png">
+          <span class="sn-footer__logo-name">Sanad</span>
+        </div>
+        <span class="sn-footer__copy">© 2026 Sanad. Riyadh, Saudi Arabia.</span>
+        <div class="sn-footer__links">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Help</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="valdiation.js"></script>
+  </body>
+  </html>
+</body>
+</html>

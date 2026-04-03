@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sanad — Register</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ── Navbar ── -->
+<nav class="sn-nav">
+  <div class="sn-container">
+    <div class="sn-nav__inner">
+      <a href="index.html" class="sn-nav__logo">
+        <img class="sn-nav__logo-img" src="images/slogo.png">
+        <span class="sn-nav__logo-name">Sanad</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── Main ── -->
+<main class="sn-main login-page">
+  <div class="sn-container">
+    <div class="login-box">
+
+
+      <!-- Brand -->
+      <div class="login-brand">
+        <div class="login-brand__logo">
+          <img src="images/slogo.png" class="login-brand__logo-img">
+          <span class="login-brand__logo-name">Sanad</span>
+        </div>
+        <p class="login-brand__tagline">Create your account to get started</p>
+      </div>
+
+
+
+      <!-- Card -->
+      <div class="login-card">
+        <h1 class="login-card__title">Create account</h1>
+        <p class="login-card__subtitle">Join Sanad and connect with pharmacies</p>
+
+        <form id="register-form">
+
+          <!-- Full Name -->
+          <div class="login-field">
+            <label>Full name</label>
+            <input type="text" placeholder="Your full name">
+            <span class="error-msg" id="name-error"></span>
+          </div>
+
+          <!-- Email -->
+          <div class="login-field">
+            <label>Email address</label>
+            <input type="email" placeholder="you@example.com">
+            <span class="error-msg" id="email-error"></span>
+          </div>
+
+          <!-- Phone -->
+          <div class="login-field">
+            <label>Phone number</label>
+            <input type="tel" placeholder="05xxxxxxxx">
+            <span class="error-msg" id="phone-error"></span>
+          </div>
+
+          <!-- Location -->
+          <div class="login-field">
+            <label>Region</label>
+            <select id="region" class="login-select">
+              <option value="">Select region</option>
+              <option>North Riyadh</option>
+              <option>South Riyadh</option>
+              <option>East Riyadh</option>
+              <option>West Riyadh</option>
+            </select>
+            <span class="error-msg" id="region-error"></span>
+          </div>
+
+          <!-- Password -->
+          <div class="login-field">
+            <label>Password</label>
+            <div class="login-pw-wrap">
+              <input type="password" placeholder="Create password">
+              <span class="error-msg" id="password-error"></span>
+            </div>
+          </div>
+
+          <!-- Confirm Password -->
+          <div class="login-field">
+            <label>Confirm password</label>
+            <div class="login-pw-wrap">
+              <input type="password" placeholder="Confirm password">
+              <span class="error-msg" id="confirm-error"></span>
+            </div>
+          </div>
+
+          <!-- Terms -->
+          <div class="login-field" style="flex-direction:row; align-items:center; gap:8px;">
+            <input type="checkbox">
+            <label style="margin:0;">I agree to Terms & Privacy</label>
+          </div>
+
+          <!-- Submit -->
+          <button class="login-submit-btn">
+            Create account
+          </button>
+
+        </form>
+
+        <p class="login-register-link">
+          Already have an account? <a href="login.html">Sign in</a>
+        </p>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<!-- ── Footer ── -->
+<footer class="sn-footer">
+  <div class="sn-container">
+    <div class="sn-footer__inner">
+      <div class="sn-footer__logo">
+        <img class="sn-footer__logo-img" src="images/slogo.png">
+        <span class="sn-footer__logo-name">Sanad</span>
+      </div>
+      <span class="sn-footer__copy">© 2026 Sanad. Riyadh, Saudi Arabia.</span>
+      <div class="sn-footer__links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Help</a>
+      </div>
+    </div>
+  </div>
+</footer>
+<script src="valdiation.js"></script>
+</body>
+</html>

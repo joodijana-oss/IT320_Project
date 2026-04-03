@@ -2330,3 +2330,132 @@ body {
     min-width: 720px;
   }
 }
+
+.login-select {
+  padding: 11px 14px;
+  background: var(--sn-surface);
+  border: 1.5px solid var(--sn-border);
+  border-radius: var(--sn-radius);
+  font-family: var(--sn-font-body);
+  font-size: 14px;
+  color: var(--sn-text);
+  outline: none;
+}
+
+.login-select:focus {
+  border-color: var(--sn-accent);
+  box-shadow: 0 0 0 3px rgba(74,127,165,0.12);
+}
+
+.login-box {
+  max-width: 650px; 
+}
+
+.login-card {
+  padding: 48px; 
+}
+
+.error-msg {
+  font-size: 12px;
+  color: #8b2020;
+  margin-top: 5px;
+  display: block;
+}
+
+/* ========================================================================================================*/
+/* =========================
+   SUBMIT REQUEST
+   ========================= */
+
+   .submit-card {
+    background: var(--sn-surface);
+    border: 1px solid var(--sn-border);
+    border-radius: var(--sn-radius-xl);
+    padding: 30px;
+    box-shadow: var(--sn-shadow-sm);
+  }
+  
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-bottom: 20px;
+  }
+  
+  .form-field {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-field label {
+    font-size: 13px;
+    margin-bottom: 6px;
+  }
+  
+  .form-field input,
+  .form-field select,
+  .form-field textarea {
+    padding: 11px;
+    border: 1.5px solid var(--sn-border);
+    border-radius: var(--sn-radius);
+  }
+  
+  .form-full {
+    grid-column: 1 / -1;
+  }
+
+  /* ========================================================================================================*/
+/* =========================
+  REQUEST DETAILS
+   ========================= */
+
+   .actions-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+  }
+  
+  .admin-btn--danger {
+    background: #d9534f;
+    color: white;
+  }
+  
+  .admin-btn--secondary {
+    background: #e5e7eb;
+  }
+
+
+  .input-box {
+    position: relative;
+  }
+  
+  .input-box input,
+  .input-box select,
+  .input-box textarea {
+    width: 100%;
+    padding-right: 35px;
+  }
+  
+  .edit-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 14px;
+    z-index: 2;
+  }
+
+  .prescription-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .prescription-box img {
+    width: 200px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+  }
+
+  
