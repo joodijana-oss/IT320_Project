@@ -1,21 +1,20 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sanad | Admin Dashboard</title>
   <link rel="stylesheet" href="style.css" />
+
 </head>
 <body>
 
-  <!-- Navbar -->
   <header class="sn-nav">
     <div class="sn-container sn-nav__inner">
       <a href="admin-dashboard.html" class="sn-nav__logo">
         <img src="images/slogo.png" alt="Sanad Logo" class="sn-nav__logo-img" />
         <span class="sn-nav__logo-name">Sanad</span>
       </a>
-
       <ul class="sn-nav__links">
         <li><a href="admin-dashboard.html" class="sn-nav--active">Dashboard</a></li>
         <li><a href="review-requests.html">Review Requests</a></li>
@@ -25,48 +24,138 @@
     </div>
   </header>
 
-  <!-- Main -->
-  <main class="sn-main admin-dashboard-page">
+  <main class="sn-main ad-dashboard-page">
     <div class="sn-container">
 
-      <section class="admin-hero">
-        <div class="admin-hero__overlay"></div>
-        <div class="admin-hero__content">
-          <span class="admin-hero__badge">Administrative overview</span>
-          <h1 class="admin-hero__title">Manage requests and keep the platform safe.</h1>
-          <p class="admin-hero__text">
-            Review submitted medication requests, approve valid cases, reject unsuitable ones,
-            and manage patient accounts through one clear administrative workspace.
-          </p>
+      <section class="ad-hero">
+        <div class="ad-hero__overlay"></div>
+        <div class="ad-hero__content">
+          <span class="ad-hero__badge">Admin Dashboard</span>
+          <h1 class="ad-hero__title">Good morning, Admin</h1>
+          <p class="ad-hero__meta">Riyadh Administrative Panel &nbsp;·&nbsp; Wednesday, 1 Apr 2026</p>
         </div>
       </section>
 
-      <section class="admin-overview">
-        <article class="admin-summary-card">
-          <div class="admin-summary-card__icon">📋</div>
-          <h2 class="admin-summary-card__title">Review Requests</h2>
-          <p class="admin-summary-card__text">
-            Access submitted medication requests, review prescription details, and make approval
-            or rejection decisions based on the request information.
-          </p>
-          <a href="review-requests.html" class="admin-summary-card__link">More</a>
-        </article>
+      <div class="ad-stats">
+        <div class="ad-stat-card">
+          <div class="ad-stat-card__value">18</div>
+          <div class="ad-stat-card__label">Pending requests</div>
+        </div>
+        <div class="ad-stat-card" style="animation-delay:0.06s;">
+          <div class="ad-stat-card__value">9</div>
+          <div class="ad-stat-card__label">Approved requests</div>
+          <div class="ad-stat-card__period">Today</div>
+        </div>
+        <div class="ad-stat-card" style="animation-delay:0.12s;">
+          <div class="ad-stat-card__value">4</div>
+          <div class="ad-stat-card__label">Rejected requests</div>
+          <div class="ad-stat-card__period">Today</div>
+        </div>
+        <div class="ad-stat-card" style="animation-delay:0.18s;">
+          <div class="ad-stat-card__value">2</div>
+          <div class="ad-stat-card__label">Blocked users</div>
+          <div class="ad-stat-card__period">Current total</div>
+        </div>
+      </div>
 
-        <article class="admin-summary-card">
-          <div class="admin-summary-card__icon">👤</div>
-          <h2 class="admin-summary-card__title">Manage Users</h2>
-          <p class="admin-summary-card__text">
-            View all registered patients, monitor their account status, and block or unblock users
-            when needed to maintain platform safety.
-          </p>
-          <a href="manage-users.html" class="admin-summary-card__link">More</a>
-        </article>
-      </section>
+      <div class="ad-table-card">
+        <div class="ad-table-card__head">
+          <span class="ad-table-card__head-title">Recent Pending Requests</span>
+          <a href="review-requests.html" class="ad-more-link">More</a>
+        </div>
+
+        <table class="ad-table">
+          <thead>
+            <tr>
+              <th>Medication</th>
+              <th>Priority</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="td-name">Augmentin 625mg</div>
+                <div class="td-id">#1024</div>
+              </td>
+              <td><span class="ad-badge ad-badge--high">High</span></td>
+              <td><span class="ad-badge ad-badge--pending">Pending</span></td>
+              <td><a href="request-details.html" class="ad-view-link">View</a></td>
+            </tr>
+
+            <tr>
+              <td>
+                <div class="td-name">Ventolin Inhaler</div>
+                <div class="td-id">#1025</div>
+              </td>
+              <td><span class="ad-badge ad-badge--medium">Medium</span></td>
+              <td><span class="ad-badge ad-badge--pending">Pending</span></td>
+              <td><a href="request-details.html" class="ad-view-link">View</a></td>
+            </tr>
+
+            <tr>
+              <td>
+                <div class="td-name">Panadol Extra 500mg</div>
+                <div class="td-id">#1026</div>
+              </td>
+              <td><span class="ad-badge ad-badge--low">Low</span></td>
+              <td><span class="ad-badge ad-badge--pending">Pending</span></td>
+              <td><a href="request-details.html" class="ad-view-link">View</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="ad-table-card ad-table-card--users">
+        <div class="ad-table-card__head">
+          <span class="ad-table-card__head-title">Recent Users</span>
+          <a href="manage-users.html" class="ad-more-link">More</a>
+        </div>
+
+        <table class="ad-table">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Email</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="td-name">Sarah Ahmed</div>
+                <div class="td-id">#201</div>
+              </td>
+              <td>sarah@example.com</td>
+              <td><span class="user-status user-status--active">Active</span></td>
+            </tr>
+
+            <tr>
+              <td>
+                <div class="td-name">Rashed Ali</div>
+                <div class="td-id">#202</div>
+              </td>
+              <td>rashed@example.com</td>
+              <td><span class="user-status user-status--blocked">Blocked</span></td>
+            </tr>
+
+            <tr>
+              <td>
+                <div class="td-name">Huda Saad</div>
+                <div class="td-id">#203</div>
+              </td>
+              <td>huda@example.com</td>
+              <td><span class="user-status user-status--active">Active</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
     </div>
   </main>
 
-  <!-- Footer -->
   <footer class="sn-footer">
     <div class="sn-container">
       <div class="sn-footer__inner">
@@ -74,9 +163,7 @@
           <img class="sn-footer__logo-img" src="images/slogo.png" alt="Sanad logo">
           <span class="sn-footer__logo-name">Sanad</span>
         </div>
-
         <span class="sn-footer__copy">© 2026 Sanad. Riyadh, Saudi Arabia.</span>
-
         <div class="sn-footer__links">
           <a href="#">Privacy</a>
           <a href="#">Terms</a>
@@ -85,6 +172,5 @@
       </div>
     </div>
   </footer>
-
 </body>
 </html>

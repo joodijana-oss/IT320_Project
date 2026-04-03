@@ -8,6 +8,7 @@
 </head>
 <body>
 
+  <!-- Navbar -->
   <header class="sn-nav">
     <div class="sn-container sn-nav__inner">
       <a href="admin-dashboard.html" class="sn-nav__logo">
@@ -24,46 +25,61 @@
     </div>
   </header>
 
+  <!-- Main -->
   <main class="sn-main review-requests-page">
     <div class="sn-container">
+
+      <a href="admin-dashboard.html" class="admin-back">← Back to Dashboard</a>
 
       <section class="admin-page-head">
         <span class="admin-page-head__badge">Request moderation</span>
         <h1 class="admin-page-head__title">Review Medication Requests</h1>
         <p class="admin-page-head__text">
-          Review pending requests, check the key information, and open the full request details
-          before making a decision.
+          Review submitted medication requests, filter them by status or priority,
+          and search by medication name or request ID.
         </p>
       </section>
 
+      <!-- Filter Bar -->
       <section class="admin-filter-bar">
         <div class="admin-filter-group">
           <label for="statusFilter">Status</label>
           <select id="statusFilter">
-            <option>Pending</option>
-            <option>Approved</option>
-            <option>Rejected</option>
+            <option value="all">All Statuses</option>
+            <option value="pending">Pending</option>
+            <option value="approved">Approved</option>
+            <option value="rejected">Rejected</option>
           </select>
         </div>
 
         <div class="admin-filter-group">
           <label for="priorityFilter">Priority</label>
           <select id="priorityFilter">
-            <option>All Priorities</option>
-            <option>High</option>
-            <option>Medium</option>
-            <option>Low</option>
+            <option value="all">All Priorities</option>
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
           </select>
         </div>
 
         <div class="admin-filter-group admin-filter-group--search">
           <label for="searchRequest">Search</label>
-          <input type="text" id="searchRequest" placeholder="Search by medication or request ID" />
+          <input
+            type="text"
+            id="searchRequest"
+            placeholder="Search by medication or request ID"
+          />
         </div>
       </section>
 
-      <section class="request-list">
-        <article class="request-card">
+      <!-- Request Cards -->
+      <section class="request-list" id="requestList">
+
+        <article class="request-card"
+          data-status="pending"
+          data-priority="high"
+          data-medication="augmentin 625mg"
+          data-id="1024">
           <div class="request-card__top">
             <div>
               <span class="request-card__id">Request #1024</span>
@@ -87,7 +103,11 @@
           </div>
         </article>
 
-        <article class="request-card">
+        <article class="request-card"
+          data-status="approved"
+          data-priority="medium"
+          data-medication="panadol extra"
+          data-id="1025">
           <div class="request-card__top">
             <div>
               <span class="request-card__id">Request #1025</span>
@@ -111,7 +131,11 @@
           </div>
         </article>
 
-        <article class="request-card">
+        <article class="request-card"
+          data-status="rejected"
+          data-priority="high"
+          data-medication="ventolin inhaler"
+          data-id="1026">
           <div class="request-card__top">
             <div>
               <span class="request-card__id">Request #1026</span>
@@ -134,11 +158,45 @@
             <a href="request-details.html" class="admin-btn admin-btn--secondary">View Details</a>
           </div>
         </article>
+
+        <article class="request-card"
+          data-status="pending"
+          data-priority="low"
+          data-medication="concor 5mg"
+          data-id="1027">
+          <div class="request-card__top">
+            <div>
+              <span class="request-card__id">Request #1027</span>
+              <h2 class="request-card__title">Concor 5mg</h2>
+            </div>
+            <span class="request-card__status request-card__status--pending">Pending</span>
+          </div>
+
+          <div class="request-card__meta">
+            <span><strong>Patient:</strong> Khalid Omar</span>
+            <span><strong>Priority:</strong> Low</span>
+            <span><strong>Submitted:</strong> 24 Mar 2026</span>
+          </div>
+
+          <p class="request-card__text">
+            Request submitted with a valid prescription and additional medication note.
+          </p>
+
+          <div class="request-card__actions">
+            <a href="request-details.html" class="admin-btn admin-btn--primary">View Details</a>
+          </div>
+        </article>
+
       </section>
+
+      <p id="noResultsMessage" class="admin-no-results" style="display: none;">
+        No matching requests found.
+      </p>
 
     </div>
   </main>
 
+  <!-- Footer -->
   <footer class="sn-footer">
     <div class="sn-container">
       <div class="sn-footer__inner">
@@ -158,5 +216,6 @@
     </div>
   </footer>
 
+  <script src="admin.js"></script>
 </body>
 </html>
