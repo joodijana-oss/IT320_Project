@@ -220,9 +220,7 @@ body {
 
 
 
-/* =========================
-   HOME PAGE
-   ========================= */
+
 /* =========================
    HOME PAGE
    ========================= */
@@ -1006,7 +1004,7 @@ body {
 /* intro cards */
 .about-grid {
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 22px;
   margin-bottom: 28px;
 }
@@ -1275,7 +1273,239 @@ body {
 }
 
 
+/* =========================
+   PHARMACY REQUESTS PAGE
+   ========================= */
 
+.ph-requests-page .sn-container {
+  max-width: 1200px;
+}
+
+.ph-page-head {
+  margin-bottom: 24px;
+}
+
+.ph-page-head__badge {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: var(--sn-accent-light);
+  color: var(--sn-primary);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.ph-page-head__title {
+  font-family: var(--sn-font-display);
+  font-size: 40px;
+  line-height: 1.1;
+  color: var(--sn-primary);
+  margin-bottom: 10px;
+}
+
+.ph-page-head__text {
+  max-width: 720px;
+  font-size: 15px;
+  color: var(--sn-text-muted);
+  line-height: 1.8;
+  font-weight: 300;
+}
+
+/* toolbar */
+.ph-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.ph-toolbar__controls {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.ph-toolbar__controls select {
+  min-width: 170px;
+  padding: 11px 14px;
+  background: var(--sn-surface);
+  border: 1px solid var(--sn-border);
+  border-radius: 999px;
+  font-family: var(--sn-font-body);
+  font-size: 14px;
+  color: var(--sn-text);
+  outline: none;
+  cursor: pointer;
+}
+
+.ph-toolbar__controls select:focus {
+  border-color: var(--sn-accent);
+}
+
+/* search */
+.ph-search-wrap {
+  flex: 1;
+  min-width: 280px;
+  position: relative;
+}
+
+.ph-search-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 15px;
+  opacity: 0.65;
+}
+
+.ph-search-wrap input {
+  width: 100%;
+  padding: 14px 18px 14px 44px;
+  border: 1px solid var(--sn-border);
+  border-radius: 999px;
+  background: var(--sn-surface);
+  font-family: var(--sn-font-body);
+  font-size: 14px;
+  color: var(--sn-text);
+  outline: none;
+  box-shadow: var(--sn-shadow-xs);
+}
+
+.ph-search-wrap input::placeholder {
+  color: var(--sn-text-faint);
+}
+
+.ph-search-wrap input:focus {
+  border-color: var(--sn-accent);
+}
+
+/* count */
+.ph-count {
+  font-size: 14px;
+  color: var(--sn-text-muted);
+  margin-bottom: 18px;
+}
+
+/* table */
+.ph-table-wrap {
+  background: var(--sn-surface);
+  border: 1px solid var(--sn-border);
+  border-radius: var(--sn-radius-xl);
+  overflow: hidden;
+  box-shadow: var(--sn-shadow-sm);
+}
+
+.ph-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ph-table thead th {
+  text-align: left;
+  padding: 18px 22px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--sn-primary);
+  background: #f1ece4;
+  text-transform: uppercase;
+  letter-spacing: 0.2px;
+}
+
+.ph-table tbody td {
+  padding: 18px 22px;
+  border-top: 1px solid var(--sn-border);
+  font-size: 15px;
+  color: var(--sn-text);
+  vertical-align: middle;
+}
+
+.td-med {
+  font-weight: 500;
+  color: var(--sn-primary);
+}
+
+.td-id {
+  color: var(--sn-text-faint);
+  font-weight: 500;
+}
+
+/* badges */
+.ph-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.ph-badge--high {
+  background: #fde8e8;
+  color: #8b2020;
+}
+
+.ph-badge--medium {
+  background: #fef3dc;
+  color: #92600a;
+}
+
+.ph-badge--low {
+  background: #e2f5ec;
+  color: #1a6b4a;
+}
+
+.ph-badge--pending {
+  background: #fef3dc;
+  color: #92600a;
+}
+
+.ph-badge--confirmed {
+  background: #e2f5ec;
+  color: #1a6b4a;
+}
+
+.ph-badge--rejected {
+  background: #fde8e8;
+  color: #8b2020;
+}
+
+.ph-view-link {
+  color: var(--sn-accent);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.ph-view-link:hover {
+  text-decoration: underline;
+}
+
+/* empty */
+.ph-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--sn-text-muted);
+  font-size: 15px;
+}
+
+/* responsive */
+@media (max-width: 900px) {
+  .ph-page-head__title {
+    font-size: 32px;
+  }
+
+  .ph-table {
+    min-width: 860px;
+  }
+
+  .ph-table-wrap {
+    overflow-x: auto;
+  }
+}
 
 
 /* ============================================================
@@ -2899,5 +3129,12 @@ body {
     border-radius: 10px;
     border: 1px solid #ddd;
   }
-
-  
+/* Fix Pharmacy View Requests hero shape */
+.ph-requests-page .ph-page-head {
+  position: relative;
+  overflow: hidden;
+  border-radius: 32px;
+  padding: 42px 40px;
+  background: linear-gradient(135deg, #3f536e 0%, #7ea3c1 100%);
+  box-shadow: var(--sn-shadow-md);
+}

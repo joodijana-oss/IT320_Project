@@ -172,3 +172,72 @@ function phToast(msg, cls) {
     phToast('Offer submitted successfully.', 'ph-toast--ok');
   };
 })();
+
+
+
+/* ─────────────────────────────────────────────────────────────
+  MEMBER 1
+  PHARMCY  VIEW REQUESTS JAVA SCRIPT
+───────────────────────────────────────────────────────────── */
+
+
+function filterPharmacyRequests() {
+  const searchValue = document.getElementById("requestSearchInput").value.toLowerCase().trim();
+  const priorityValue = document.getElementById("priorityFilter").value;
+  const body = document.getElementById("phRequestsBody");
+  const rows = body.querySelectorAll("tr");
+  const emptyState = document.getElementById("phRequestsEmpty");
+  const countLabel = document.getElementById("phRequestsCount");
+
+  let visibleCount = 0;
+
+  rows.forEach((row) => {
+    const med = row.dataset.med.toLowerCase();
+    const id = row.dataset.id.toLowerCase();
+    const priority = row.dataset.priority.toLowerCase();
+
+    const matchesSearch = med.includes(searchValue) || id.includes(searchValue);
+    const matchesPriority = !priorityValue || priority === priorityValue;
+
+    if (matchesSearch && matchesPriority) {
+      row.style.display = "";
+      visibleCount++;
+    } else {
+      row.style.display = "none";
+    }
+  });
+
+  countLabel.innerHTML = `Showing <strong>${visibleCount}</strong> requests`;
+  emptyState.style.display = visibleCount === 0 ? "block" : "none";
+}
+
+function sortPharmacyRequests() {
+  const sortValue = document.getElementById("sortRequests").value;
+  const body = document.getElementById("phRequestsBody");
+  const rows = Array.from(body.querySelectorAll("tr"));
+
+  const priorityOrder = {
+    high: 1,
+    medium: 2,
+    low: 3
+  };
+
+  rows.sort((a, b) => {
+    if (sortValue === "newest") {
+      return new Date(b.dataset.date) - new Date(a.dataset.date);
+    }
+
+    if (sortValue === "oldest") {
+      return new Date(a.dataset.date) - new Date(b.dataset.date);
+    }
+
+    if (sortValue === "priority") {
+      return priorityOrder[a.dataset.priority] - priorityOrder[b.dataset.priority];
+    }
+
+    return 0;
+  });
+
+  rows.forEach((row) => body.appendChild(row));
+  filterPharmacyRequests();
+}

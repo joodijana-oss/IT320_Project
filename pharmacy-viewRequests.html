@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sanad | View Requests</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="sn-nav">
+    <div class="sn-container sn-nav__inner">
+      <a href="pharmacy-dashboard.html" class="sn-nav__logo">
+        <img src="images/slogo.png" alt="Sanad Logo" class="sn-nav__logo-img" />
+        <span class="sn-nav__logo-name">Sanad</span>
+      </a>
+
+      <ul class="sn-nav__links">
+        <li><a href="pharmacy-dashboard.html">Dashboard</a></li>
+        <li><a href="pharmacy-requests.html" class="sn-nav--active">Requests</a></li>
+        <li><a href="pharmacy-reports.html">Reports</a></li>
+        <li><a href="Homepage.html" class="sn-nav--logout">Log out</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="sn-main ph-requests-page">
+    <div class="sn-container">
+
+      <section class="ph-page-head">
+        <span class="ph-page-head__badge">Pharmacy Requests</span>
+        <h1 class="ph-page-head__title">View Requests</h1>
+        <p class="ph-page-head__text">
+          Browse approved medication requests in your assigned area and respond when the medication is available.
+        </p>
+      </section>
+
+      <!-- Search + filters -->
+      <div class="ph-toolbar">
+        <div class="ph-search-wrap">
+          <span class="ph-search-icon">🔍</span>
+          <input
+            type="text"
+            id="requestSearchInput"
+            placeholder="Search by medication name or request ID..."
+            oninput="filterPharmacyRequests()"
+          />
+        </div>
+
+        <div class="ph-toolbar__controls">
+          <select id="priorityFilter" onchange="filterPharmacyRequests()">
+            <option value="">All Priorities</option>
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+          </select>
+
+          <select id="sortRequests" onchange="sortPharmacyRequests()">
+            <option value="newest">Newest first</option>
+            <option value="oldest">Oldest first</option>
+            <option value="priority">Priority</option>
+          </select>
+        </div>
+      </div>
+
+      <p class="ph-count" id="phRequestsCount">Showing <strong>6</strong> requests</p>
+
+      <div class="ph-table-wrap">
+        <table class="ph-table">
+          <thead>
+            <tr>
+              <th>Medication</th>
+              <th>Request ID</th>
+              <th>Priority</th>
+              <th>Area</th>
+              <th>Date submitted</th>
+              <th></th>
+            </tr>
+          </thead>
+
+          <tbody id="phRequestsBody">
+            <tr data-med="augmentin 625mg" data-id="1001" data-priority="high" data-date="2025-03-10">
+              <td class="td-med">Augmentin 625mg</td>
+              <td class="td-id">#1001</td>
+              <td><span class="ph-badge ph-badge--high">High</span></td>
+              <td>North Riyadh</td>
+              <td>10 Mar 2025</td>
+              <td><a href="pharmacy-request-details.html" class="ph-view-link">View request</a></td>
+            </tr>
+
+            <tr data-med="nexium 40mg" data-id="1002" data-priority="medium" data-date="2025-03-06">
+              <td class="td-med">Nexium 40mg</td>
+              <td class="td-id">#1002</td>
+              <td><span class="ph-badge ph-badge--medium">Medium</span></td>
+              <td>North Riyadh</td>
+              <td>6 Mar 2025</td>
+              <td><a href="pharmacy-request-details.html" class="ph-view-link">View request</a></td>
+            </tr>
+
+            <tr data-med="panadol extra 500mg" data-id="1003" data-priority="low" data-date="2025-03-02">
+              <td class="td-med">Panadol Extra 500mg</td>
+              <td class="td-id">#1003</td>
+              <td><span class="ph-badge ph-badge--low">Low</span></td>
+              <td>North Riyadh</td>
+              <td>2 Mar 2025</td>
+              <td><a href="pharmacy-request-details.html" class="ph-view-link">View request</a></td>
+            </tr>
+
+            <tr data-med="concor 5mg" data-id="1004" data-priority="high" data-date="2025-02-21">
+              <td class="td-med">Concor 5mg</td>
+              <td class="td-id">#1004</td>
+              <td><span class="ph-badge ph-badge--high">High</span></td>
+              <td>North Riyadh</td>
+              <td>21 Feb 2025</td>
+              <td><a href="pharmacy-request-details.html" class="ph-view-link">View request</a></td>
+            </tr>
+
+            <tr data-med="glucophage 850mg" data-id="1005" data-priority="medium" data-date="2025-02-16">
+              <td class="td-med">Glucophage 850mg</td>
+              <td class="td-id">#1005</td>
+              <td><span class="ph-badge ph-badge--medium">Medium</span></td>
+              <td>North Riyadh</td>
+              <td>16 Feb 2025</td>
+              <td><a href="pharmacy-request-details.html" class="ph-view-link">View request</a></td>
+            </tr>
+
+            <tr data-med="ventolin inhaler" data-id="1006" data-priority="low" data-date="2025-02-11">
+              <td class="td-med">Ventolin Inhaler</td>
+              <td class="td-id">#1006</td>
+              <td><span class="ph-badge ph-badge--low">Low</span></td>
+              <td>North Riyadh</td>
+              <td>11 Feb 2025</td>
+              <td><a href="pharmacy-request-details.html" class="ph-view-link">View request</a></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="ph-empty" id="phRequestsEmpty" style="display:none;">
+          No requests match your search or selected filters.
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="sn-footer">
+    <div class="sn-container">
+      <div class="sn-footer__inner">
+        <div class="sn-footer__logo">
+          <img class="sn-footer__logo-img" src="images/slogo.png" alt="Sanad logo">
+          <span class="sn-footer__logo-name">Sanad</span>
+        </div>
+        <span class="sn-footer__copy">© 2026 Sanad. Riyadh, Saudi Arabia.</span>
+        <div class="sn-footer__links">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Help</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="pharmacy.js"></script>
+</body>
+</html>
