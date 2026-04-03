@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sanad | Reports</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <header class="sn-nav">
+    <div class="sn-container sn-nav__inner">
+      <a href="pharmacy-dashboard.html" class="sn-nav__logo">
+        <img src="images/slogo.png" alt="Sanad Logo" class="sn-nav__logo-img" />
+        <span class="sn-nav__logo-name">Sanad</span>
+      </a>
+      <ul class="sn-nav__links">
+        <li><a href="pharmacy-dashboard.html">Dashboard</a></li>
+        <li><a href="pharmacy-requests.html">Requests</a></li>
+        <li><a href="pharmacy-reports.html" class="sn-nav--active">Reports</a></li>
+        <li><a href="index.html" class="sn-nav--logout">Log out</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="sn-main ph-reports-page">
+    <div class="sn-container">
+
+      <section class="ph-page-head">
+        <span class="ph-page-head__badge">Performance reports</span>
+        <h1 class="ph-page-head__title">Reports</h1>
+        <p class="ph-page-head__text">
+          Track your offer activity, confirmation rate, and performance trends over time.
+        </p>
+      </section>
+
+      <div class="ph-period-bar">
+        <button class="ph-pill" onclick="load('7d',this)">Last 7 days</button>
+        <button class="ph-pill active" onclick="load('30d',this)">Last 30 days</button>
+        <button class="ph-pill" onclick="load('90d',this)">Last 3 months</button>
+        <button class="ph-pill" onclick="load('all',this)">All time</button>
+      </div>
+
+      <div class="ph-stat-row">
+        <div class="ph-stat-card">
+          <div class="ph-stat-card__value" id="mOffers">11</div>
+          <div class="ph-stat-card__label">Offers submitted</div>
+          <div class="ph-stat-card__delta delta-up" id="dOffers">↑ 22% vs prev period</div>
+          <a href="pharmacy-offers.html" class="ph-offers-link">View all offers →</a>
+        </div>
+        <div class="ph-stat-card">
+          <div class="ph-stat-card__value" id="mConfirmed">6</div>
+          <div class="ph-stat-card__label">Confirmed offers</div>
+          <div class="ph-stat-card__delta delta-up" id="dConfirmed">↑ 15% vs prev period</div>
+        </div>
+        <div class="ph-stat-card">
+          <div class="ph-stat-card__value" id="mRejected">3</div>
+          <div class="ph-stat-card__label">Not selected</div>
+          <div class="ph-stat-card__delta delta-up" id="dRejected">↓ 5% vs prev period</div>
+        </div>
+        <div class="ph-stat-card">
+          <div class="ph-stat-card__value" id="mRate">54%</div>
+          <div class="ph-stat-card__label">Confirmation rate</div>
+          <div class="ph-stat-card__delta delta-neu" id="dRate">— Same as prev period</div>
+        </div>
+      </div>
+
+      <div class="ph-no-data" id="noData" style="display:none;">
+        No data available for the selected period.
+      </div>
+
+      <div id="chartsSection">
+        <div class="ph-charts-main">
+          <div class="ph-chart-card">
+            <div class="ph-chart-card__title">Offer Activity</div>
+            <div class="ph-chart-card__sub">Submitted vs confirmed offers over time</div>
+            <div class="ph-chart-wrap-lg">
+              <canvas id="actChart"></canvas>
+            </div>
+          </div>
+          <div class="ph-chart-card">
+            <div class="ph-chart-card__title">Offer Outcomes</div>
+            <div class="ph-chart-card__sub">Breakdown of all submitted offers</div>
+            <div class="ph-chart-wrap">
+              <canvas id="donutChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="sn-footer">
+    <div class="sn-container">
+      <div class="sn-footer__inner">
+        <div class="sn-footer__logo">
+          <img class="sn-footer__logo-img" src="images/slogo.png" alt="Sanad logo">
+          <span class="sn-footer__logo-name">Sanad</span>
+        </div>
+        <span class="sn-footer__copy">© 2026 Sanad. Riyadh, Saudi Arabia.</span>
+        <div class="sn-footer__links">
+          <a href="#">Privacy</a><a href="#">Terms</a><a href="#">Help</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="pharmacy.js"></script>
+</body>
+</html>

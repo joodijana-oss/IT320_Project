@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sanad | Pharmacy Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="sn-nav">
+    <div class="sn-container sn-nav__inner">
+      <a href="pharmacy-dashboard.html" class="sn-nav__logo">
+        <img src="images/slogo.png" alt="Sanad Logo" class="sn-nav__logo-img" />
+        <span class="sn-nav__logo-name">Sanad</span>
+      </a>
+      <ul class="sn-nav__links">
+        <li><a href="pharmacy-dashboard.html" class="sn-nav--active">Dashboard</a></li>
+        <li><a href="pharmacy-requests.html">Requests</a></li>
+        <li><a href="pharmacy-reports.html">Reports</a></li>
+        <li><a href="index.html" class="sn-nav--logout">Log out</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="sn-main ph-dashboard-page">
+    <div class="sn-container">
+
+      <section class="ph-hero">
+        <div class="ph-hero__overlay"></div>
+        <div class="ph-hero__content">
+          <span class="ph-hero__badge">Pharmacy Dashboard</span>
+          <h1 class="ph-hero__title">Good morning, Al-Noor Pharmacy</h1>
+          <p class="ph-hero__meta">North Riyadh &nbsp;·&nbsp; Wednesday, 1 Apr 2026</p>
+        </div>
+      </section>
+
+      <div class="ph-stats">
+        <div class="ph-stat-card">
+          <div class="ph-stat-card__value">24</div>
+          <div class="ph-stat-card__label">Available requests nearby</div>
+        </div>
+        <div class="ph-stat-card" style="animation-delay:0.06s;">
+          <div class="ph-stat-card__value">11</div>
+          <div class="ph-stat-card__label">Offers submitted</div>
+          <div class="ph-stat-card__period">All time</div>
+        </div>
+        <div class="ph-stat-card" style="animation-delay:0.12s;">
+          <div class="ph-stat-card__value">6</div>
+          <div class="ph-stat-card__label">Confirmed offers</div>
+          <div class="ph-stat-card__period">All time</div>
+        </div>
+        <div class="ph-stat-card" style="animation-delay:0.18s;">
+          <div class="ph-stat-card__value">3</div>
+          <div class="ph-stat-card__label">Pending offers</div>
+          <div class="ph-stat-card__period">Awaiting response</div>
+        </div>
+      </div>
+
+      <p class="ph-quick-label">Quick access</p>
+      <div class="ph-quick-grid">
+        <a href="pharmacy-requests.html" class="ph-quick-card">
+          <div class="ph-quick-card__icon">📋</div>
+          <h2 class="ph-quick-card__title">View Requests</h2>
+          <p class="ph-quick-card__text">Browse approved medication requests in your area and submit offers.</p>
+          <span class="ph-quick-card__link">Browse Requests</span>
+        </a>
+        <a href="pharmacy-offers.html" class="ph-quick-card">
+          <div class="ph-quick-card__icon">📤</div>
+          <h2 class="ph-quick-card__title">My Offers</h2>
+          <p class="ph-quick-card__text">View and manage all offers you have previously submitted.</p>
+          <span class="ph-quick-card__link">View Offers</span>
+        </a>
+        <a href="pharmacy-reports.html" class="ph-quick-card">
+          <div class="ph-quick-card__icon">📊</div>
+          <h2 class="ph-quick-card__title">View Reports</h2>
+          <p class="ph-quick-card__text">Track your offer activity and performance trends over time.</p>
+          <span class="ph-quick-card__link">View Reports</span>
+        </a>
+      </div>
+
+      <div class="ph-table-card">
+        <div class="ph-table-card__head">
+          <span class="ph-table-card__head-title">Recent Requests</span>
+        </div>
+        <table class="ph-table">
+          <thead>
+            <tr>
+              <th>Medication</th>
+              <th>Priority</th>
+              <th>Date</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><div class="td-name">Augmentin 625mg</div><div class="td-id">#1001</div></td>
+              <td><span class="ph-badge ph-badge--high">High</span></td>
+              <td>10 Mar 2025</td>
+              <td><a href="pharmacy-request-details.html" class="ph-view-link">View</a></td>
+            </tr>
+            <tr>
+              <td><div class="td-name">Nexium 40mg</div><div class="td-id">#1002</div></td>
+              <td><span class="ph-badge ph-badge--medium">Medium</span></td>
+              <td>5 Mar 2025</td>
+              <td><a href="pharmacy-request-details.html" class="ph-view-link">View</a></td>
+            </tr>
+            <tr>
+              <td><div class="td-name">Panadol Extra 500mg</div><div class="td-id">#1003</div></td>
+              <td><span class="ph-badge ph-badge--low">Low</span></td>
+              <td>1 Mar 2025</td>
+              <td><a href="pharmacy-request-details.html" class="ph-view-link">View</a></td>
+            </tr>
+            <tr>
+              <td><div class="td-name">Concor 5mg</div><div class="td-id">#1004</div></td>
+              <td><span class="ph-badge ph-badge--high">High</span></td>
+              <td>20 Feb 2025</td>
+              <td><a href="pharmacy-request-details.html" class="ph-view-link">View</a></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="ph-table-footer">
+          <a href="pharmacy-requests.html">View all requests →</a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="sn-footer">
+    <div class="sn-container">
+      <div class="sn-footer__inner">
+        <div class="sn-footer__logo">
+          <img class="sn-footer__logo-img" src="images/slogo.png" alt="Sanad logo">
+          <span class="sn-footer__logo-name">Sanad</span>
+        </div>
+        <span class="sn-footer__copy">© 2026 Sanad. Riyadh, Saudi Arabia.</span>
+        <div class="sn-footer__links">
+          <a href="#">Privacy</a><a href="#">Terms</a><a href="#">Help</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="pharmacy.js"></script>
+</body>
+</html>
