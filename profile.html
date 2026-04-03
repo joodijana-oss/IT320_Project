@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sanad — My Profile</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ── Navbar ─────────────────────────────────────────────── -->
+<nav class="sn-nav">
+  <div class="sn-container">
+    <div class="sn-nav__inner">
+
+      <a href="index.html" class="sn-nav__logo">
+        <img class="sn-nav__logo-img" src="images/slogo.png" alt="Sanad logo">
+        <span class="sn-nav__logo-name">Sanad</span>
+      </a>
+
+      <ul class="sn-nav__links">
+        <li><a href="user-dashboard.html">Dashboard</a></li>
+        <li><a href="profile.html" class="sn-nav--active">Profile</a></li>
+        <li><a href="submit-request.html">Submit Request</a></li>
+        <li><a href="my-requests.html">My Requests</a></li>
+        <li><a href="login.html" class="sn-nav--logout" id="logout-link">Log out</a></li>
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+<!-- ── Main ───────────────────────────────────────────────── -->
+<main class="sn-main">
+  <div class="sn-container">
+    <div class="profile-page">
+
+      <!-- Page header -->
+      <h1 class="profile-page__title">My Profile</h1>
+      <p class="profile-page__subtitle">Your account information</p>
+
+      <div class="profile-card">
+
+        <!-- Hero: avatar + name + role + status -->
+        <div class="profile-hero">
+          <div class="profile-avatar" id="profile-avatar">SA</div>
+          <div>
+            <div class="profile-hero__name" id="profile-name">Sara Ahmed</div>
+            <div class="profile-hero__role">Patient account</div>
+            <span class="profile-status profile-status--active" id="profile-status">Active</span>
+          </div>
+        </div>
+
+        <hr class="profile-divider">
+
+        <!-- Info grid -->
+        <p class="profile-section-label">Account details</p>
+        <div class="profile-info-grid">
+
+          <div class="profile-info-item">
+            <div class="profile-info-item__label">Name</div>
+            <div class="profile-info-item__value" id="info-name">Sara Ahmed</div>
+          </div>
+
+          <div class="profile-info-item">
+            <div class="profile-info-item__label">Email address</div>
+            <div class="profile-info-item__value" id="info-email">sara@example.com</div>
+          </div>
+
+          <div class="profile-info-item">
+            <div class="profile-info-item__label">Zone</div>
+            <div class="profile-info-item__value">North Riyadh</div>
+          </div>
+
+          <div class="profile-info-item">
+            <div class="profile-info-item__label">Account status</div>
+            <div class="profile-info-item__value">
+              <span class="profile-status profile-status--active">Active</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ── Footer ─────────────────────────────────────────────── -->
+<footer class="sn-footer">
+  <div class="sn-container">
+    <div class="sn-footer__inner">
+      <div class="sn-footer__logo">
+        <img class="sn-footer__logo-img" src="images/slogo.png" alt="Sanad logo">
+        <span class="sn-footer__logo-name">Sanad</span>
+      </div>
+      <span class="sn-footer__copy">© 2026 Sanad. Riyadh, Saudi Arabia.</span>
+      <div class="sn-footer__links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Help</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sanad — My Requests</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ── Navbar ─────────────────────────────────────────────── -->
+<nav class="sn-nav">
+  <div class="sn-container">
+    <div class="sn-nav__inner">
+
+      <a href="index.html" class="sn-nav__logo">
+        <img class="sn-nav__logo-img" src="images/slogo.png" alt="Sanad logo">
+        <span class="sn-nav__logo-name">Sanad</span>
+      </a>
+
+      <ul class="sn-nav__links">
+        <li><a href="user-dashboard.html">Dashboard</a></li>
+        <li><a href="profile.html">Profile</a></li>
+        <li><a href="submit-request.html">Submit Request</a></li>
+        <li><a href="my-requests.html" class="sn-nav--active">My Requests</a></li>
+        <li><a href="login.html" class="sn-nav--logout" id="logout-link">Log out</a></li>
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+<!-- ── Main ───────────────────────────────────────────────── -->
+<main class="sn-main">
+  <div class="sn-container">
+
+    <!-- Page header -->
+    <div class="requests-page__header">
+      <div>
+        <h1 class="requests-page__title">My Requests</h1>
+        <p class="requests-page__subtitle">Track your medication requests and pharmacy responses</p>
+      </div>
+      <a href="submit-request.html" class="req-submit-btn">+ New request</a>
+    </div>
+
+    <!-- Request list -->
+    <div id="requests-list">
+
+      <!-- Card: Pending — view + delete only -->
+      <div class="req-card" data-id="1001">
+        <div class="req-card__top">
+          <div>
+            <div class="req-card__name">Augmentin 625mg</div>
+            <div class="req-card__badges">
+              <span class="req-badge req-badge--pending">Pending</span>
+              <span class="req-badge req-badge--high">High</span>
+            </div>
+          </div>
+          <div class="req-card__actions">
+            <a href="user-request-details.html" class="req-view-link">View</a>
+            <button class="req-btn req-btn--danger" onclick="openDeleteModal(1001, 'Augmentin 625mg')">Delete</button>
+          </div>
+        </div>
+        <div class="req-card__footer">
+          Request #1001
+        </div>
+      </div>
+
+      <!-- Card: Approved — offer notification, view only -->
+      <div class="req-card" data-id="1002">
+        <div class="req-card__top">
+          <div>
+            <div class="req-card__name">Nexium 40mg</div>
+            <div class="req-card__badges">
+              <span class="req-badge req-badge--approved">Approved</span>
+              <span class="req-badge req-badge--medium">Medium</span>
+            </div>
+          </div>
+          <div class="req-card__actions">
+            <a href="#" class="req-view-link">View</a>
+          </div>
+        </div>
+        <div class="req-card__offer-strip">
+          <span>New pharmacy offer available</span>
+          <a href="#">View &amp; respond →</a>
+        </div>
+        <div class="req-card__footer">
+          Request #1002
+        </div>
+      </div>
+
+      <!-- Card: Confirmed — view only -->
+      <div class="req-card" data-id="1003">
+        <div class="req-card__top">
+          <div>
+            <div class="req-card__name">Panadol Extra 500mg</div>
+            <div class="req-card__badges">
+              <span class="req-badge req-badge--confirmed">Confirmed</span>
+              <span class="req-badge req-badge--low">Low</span>
+            </div>
+          </div>
+          <div class="req-card__actions">
+            <a href="#" class="req-view-link">View</a>
+          </div>
+        </div>
+        <div class="req-card__footer">
+          Request #1003
+        </div>
+      </div>
+
+      <!-- Card: Rejected — view only -->
+      <div class="req-card" data-id="1004">
+        <div class="req-card__top">
+          <div>
+            <div class="req-card__name">Concor 5mg</div>
+            <div class="req-card__badges">
+              <span class="req-badge req-badge--rejected">Rejected</span>
+              <span class="req-badge req-badge--high">High</span>
+            </div>
+          </div>
+          <div class="req-card__actions">
+            <a href="#" class="req-view-link">View</a>
+          </div>
+        </div>
+        <div class="req-card__footer">
+          Request #1004
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Empty state — shown when user has no requests -->
+    <div class="req-empty" id="empty-state" style="display:none">
+      <div class="req-empty__icon">📋</div>
+      <h2 class="req-empty__title">No requests yet</h2>
+      <p class="req-empty__text">Submit your first medication request to get started.</p>
+      <a href="submit-request.html" class="req-submit-btn">Submit a request</a>
+    </div>
+
+  </div>
+</main>
+
+<!-- ── Delete confirmation modal ──────────────────────────── -->
+<div class="req-modal-overlay" id="delete-modal">
+  <div class="req-modal">
+    <h2 class="req-modal__title">Delete this request?</h2>
+    <p class="req-modal__body">
+      You are about to delete <strong id="modal-med-name"></strong>.
+      This cannot be undone.
+    </p>
+    <div class="req-modal__actions">
+      <button class="req-modal__cancel" onclick="closeDeleteModal()">Cancel</button>
+      <button class="req-btn req-btn--danger" onclick="confirmDelete()">Yes, delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Footer ─────────────────────────────────────────────── -->
+<footer class="sn-footer">
+  <div class="sn-container">
+    <div class="sn-footer__inner">
+      <div class="sn-footer__logo">
+        <img class="sn-footer__logo-img" src="images/slogo.png" alt="Sanad logo">
+        <span class="sn-footer__logo-name">Sanad</span>
+      </div>
+      <span class="sn-footer__copy">© 2026 Sanad. Riyadh, Saudi Arabia.</span>
+      <div class="sn-footer__links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Help</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>
