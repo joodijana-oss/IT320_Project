@@ -213,6 +213,23 @@ body {
 }
 
 
+/* Back link */
+.sn-back {
+   display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 18px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--sn-accent);
+  text-decoration: none;
+}
+
+.sn-back:hover {
+  color: var(--sn-primary);
+  text-decoration: none;
+}
+
 
 /* ============================================================
    MEMBER 1 — Home, User Dashboard, View Requests
@@ -2133,19 +2150,7 @@ body {
    SHARED COMPONENTS
 ───────────────────────────────────────────────────────────── */
 
-/* Back link */
-.ph-back {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--ph-accent);
-  text-decoration: none;
-  margin-bottom: 22px;
-  transition: color 0.15s;
-}
-.ph-back:hover { color: var(--ph-primary); text-decoration: none; }
+
 
 /* Gradient page hero (reports, offers, request-details) */
 .ph-page-head {
@@ -2854,6 +2859,253 @@ body {
 }
 
 
+/* =========================
+   PATIENT OFFERS PAGE
+   ========================= */
+
+
+.patient-offers-page .sn-container { max-width: 1200px; }
+
+/* Request summary strip */
+.offer-req-strip {
+  background: var(--sn-surface);
+  border: 1px solid var(--sn-border);
+  border-radius: var(--sn-radius-xl);
+  padding: 22px 26px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 22px;
+  box-shadow: var(--sn-shadow-sm);
+}
+.offer-req-strip__title {
+  font-family: var(--sn-font-display);
+  font-size: 26px;
+  color: var(--sn-primary);
+  margin-bottom: 6px;
+}
+.offer-req-strip__meta {
+  display: flex;
+  gap: 16px;
+  font-size: 14px;
+  color: var(--sn-text-muted);
+  flex-wrap: wrap;
+}
+.offer-req-strip__badges { display: flex; gap: 8px; align-items: center; }
+
+/* Confirmed bar */
+.offer-confirmed-bar {
+  display: none;
+  background: #e8f6ee;
+  border: 1px solid #b2d8c2;
+  border-radius: var(--sn-radius-lg);
+  padding: 13px 20px;
+  font-size: 14px;
+  color: #216b43;
+  margin-bottom: 20px;
+}
+
+/* Offer cards */
+.offer-card {
+  background: var(--sn-surface);
+  border: 1px solid var(--sn-border);
+  border-radius: var(--sn-radius-xl);
+  padding: 26px;
+  box-shadow: var(--sn-shadow-sm);
+  margin-bottom: 18px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.offer-card:hover { transform: translateY(-6px); box-shadow: var(--sn-shadow-md); }
+.offer-card--accepted { border-color: #b2d8c2; background: linear-gradient(135deg, #f4fbf7, #fff); }
+.offer-card--dismissed { opacity: 0.55; }
+
+.offer-card__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+.offer-pharm-row { display: flex; align-items: center; gap: 14px; }
+.offer-pharm-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: #fff;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid var(--sn-border);
+  flex-shrink: 0;
+}
+
+.offer-pharm-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 6px;
+}
+.offer-pharm-name {
+  font-family: var(--sn-font-display);
+  font-size: 20px;
+  color: var(--sn-primary);
+  margin-bottom: 3px;
+}
+.offer-pharm-sub { font-size: 13px; color: var(--sn-text-muted); font-weight: 300; }
+
+/* Offer data grid */
+.offer-data-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  background: var(--sn-surface-alt);
+  border-radius: var(--sn-radius-lg);
+  padding: 16px;
+  margin-bottom: 16px;
+}
+.offer-data-item__label {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--sn-text-muted);
+  margin-bottom: 5px;
+}
+.offer-data-item__value {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--sn-primary);
+}
+.offer-data-item__value--price {
+  font-family: var(--sn-font-display);
+  font-size: 22px;
+}
+
+/* Offer note */
+.offer-note {
+  font-size: 13px;
+  color: var(--sn-text-muted);
+  font-style: italic;
+  border-left: 3px solid var(--sn-border);
+  padding-left: 14px;
+  margin-bottom: 18px;
+  line-height: 1.75;
+  font-weight: 300;
+}
+
+/* Actions row */
+.offer-actions-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid var(--sn-border);
+}
+.offer-map-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--sn-accent);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--sn-font-body);
+  padding: 0;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.offer-map-btn:hover { color: var(--sn-primary); }
+
+.offer-accepted-label {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  background: #e8f6ee;
+  color: #216b43;
+}
+
+/* Empty state */
+.offer-empty { text-align: center; padding: 60px 24px; color: var(--sn-text-muted); font-size: 14px; }
+
+/* Map modal */
+.sn-modal-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(31,47,70,0.30);
+  backdrop-filter: blur(4px);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+}
+.sn-modal-overlay.open { display: flex; }
+.sn-modal {
+  background: var(--sn-surface);
+  border-radius: var(--sn-radius-xl);
+  padding: 32px;
+  width: min(500px, 94vw);
+  box-shadow: var(--sn-shadow-md);
+  animation: modalIn 0.22s ease;
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+.sn-modal__head {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 20px;
+}
+.sn-modal__title { font-family: var(--sn-font-display); font-size: 22px; color: var(--sn-primary); }
+.sn-modal__close {
+  background: none; border: none; cursor: pointer;
+  font-size: 18px; color: var(--sn-text-muted);
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: var(--sn-radius-sm);
+  transition: background 0.15s;
+}
+.sn-modal__close:hover { background: var(--sn-surface-alt); }
+
+
+
+.map-info-row {
+  display: flex; justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--sn-border);
+  font-size: 14px;
+}
+.map-info-row:last-child { border-bottom: none; }
+.map-info-row span:first-child { color: var(--sn-text-muted); }
+.map-info-row span:last-child  { font-weight: 500; color: var(--sn-primary); }
+
+/* Toast */
+.sn-toast-wrap {
+  position: fixed; bottom: 24px; right: 24px;
+  z-index: 200; display: flex; flex-direction: column; gap: 8px;
+}
+.sn-toast {
+  background: var(--sn-primary); color: #fff;
+  padding: 12px 20px; border-radius: var(--sn-radius);
+  font-size: 14px; box-shadow: var(--sn-shadow-md);
+  animation: toastIn 0.25s ease;
+}
+.sn-toast--ok  { background: #1f6a43; }
+.sn-toast--err { background: #8b2020; }
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (max-width: 600px) {
+  .offer-card__top { flex-direction: column; }
+}
+
+
 
 
 /* ============================================================
@@ -3011,21 +3263,7 @@ body {
   color: var(--sn-primary);
 }
 
-.admin-back {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 18px;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--sn-accent);
-  text-decoration: none;
-}
 
-.admin-back:hover {
-  color: var(--sn-primary);
-  text-decoration: none;
-}
 
 /* Recent requests table card */
 .ad-table-card {
