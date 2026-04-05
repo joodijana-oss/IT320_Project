@@ -147,38 +147,13 @@
   <footer class="sn-footer">
     <div class="sn-container">
       <div class="sn-footer__inner">
-        <div class="sn-footer__logo">
-          <img class="sn-footer__logo-img" src="images/slogo.png" alt="Sanad logo">
           <span class="sn-footer__logo-name">Sanad</span>
-        </div>
         <span class="sn-footer__copy">© 2026 Sanad. Riyadh, Saudi Arabia.</span>
-        <div class="sn-footer__links">
-          <a href="#">Privacy</a><a href="#">Terms</a><a href="#">Help</a>
-        </div>
       </div>
     </div>
   </footer>
 
-  <script>
-
-    function toast(msg, cls = '') {
-      const t = document.createElement('div');
-      t.className = 'ph-toast ' + cls;
-      t.textContent = msg;
-      document.getElementById('toasts').appendChild(t);
-      setTimeout(() => t.remove(), 4000);
-    }
-
-    function submitOffer() {
-      const price = parseFloat(document.getElementById('priceInput').value);
-      if (!price || price <= 0) { toast('Please enter a valid price.', 'ph-toast--err'); return; }
-
-      document.getElementById('sentPrice').textContent = `﷼ ${price.toFixed(2)}`;
-      document.getElementById('offerForm').style.display = 'none';
-      document.getElementById('offerSent').style.display = '';
-      toast('Offer submitted successfully.', 'ph-toast--ok');
-    }
-  </script>
-
+  
+  <script src="pharmacy.js"></script>
 </body>
 </html>
