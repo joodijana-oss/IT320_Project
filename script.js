@@ -157,3 +157,15 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+window.addEventListener("DOMContentLoaded", () => {
+  const deletedId = localStorage.getItem("deletedRequestId");
+
+  if (deletedId) {
+    const card = document.querySelector(`[data-id="${deletedId}"]`);
+    if (card) {
+      card.remove();
+    }
+
+    localStorage.removeItem("deletedRequestId");
+  }
+});
