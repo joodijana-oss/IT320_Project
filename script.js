@@ -4,16 +4,17 @@
    method="POST" action="login.php" to the login form.
    ============================================================ */
 
+ 
 /* ── LOGIN PAGE ──────────────────────────────────────────── */
 (function () {
-
+ 
   var pwInput  = document.getElementById('login-password');
   var pwToggle = document.getElementById('login-pw-toggle');
   var form     = document.getElementById('login-form');
-
+ 
   /* Only run if we are on the login page */
   if (!form) return;
-
+ 
   /* ── Show / hide password ── */
   pwToggle.addEventListener('click', function () {
     var isPassword = pwInput.type === 'password';
@@ -21,34 +22,56 @@
     document.getElementById('icon-eye-show').style.display = isPassword ? 'none' : 'block';
     document.getElementById('icon-eye-hide').style.display = isPassword ? 'block' : 'none';
   });
-
+ 
   /* ── Clear email error when user starts retyping ── */
   document.getElementById('login-email').addEventListener('input', function () {
     this.style.borderColor = '';
     document.getElementById('login-email-error').style.display = 'none';
   });
-
-  /* ── On submit: validate email then redirect ── */
+ 
+  /* ── Clear password error when user starts retyping ── */
+  pwInput.addEventListener('input', function () {
+    this.style.borderColor = '';
+    document.getElementById('login-password-error').style.display = 'none';
+  });
+ 
+  /* ── On submit: validate email and password then redirect ── */
   /* PHP phase: remove this handler and add method="POST" action="login.php" to the form */
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-
-    var emailInput = document.getElementById('login-email');
-    var emailError = document.getElementById('login-email-error');
-    var email      = emailInput.value.trim();
-
+ 
+    var emailInput    = document.getElementById('login-email');
+    var emailError    = document.getElementById('login-email-error');
+    var passwordError = document.getElementById('login-password-error');
+    var email         = emailInput.value.trim();
+    var password      = pwInput.value.trim();
+    var valid         = true;
+ 
+    /* Reset errors */
     emailInput.style.borderColor = '';
+    pwInput.style.borderColor    = '';
     emailError.style.display     = 'none';
-
+    passwordError.style.display  = 'none';
+ 
+    /* Validate email format */
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       emailInput.style.borderColor = '#8b2020';
       emailError.style.display     = 'block';
-      return;
+      valid = false;
     }
-
+ 
+    /* Validate password not empty */
+    if (!password) {
+      pwInput.style.borderColor   = '#8b2020';
+      passwordError.style.display = 'block';
+      valid = false;
+    }
+ 
+    if (!valid) return;
+ 
     window.location.href = 'user-dashboard.html';
   });
-
+ 
 })();
 
 
