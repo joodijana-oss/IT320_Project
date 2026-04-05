@@ -1,7 +1,3 @@
-/* ============================================================
-   pharmacy.js — Member 4 scripts
-   Covers: pharmacy-reports, pharmacy-offers, pharmacy-request-details
-   ============================================================ */
 
 
 /* ─────────────────────────────────────────────────────────────
@@ -21,7 +17,6 @@ function phToast(msg, cls) {
 
 /* ─────────────────────────────────────────────────────────────
    PHARMACY REPORTS
-   Runs only when #actChart exists on the page.
 ───────────────────────────────────────────────────────────── */
 
 (function initReports() {
@@ -130,7 +125,6 @@ function phToast(msg, cls) {
 
 /* ─────────────────────────────────────────────────────────────
    PHARMACY OFFERS
-   Runs only when #offersBody exists on the page.
 ───────────────────────────────────────────────────────────── */
 
 (function initOffers() {
@@ -154,7 +148,6 @@ function phToast(msg, cls) {
 
 /* ─────────────────────────────────────────────────────────────
    PHARMACY REQUEST DETAILS
-   Runs only when #offerForm exists on the page.
 ───────────────────────────────────────────────────────────── */
 
 (function initRequestDetails() {
@@ -176,7 +169,6 @@ function phToast(msg, cls) {
 
 
 /* ─────────────────────────────────────────────────────────────
-  MEMBER 1
   PHARMCY  VIEW REQUESTS JAVA SCRIPT
 ───────────────────────────────────────────────────────────── */
 

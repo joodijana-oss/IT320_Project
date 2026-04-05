@@ -254,7 +254,6 @@ body {
   align-items: center;
   box-shadow: var(--sn-shadow-md);
 
-  /* fallback image if video doesn't work */
   background: url("images/IMG_4806.jpg") center center / cover no-repeat;
 }
 
@@ -267,7 +266,7 @@ body {
   z-index: 0;
   opacity: 1;
 }
-/* OVERLAY — lighter so background stays visible */
+
 .home-hero__overlay {
   position: absolute;
   inset: 0;
@@ -617,7 +616,7 @@ body {
 
 
 
-/* ===== Bottom cards (home-cards) ===== */
+/* ===== Bottom cards  ===== */
 
 .home-section {
   margin-top: 40px;
@@ -642,7 +641,7 @@ body {
   overflow: hidden;
 }
 
-/* 🔥 Hover effect */
+/*  Hover effect */
 .home-card:hover {
   transform: translateY(-8px) scale(1.03);
   box-shadow: var(--sn-shadow-md);
@@ -831,7 +830,7 @@ body {
 
 
 /* =========================
-   User Dashboard - small beauty touches
+   User Dashboard 
    ========================= */
 
 /* Hero soft glow */
@@ -1525,9 +1524,6 @@ body {
 }
 
 
-/* ============================================================
-   MEMBER 2 — Register, Submit Request, Request Details
-   ============================================================ */
 
 
 
@@ -1854,7 +1850,6 @@ body {
 
 /* ============================================================
    My Requests Page — Member 3
-   File: my-requests.html
    ============================================================ */
  
 /* -- Page header -- */
@@ -2164,7 +2159,7 @@ body {
 
 
 
-/* Gradient page hero (reports, offers, request-details) */
+/* Gradient page hero  */
 .ph-page-head {
   position: relative;
   overflow: hidden;
@@ -2201,7 +2196,7 @@ body {
   max-width: 620px;
 }
 
-/* Badges (used by dashboard, offers, request-details) */
+/* Badges  */
 .ph-badge {
   display: inline-block;
   padding: 5px 11px;
@@ -2217,7 +2212,7 @@ body {
 .ph-badge--confirmed { background: #e8f6ee; color: #216b43; }
 .ph-badge--rejected  { background: #fde8e8; color: #8b2020; }
 
-/* View link (dashboard table, offers table) */
+/* View link */
 .ph-view-link {
   font-size: 13px;
   font-weight: 500;
@@ -3580,7 +3575,7 @@ body {
    ========================= */
 
 .ad-rd-page .admin-page-head__title {
-  font-size: 34px; /* smaller than before */
+  font-size: 34px; 
 }
 
 .ad-rd-page .admin-page-head__text {
@@ -4509,7 +4504,7 @@ body {
     border-radius: 10px;
     border: 1px solid #ddd;
   }
-/* Fix Pharmacy View Requests hero shape */
+  
 .ph-requests-page .ph-page-head {
   position: relative;
   overflow: hidden;

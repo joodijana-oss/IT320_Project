@@ -1,8 +1,4 @@
-/* ============================================================
-   script.js — shared JavaScript for all Member 3 pages
-   PHP phase: remove login submit handler and add
-   method="POST" action="login.php" to the login form.
-   ============================================================ */
+
 
  
 /* ── LOGIN PAGE ──────────────────────────────────────────── */
@@ -12,7 +8,6 @@
   var pwToggle = document.getElementById('login-pw-toggle');
   var form     = document.getElementById('login-form');
  
-  /* Only run if we are on the login page */
   if (!form) return;
  
   /* ── Show / hide password ── */
@@ -36,7 +31,6 @@
   });
  
   /* ── On submit: validate email and password then redirect ── */
-  /* PHP phase: remove this handler and add method="POST" action="login.php" to the form */
   form.addEventListener('submit', function (e) {
     e.preventDefault();
  
@@ -92,13 +86,10 @@
 
 
 /* ── MY REQUESTS PAGE ────────────────────────────────────── */
-/* PHP phase: remove this entire section — delete is handled
-   server-side by posting to delete_request.php             */
 (function () {
 
   var deleteModal = document.getElementById('delete-modal');
 
-  /* Only run if we are on the my-requests page */
   if (!deleteModal) return;
 
   var pendingDeleteId   = null;
@@ -120,7 +111,6 @@
   function confirmDelete() {
     if (!pendingDeleteId) return;
 
-    /* PHP phase: POST to delete_request.php with request_id */
     var card = document.querySelector('[data-id="' + pendingDeleteId + '"]');
     if (card) {
       card.style.transition = 'opacity 0.2s, transform 0.2s';
@@ -137,13 +127,10 @@
     }
     closeDeleteModal();
   }
-
-  /* Close modal when clicking the overlay background */
   deleteModal.addEventListener('click', function (e) {
     if (e.target === this) closeDeleteModal();
   });
 
-  /* Expose functions used by onclick in HTML */
   window.openDeleteModal  = openDeleteModal;
   window.closeDeleteModal = closeDeleteModal;
   window.confirmDelete    = confirmDelete;
@@ -173,7 +160,7 @@ window.addEventListener("DOMContentLoaded", () => {
     // نحذف الرسالة بعد عرضها
     localStorage.removeItem("requestSuccess");
 
-    // (اختياري) تختفي بعد 4 ثواني
+    //  تختفي بعد 4 ثواني
     setTimeout(() => {
       box.style.display = "none";
     }, 10000);
