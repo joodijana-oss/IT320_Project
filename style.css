@@ -58,7 +58,7 @@ body {
 
 
 /* ============================================================
-   3. NAVBAR  (shared — all pages)
+   3. NAVBAR  
    ============================================================ */
 
 .sn-nav {
@@ -99,7 +99,6 @@ body {
   line-height: 1;
 }
 
-/* Nav links — used on pages after login */
 .sn-nav__links {
   display: flex;
   align-items: center;
@@ -134,7 +133,7 @@ body {
 
 
 /* ============================================================
-   4. FOOTER  (shared — all pages)
+   4. FOOTER  
    ============================================================ */
 
 .sn-footer {
@@ -212,11 +211,6 @@ body {
   color: var(--sn-primary);
   text-decoration: none;
 }
-
-
-/* ============================================================
-   MEMBER 1 — Home, User Dashboard, View Requests
-   ============================================================ */
 
 
 
