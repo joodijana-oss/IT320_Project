@@ -216,9 +216,8 @@ function enableEdit(icon) {
 }
 
 
-// ===== CUSTOM MODAL (بدون HTML) =====
+// ===== CUSTOM MODAL =====
 function showModal(title, message, onConfirm) {
-  // الخلفية
   const overlay = document.createElement("div");
   overlay.style.position = "fixed";
   overlay.style.top = 0;
@@ -233,7 +232,6 @@ function showModal(title, message, onConfirm) {
   overlay.style.justifyContent = "center";
   overlay.style.zIndex = 9999;
 
-  // البوكس
   const box = document.createElement("div");
   box.style.background = "#fff";
   box.style.padding = "20px";
