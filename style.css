@@ -1,20 +1,3 @@
-/* ============================================================
-   SANAD — Shared Stylesheet
-   
-   This file contains ONLY what is shared across all pages:
-   1. Fonts & Design Tokens
-   2. Reset & Base
-   3. Navbar
-   4. Footer
-
-   
-   Do not change sections 1–4 without telling the group.
-   ============================================================ */
-
-
-/* ============================================================
-   1. FONTS & DESIGN TOKENS
-   ============================================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap');
 
