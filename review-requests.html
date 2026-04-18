@@ -8,7 +8,6 @@
 </head>
 <body>
 
-  <!-- Navbar -->
   <header class="sn-nav">
     <div class="sn-container sn-nav__inner">
       <a href="admin-dashboard.html" class="sn-nav__logo">
@@ -25,7 +24,6 @@
     </div>
   </header>
 
-  <!-- Main -->
   <main class="sn-main review-requests-page">
     <div class="sn-container">
 
@@ -40,7 +38,6 @@
         </p>
       </section>
 
-      <!-- Filter Bar -->
       <section class="admin-filter-bar">
         <div class="admin-filter-group">
           <label for="statusFilter">Status</label>
@@ -72,121 +69,8 @@
         </div>
       </section>
 
-      <!-- Request Cards -->
       <section class="request-list" id="requestList">
-
-        <article class="request-card"
-          data-status="pending"
-          data-priority="high"
-          data-medication="augmentin 625mg"
-          data-id="1024">
-          <div class="request-card__top">
-            <div>
-              <span class="request-card__id">Request #1024</span>
-              <h2 class="request-card__title">Augmentin 625mg</h2>
-            </div>
-            <span class="request-card__status request-card__status--pending">Pending</span>
-          </div>
-
-          <div class="request-card__meta">
-            <span><strong>Patient:</strong> Sarah Ahmed</span>
-            <span><strong>Priority:</strong> High</span>
-            <span><strong>Submitted:</strong> 27 Mar 2026</span>
-          </div>
-
-          <p class="request-card__text">
-            Prescription uploaded successfully. The patient marked the request as urgent.
-          </p>
-
-          <div class="request-card__actions">
-            <a href="request-details.html" class="admin-btn admin-btn--primary">View Details</a>
-          </div>
-        </article>
-
-        <article class="request-card"
-          data-status="approved"
-          data-priority="medium"
-          data-medication="panadol extra"
-          data-id="1025">
-          <div class="request-card__top">
-            <div>
-              <span class="request-card__id">Request #1025</span>
-              <h2 class="request-card__title">Panadol Extra</h2>
-            </div>
-            <span class="request-card__status request-card__status--approved">Approved</span>
-          </div>
-
-          <div class="request-card__meta">
-            <span><strong>Patient:</strong> Rashed Ali</span>
-            <span><strong>Priority:</strong> Medium</span>
-            <span><strong>Submitted:</strong> 26 Mar 2026</span>
-          </div>
-
-          <p class="request-card__text">
-            Request was reviewed and approved. It is currently visible to pharmacies in the assigned area.
-          </p>
-
-          <div class="request-card__actions">
-            <a href="request-details.html" class="admin-btn admin-btn--secondary">View Details</a>
-          </div>
-        </article>
-
-        <article class="request-card"
-          data-status="rejected"
-          data-priority="high"
-          data-medication="ventolin inhaler"
-          data-id="1026">
-          <div class="request-card__top">
-            <div>
-              <span class="request-card__id">Request #1026</span>
-              <h2 class="request-card__title">Ventolin Inhaler</h2>
-            </div>
-            <span class="request-card__status request-card__status--rejected">Rejected</span>
-          </div>
-
-          <div class="request-card__meta">
-            <span><strong>Patient:</strong> Huda Saad</span>
-            <span><strong>Priority:</strong> High</span>
-            <span><strong>Submitted:</strong> 25 Mar 2026</span>
-          </div>
-
-          <p class="request-card__text">
-            This request was rejected due to an expired prescription.
-          </p>
-
-          <div class="request-card__actions">
-            <a href="request-details.html" class="admin-btn admin-btn--secondary">View Details</a>
-          </div>
-        </article>
-
-        <article class="request-card"
-          data-status="pending"
-          data-priority="low"
-          data-medication="concor 5mg"
-          data-id="1027">
-          <div class="request-card__top">
-            <div>
-              <span class="request-card__id">Request #1027</span>
-              <h2 class="request-card__title">Concor 5mg</h2>
-            </div>
-            <span class="request-card__status request-card__status--pending">Pending</span>
-          </div>
-
-          <div class="request-card__meta">
-            <span><strong>Patient:</strong> Khalid Omar</span>
-            <span><strong>Priority:</strong> Low</span>
-            <span><strong>Submitted:</strong> 24 Mar 2026</span>
-          </div>
-
-          <p class="request-card__text">
-            Request submitted with a valid prescription and additional medication note.
-          </p>
-
-          <div class="request-card__actions">
-            <a href="request-details.html" class="admin-btn admin-btn--primary">View Details</a>
-          </div>
-        </article>
-
+        <!-- Requests will be loaded here from PHP -->
       </section>
 
       <p id="noResultsMessage" class="admin-no-results" style="display: none;">
@@ -196,11 +80,10 @@
     </div>
   </main>
 
-  <!-- Footer -->
   <footer class="sn-footer">
     <div class="sn-container">
       <div class="sn-footer__inner">
-          <span class="sn-footer__logo-name">Sanad</span>
+        <span class="sn-footer__logo-name">Sanad</span>
         <span class="sn-footer__copy">© 2026 Sanad. Riyadh, Saudi Arabia.</span>
       </div>
     </div>

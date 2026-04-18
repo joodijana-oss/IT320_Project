@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sanad | Admin Dashboard</title>
   <link rel="stylesheet" href="style.css" />
-
 </head>
 <body>
 
@@ -32,27 +31,27 @@
         <div class="ad-hero__content">
           <span class="ad-hero__badge">Admin Dashboard</span>
           <h1 class="ad-hero__title">Good morning, Admin</h1>
-          <p class="ad-hero__meta">Riyadh Administrative Panel &nbsp;·&nbsp; Wednesday, 1 Apr 2026</p>
+          <p class="ad-hero__meta">Riyadh Administrative Panel</p>
         </div>
       </section>
 
       <div class="ad-stats">
         <div class="ad-stat-card">
-          <div class="ad-stat-card__value">18</div>
+          <div class="ad-stat-card__value">0</div>
           <div class="ad-stat-card__label">Pending requests</div>
         </div>
-        <div class="ad-stat-card" style="animation-delay:0.06s;">
-          <div class="ad-stat-card__value">9</div>
+        <div class="ad-stat-card">
+          <div class="ad-stat-card__value">0</div>
           <div class="ad-stat-card__label">Approved requests</div>
-          <div class="ad-stat-card__period">Today</div>
+          <div class="ad-stat-card__period">Current total</div>
         </div>
-        <div class="ad-stat-card" style="animation-delay:0.12s;">
-          <div class="ad-stat-card__value">4</div>
+        <div class="ad-stat-card">
+          <div class="ad-stat-card__value">0</div>
           <div class="ad-stat-card__label">Rejected requests</div>
-          <div class="ad-stat-card__period">Today</div>
+          <div class="ad-stat-card__period">Current total</div>
         </div>
-        <div class="ad-stat-card" style="animation-delay:0.18s;">
-          <div class="ad-stat-card__value">2</div>
+        <div class="ad-stat-card">
+          <div class="ad-stat-card__value">0</div>
           <div class="ad-stat-card__label">Blocked users</div>
           <div class="ad-stat-card__period">Current total</div>
         </div>
@@ -74,35 +73,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>
-                <div class="td-name">Augmentin 625mg</div>
-                <div class="td-id">#1024</div>
-              </td>
-              <td><span class="ad-badge ad-badge--high">High</span></td>
-              <td><span class="ad-badge ad-badge--pending">Pending</span></td>
-              <td><a href="request-details.html" class="ad-view-link">View</a></td>
-            </tr>
-
-            <tr>
-              <td>
-                <div class="td-name">Ventolin Inhaler</div>
-                <div class="td-id">#1025</div>
-              </td>
-              <td><span class="ad-badge ad-badge--medium">Medium</span></td>
-              <td><span class="ad-badge ad-badge--pending">Pending</span></td>
-              <td><a href="request-details.html" class="ad-view-link">View</a></td>
-            </tr>
-
-            <tr>
-              <td>
-                <div class="td-name">Panadol Extra 500mg</div>
-                <div class="td-id">#1026</div>
-              </td>
-              <td><span class="ad-badge ad-badge--low">Low</span></td>
-              <td><span class="ad-badge ad-badge--pending">Pending</span></td>
-              <td><a href="request-details.html" class="ad-view-link">View</a></td>
-            </tr>
+            <!-- Recent requests will be loaded here -->
           </tbody>
         </table>
       </div>
@@ -119,36 +90,10 @@
               <th>User</th>
               <th>Email</th>
               <th>Status</th>
-              <th></th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>
-                <div class="td-name">Sarah Ahmed</div>
-                <div class="td-id">#201</div>
-              </td>
-              <td>sarah@example.com</td>
-              <td><span class="user-status user-status--active">Active</span></td>
-            </tr>
-
-            <tr>
-              <td>
-                <div class="td-name">Rashed Ali</div>
-                <div class="td-id">#202</div>
-              </td>
-              <td>rashed@example.com</td>
-              <td><span class="user-status user-status--blocked">Blocked</span></td>
-            </tr>
-
-            <tr>
-              <td>
-                <div class="td-name">Huda Saad</div>
-                <div class="td-id">#203</div>
-              </td>
-              <td>huda@example.com</td>
-              <td><span class="user-status user-status--active">Active</span></td>
-            </tr>
+            <!-- Recent users will be loaded here -->
           </tbody>
         </table>
       </div>
@@ -159,10 +104,12 @@
   <footer class="sn-footer">
     <div class="sn-container">
       <div class="sn-footer__inner">
-          <span class="sn-footer__logo-name">Sanad</span>
+        <span class="sn-footer__logo-name">Sanad</span>
         <span class="sn-footer__copy">© 2026 Sanad. Riyadh, Saudi Arabia.</span>
       </div>
     </div>
   </footer>
+
+  <script src="admin.js"></script>
 </body>
 </html>
