@@ -3,7 +3,7 @@ session_start();
 
 // ── SESSION GUARD ───────────────────────────────────────────
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'patient') {
-    header('Location: login.html');
+    header('Location: login.php');
     exit;
 }
 

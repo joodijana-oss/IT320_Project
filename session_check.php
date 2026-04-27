@@ -3,7 +3,9 @@
 // Usage: require 'session_check.php'; at top of any protected PHP page.
 // Pass $required_role = 'patient' | 'pharmacy' | 'admin' before including.
 
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 if (empty($_SESSION['role'])) {
     header('Location: login.php');

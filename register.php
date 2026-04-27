@@ -47,7 +47,7 @@
         <h1 class="login-card__title">Create account</h1>
         <p class="login-card__subtitle">Join Sanad and connect with pharmacies</p>
 
-        <form id="register-form" method="POST" action="register.php" novalidate>
+        <form id="register-form" method="POST" action="register_process.php" novalidate>
 
           <!-- Full Name -->
           <div class="login-field">

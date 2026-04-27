@@ -63,15 +63,13 @@ require 'session_check.php';
           <span class="error-msg"></span>
         </div>
 
-        <div class="form-field">
-          <label>City</label>
-          <select id="zone" required>
-            <option value="">Select city</option>
-            <option>Riyadh</option>
-            
-          </select>
-          <span class="error-msg"></span>
-        </div>
+          <div class="form-field">
+              <label>City</label>
+              <select name="city" disabled>
+                  <option>Riyadh</option>
+              </select>
+              <span class="error-msg"></span>
+          </div>
         
         <div class="form-field">
             <label>Zone</label>
@@ -120,5 +118,3 @@ require 'session_check.php';
   <script src="valdiation.js"></script>
   </body>
   </html>
-</body>
-</html>
