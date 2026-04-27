@@ -11,16 +11,16 @@
 <!-- Navbar -->
   <header class="sn-nav">
     <div class="sn-container sn-nav__inner">
-      <a href="index.html" class="sn-nav__logo">
+      <a href="index.php" class="sn-nav__logo">
         <img src="images/slogo.png" alt="Sanad Logo" class="sn-nav__logo-img" />
         <span class="sn-nav__logo-name">Sanad</span>
       </a>
 
       <ul class="sn-nav__links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="login.html" class="sn-nav--active">Log in</a></li>
-        <li><a href="register.html">Register</a></li>
-        <li><a href="about.html">About us</a></li>
+        <li><a href="index.php">Home</a></li>
+        <li><a href="login.php" class="sn-nav--active">Log in</a></li>
+        <li><a href="register.php">Register</a></li>
+        <li><a href="about.php">About us</a></li>
       </ul>
     </div>
   </header>
@@ -46,7 +46,7 @@
         <p class="login-card__subtitle">Sign in to your account to continue</p>
 
 
-        <form id="login-form" novalidate>
+        <form id="login-form" method="POST" action="login_process.php" novalidate>
 
           <div class="login-field">
             <label for="login-role">Sign in as</label>
@@ -92,7 +92,7 @@
         </form>
 
         <p class="login-register-link">
-          Don't have an account? <a href="register.html">Register here</a>
+          Don't have an account? <a href="register.php">Register here</a>
         </p>
       </div>
 

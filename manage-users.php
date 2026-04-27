@@ -1,3 +1,9 @@
+<?php
+$required_role = 'admin';
+require 'session_check.php';
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,23 +16,23 @@
 
   <header class="sn-nav">
     <div class="sn-container sn-nav__inner">
-      <a href="admin-dashboard.html" class="sn-nav__logo">
+      <a href="admin-dashboard.php" class="sn-nav__logo">
         <img src="images/slogo.png" alt="Sanad Logo" class="sn-nav__logo-img" />
         <span class="sn-nav__logo-name">Sanad</span>
       </a>
 
       <ul class="sn-nav__links">
-        <li><a href="admin-dashboard.html">Dashboard</a></li>
-        <li><a href="review-requests.html">Review Requests</a></li>
-        <li><a href="manage-users.html" class="sn-nav--active">Manage Users</a></li>
-        <li><a href="index.html" class="sn-nav--logout">Log out</a></li>
+        <li><a href="admin-dashboard.php">Dashboard</a></li>
+        <li><a href="review-requests.php">Review Requests</a></li>
+        <li><a href="manage-users.php" class="sn-nav--active">Manage Users</a></li>
+        <li><a href="logout.php" class="sn-nav--logout">Log out</a></li>
       </ul>
     </div>
   </header>
 
   <main class="sn-main manage-users-page">
     <div class="sn-container">
-      <a href="admin-dashboard.html" class="sn-back">← Back to Dashboard</a>
+      <a href="admin-dashboard.php" class="sn-back">← Back to Dashboard</a>
 
       <section class="admin-page-head">
         <span class="admin-page-head__badge">User management</span>

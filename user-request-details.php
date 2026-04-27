@@ -1,3 +1,8 @@
+<?php
+$required_role = 'patient'; 
+require 'session_check.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,24 +15,24 @@
   <!-- Navbar -->
   <header class="sn-nav">
     <div class="sn-container sn-nav__inner">
-      <a href="index.html" class="sn-nav__logo">
+      <a href="index.php" class="sn-nav__logo">
         <img src="images/slogo.png" alt="Sanad Logo" class="sn-nav__logo-img" />
         <span class="sn-nav__logo-name">Sanad</span>
       </a>
 
       <ul class="sn-nav__links">
-        <li><a href="user-dashboard.html">Dashboard</a></li>
-        <li><a href="profile.html">Profile</a></li>
-        <li><a href="submit-request.html">Submit Request</a></li>
-        <li><a href="my-requests.html" class="sn-nav--active">My Requests</a></li>
-        <li><a href="index.html" class="sn-nav--logout">Log out</a></li>
+        <li><a href="user-dashboard.php">Dashboard</a></li>
+        <li><a href="profile.php">Profile</a></li>
+        <li><a href="submit-request.php">Submit Request</a></li>
+        <li><a href="my-requests.php" class="sn-nav--active">My Requests</a></li>
+        <li><a href="logout.php" class="sn-nav--logout">Log out</a></li>
       </ul>
     </div>
   </header>
 
   <main class="sn-main submit-request-page">
     <div class="sn-container">
-      <a href="my-requests.html" class="sn-back">← Back to My Requests</a>
+      <a href="my-requests.php" class="sn-back">← Back to My Requests</a>
 
     <!-- HEADER -->
     <section class="admin-page-head admin-page-head--small">
@@ -126,7 +131,7 @@
           Save Changes
         </button>
 
-        <a href="patient-offers.html" class="admin-btn admin-btn--secondary">
+        <a href="patient-offers.php" class="admin-btn admin-btn--secondary">
             View Offers
           </a>
 

@@ -1,3 +1,11 @@
+
+<?php
+$required_role = 'patient'; 
+require 'session_check.php';
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,17 +21,17 @@
   <div class="sn-container">
     <div class="sn-nav__inner">
 
-      <a href="index.html" class="sn-nav__logo">
+      <a href="index.php" class="sn-nav__logo">
         <img class="sn-nav__logo-img" src="images/slogo.png" alt="Sanad logo">
         <span class="sn-nav__logo-name">Sanad</span>
       </a>
 
       <ul class="sn-nav__links">
-        <li><a href="user-dashboard.html">Dashboard</a></li>
-        <li><a href="profile.html">Profile</a></li>
-        <li><a href="submit-request.html">Submit Request</a></li>
-        <li><a href="my-requests.html" class="sn-nav--active">My Requests</a></li>
-        <li><a href="login.html" class="sn-nav--logout" id="logout-link">Log out</a></li>
+        <li><a href="user-dashboard.php">Dashboard</a></li>
+        <li><a href="profile.php">Profile</a></li>
+        <li><a href="submit-request.php">Submit Request</a></li>
+        <li><a href="my-requests.php" class="sn-nav--active">My Requests</a></li>
+        <li><a href="logout.php" class="sn-nav--logout">Log out</a></li>
       </ul>
 
     </div>
@@ -33,7 +41,7 @@
 <!-- ── Main ───────────────────────────────────────────────── -->
 <main class="sn-main">
   <div class="sn-container">
-    <a href="user-dashboard.html" class="sn-back">← Back to Dashboard</a>
+    <a href="user-dashboard.php" class="sn-back">← Back to Dashboard</a>
 
     <!-- Page header -->
     <div class="requests-page__header">
@@ -42,7 +50,7 @@
         <h1 class="requests-page__title">My Requests</h1>
         <p class="requests-page__subtitle">Track your medication requests and pharmacy responses</p>
       </div>
-      <a href="submit-request.html" class="req-submit-btn">+ New request</a>
+      <a href="submit-request.php" class="req-submit-btn">+ New request</a>
     </div>
     <div id="success-box" class="success-box" style="display:none;"></div>
 
@@ -60,7 +68,7 @@
             </div>
           </div>
           <div class="req-card__actions">
-            <a href="user-request-details.html" class="req-view-link">View</a>
+            <a href="user-request-details.php" class="req-view-link">View</a>
             <button class="req-btn req-btn--danger" onclick="openDeleteModal(1001, 'Augmentin 625mg')">Delete</button>
           </div>
         </div>
@@ -80,12 +88,12 @@
             </div>
           </div>
           <div class="req-card__actions">
-            <a href="user-request-details.html" class="req-view-link">View</a>
+            <a href="user-request-details.php" class="req-view-link">View</a>
           </div>
         </div>
         <div class="req-card__offer-strip">
           <span>New pharmacy offer available</span>
-          <a href="patient-offers.html">View &amp; respond →</a>
+          <a href="patient-offers.php">View &amp; respond →</a>
         </div>
         <div class="req-card__footer">
           Nexium 40mg
@@ -103,7 +111,7 @@
             </div>
           </div>
           <div class="req-card__actions">
-            <a href="user-request-details.html" class="req-view-link">View</a>
+            <a href="user-request-details.php" class="req-view-link">View</a>
           </div>
         </div>
         <div class="req-card__footer">
@@ -122,7 +130,7 @@
             </div>
           </div>
           <div class="req-card__actions">
-            <a href="user-request-details.html" class="req-view-link">View</a>
+            <a href="user-request-details.php" class="req-view-link">View</a>
           </div>
         </div>
         <div class="req-card__footer">
@@ -137,7 +145,7 @@
       <div class="req-empty__icon">📋</div>
       <h2 class="req-empty__title">No requests yet</h2>
       <p class="req-empty__text">Submit your first medication request to get started.</p>
-      <a href="submit-request.html" class="req-submit-btn">Submit a request</a>
+      <a href="submit-request.php" class="req-submit-btn">Submit a request</a>
     </div>
 
   </div>

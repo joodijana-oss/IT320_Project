@@ -11,16 +11,16 @@
   <!-- Navbar -->
   <header class="sn-nav">
     <div class="sn-container sn-nav__inner">
-      <a href="index.html" class="sn-nav__logo">
+      <a href="index.php" class="sn-nav__logo">
         <img src="images/slogo.png" alt="Sanad Logo" class="sn-nav__logo-img" />
         <span class="sn-nav__logo-name">Sanad</span>
       </a>
 
       <ul class="sn-nav__links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="login.html">Log in</a></li>
-        <li><a href="register.html">Register</a></li>
-        <li><a href="about.html" class="sn-nav--active">About us</a></li>
+        <li><a href="index.php">Home</a></li>
+        <li><a href="login.php">Log in</a></li>
+        <li><a href="register.php">Register</a></li>
+        <li><a href="about.php" class="sn-nav--active">About us</a></li>
       </ul>
     </div>
   </header>

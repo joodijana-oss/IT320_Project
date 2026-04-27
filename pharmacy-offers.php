@@ -1,3 +1,10 @@
+
+
+<?php
+$required_role = 'pharmacy'; 
+require 'session_check.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,15 +17,15 @@
 
   <header class="sn-nav">
     <div class="sn-container sn-nav__inner">
-      <a href="pharmacy-dashboard.html" class="sn-nav__logo">
+      <a href="pharmacy-dashboard.php" class="sn-nav__logo">
         <img src="images/slogo.png" alt="Sanad Logo" class="sn-nav__logo-img" />
         <span class="sn-nav__logo-name">Sanad</span>
       </a>
       <ul class="sn-nav__links">
-        <li><a href="pharmacy-dashboard.html">Dashboard</a></li>
-        <li><a href="pharmacy-viewRequests.html">Requests</a></li>
-        <li><a href="pharmacy-reports.html" class="sn-nav--active">Reports</a></li>
-        <li><a href="index.html" class="sn-nav--logout">Log out</a></li>
+        <li><a href="pharmacy-dashboard.php">Dashboard</a></li>
+        <li><a href="pharmacy-viewRequests.php">Requests</a></li>
+        <li><a href="pharmacy-reports.php" class="sn-nav--active">Reports</a></li>
+        <li><a href="logout.php" class="sn-nav--logout">Log out</a></li>
       </ul>
     </div>
   </header>
@@ -26,7 +33,7 @@
   <main class="sn-main ph-offers-page">
     <div class="sn-container">
 
-      <a href="pharmacy-dashboard.html" class="sn-back">← Back to Dashboard</a>
+      <a href="pharmacy-dashboard.php" class="sn-back">← Back to Dashboard</a>
 
       <section class="ph-page-head">
         <span class="ph-page-head__badge">Offer history</span>
@@ -62,7 +69,7 @@
               <td>10 Mar 2025</td>
               <td>﷼ 42.50</td>
               <td><span class="ph-badge ph-badge--pending">Pending</span></td>
-              <td><a href="pharmacy-request-details.html" class="ph-view-link">View request</a></td>
+              <td><a href="pharmacy-request-details.php" class="ph-view-link">View request</a></td>
             </tr>
             <tr data-med="nexium 40mg" data-id="1002">
               <td class="td-med">Nexium 40mg</td>
@@ -70,7 +77,7 @@
               <td>6 Mar 2025</td>
               <td>﷼ 55.00</td>
               <td><span class="ph-badge ph-badge--confirmed">Confirmed</span></td>
-              <td><a href="pharmacy-request-details.html" class="ph-view-link">View request</a></td>
+              <td><a href="pharmacy-request-details.php" class="ph-view-link">View request</a></td>
             </tr>
             <tr data-med="panadol extra 500mg" data-id="1003">
               <td class="td-med">Panadol Extra 500mg</td>
@@ -78,7 +85,7 @@
               <td>2 Mar 2025</td>
               <td>﷼ 18.75</td>
               <td><span class="ph-badge ph-badge--confirmed">Confirmed</span></td>
-              <td><a href="pharmacy-request-details.html" class="ph-view-link">View request</a></td>
+              <td><a href="pharmacy-request-details.php" class="ph-view-link">View request</a></td>
             </tr>
             <tr data-med="concor 5mg" data-id="1004">
               <td class="td-med">Concor 5mg</td>
@@ -86,7 +93,7 @@
               <td>21 Feb 2025</td>
               <td>﷼ 63.00</td>
               <td><span class="ph-badge ph-badge--rejected">Not selected</span></td>
-              <td><a href="pharmacy-request-details.html" class="ph-view-link">View request</a></td>
+              <td><a href="pharmacy-request-details.php" class="ph-view-link">View request</a></td>
             </tr>
             <tr data-med="glucophage 850mg" data-id="1005">
               <td class="td-med">Glucophage 850mg</td>
@@ -94,7 +101,7 @@
               <td>16 Feb 2025</td>
               <td>﷼ 29.00</td>
               <td><span class="ph-badge ph-badge--confirmed">Confirmed</span></td>
-              <td><a href="pharmacy-request-details.html" class="ph-view-link">View request</a></td>
+              <td><a href="pharmacy-request-details.php" class="ph-view-link">View request</a></td>
             </tr>
             <tr data-med="ventolin inhaler" data-id="1006">
               <td class="td-med">Ventolin Inhaler</td>
@@ -102,7 +109,7 @@
               <td>11 Feb 2025</td>
               <td>﷼ 47.50</td>
               <td><span class="ph-badge ph-badge--rejected">Not selected</span></td>
-              <td><a href="pharmacy-request-details.html" class="ph-view-link">View request</a></td>
+              <td><a href="pharmacy-request-details.php" class="ph-view-link">View request</a></td>
             </tr>
           </tbody>
         </table>

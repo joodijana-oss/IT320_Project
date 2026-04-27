@@ -1,3 +1,9 @@
+
+<?php
+$required_role = 'patient'; 
+require 'session_check.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,17 +19,17 @@
   <div class="sn-container">
     <div class="sn-nav__inner">
  
-      <a href="index.html" class="sn-nav__logo">
+      <a href="index.php" class="sn-nav__logo">
         <img class="sn-nav__logo-img" src="images/slogo.png" alt="Sanad logo">
         <span class="sn-nav__logo-name">Sanad</span>
       </a>
  
       <ul class="sn-nav__links">
-        <li><a href="user-dashboard.html">Dashboard</a></li>
-        <li><a href="profile.html" class="sn-nav--active">Profile</a></li>
-        <li><a href="submit-request.html">Submit Request</a></li>
-        <li><a href="my-requests.html">My Requests</a></li>
-        <li><a href="login.html" class="sn-nav--logout" id="logout-link">Log out</a></li>
+        <li><a href="user-dashboard.php">Dashboard</a></li>
+        <li><a href="profile.php" class="sn-nav--active">Profile</a></li>
+        <li><a href="submit-request.php">Submit Request</a></li>
+        <li><a href="my-requests.php">My Requests</a></li>
+        <li><a href="logout.php" class="sn-nav--logout">Log out</a></li>
       </ul>
  
     </div>
@@ -33,7 +39,7 @@
 <!-- ── Main ───────────────────────────────────────────────── -->
 <main class="sn-main">
   <div class="sn-container">
-    <a href="user-dashboard.html" class="sn-back">← Back to Dashboard</a>
+    <a href="user-dashboard.php" class="sn-back">← Back to Dashboard</a>
     <div class="profile-page">
  
       <!-- Page header -->

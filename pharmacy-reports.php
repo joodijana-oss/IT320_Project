@@ -1,3 +1,8 @@
+
+<?php
+$required_role = 'pharmacy'; 
+require 'session_check.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,22 +16,22 @@
 
   <header class="sn-nav">
     <div class="sn-container sn-nav__inner">
-      <a href="pharmacy-dashboard.html" class="sn-nav__logo">
+      <a href="pharmacy-dashboard.php" class="sn-nav__logo">
         <img src="images/slogo.png" alt="Sanad Logo" class="sn-nav__logo-img" />
         <span class="sn-nav__logo-name">Sanad</span>
       </a>
       <ul class="sn-nav__links">
-        <li><a href="pharmacy-dashboard.html">Dashboard</a></li>
-        <li><a href="pharmacy-viewRequests.html">Requests</a></li>
-        <li><a href="pharmacy-reports.html" class="sn-nav--active">Reports</a></li>
-        <li><a href="index.html" class="sn-nav--logout">Log out</a></li>
+        <li><a href="pharmacy-dashboard.php">Dashboard</a></li>
+        <li><a href="pharmacy-viewRequests.php">Requests</a></li>
+        <li><a href="pharmacy-reports.php" class="sn-nav--active">Reports</a></li>
+        <li><a href="logout.php" class="sn-nav--logout">Log out</a></li>
       </ul>
     </div>
   </header>
 
   <main class="sn-main ph-reports-page">
     <div class="sn-container">
-      <a href="pharmacy-dashboard.html" class="sn-back">← Back to Dashboard</a>
+      <a href="pharmacy-dashboard.php" class="sn-back">← Back to Dashboard</a>
 
       <section class="ph-page-head">
         <span class="ph-page-head__badge">Performance reports</span>
@@ -48,7 +53,7 @@
           <div class="ph-stat-card__value" id="mOffers">11</div>
           <div class="ph-stat-card__label">Offers submitted</div>
           <div class="ph-stat-card__delta delta-up" id="dOffers">↑ 22% vs prev period</div>
-          <a href="pharmacy-offers.html" class="ph-offers-link">View all offers →</a>
+          <a href="pharmacy-offers.php" class="ph-offers-link">View all offers →</a>
         </div>
         <div class="ph-stat-card">
           <div class="ph-stat-card__value" id="mConfirmed">6</div>

@@ -1,3 +1,7 @@
+<?php
+$required_role = 'patient'; 
+require 'session_check.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,17 +15,17 @@
   <!-- Navbar -->
   <header class="sn-nav">
     <div class="sn-container sn-nav__inner">
-      <a href="index.html" class="sn-nav__logo">
+      <a href="index.php" class="sn-nav__logo">
         <img src="images/slogo.png" alt="Sanad Logo" class="sn-nav__logo-img" />
         <span class="sn-nav__logo-name">Sanad</span>
       </a>
 
       <ul class="sn-nav__links">
-        <li><a href="user-dashboard.html" class="sn-nav--active">Dashboard</a></li>
-        <li><a href="profile.html">Profile</a></li>
-        <li><a href="submit-request.html">Submit Request</a></li>
-        <li><a href="my-requests.html">My Requests</a></li>
-        <li><a href="index.html" class="sn-nav--logout">Log out</a></li>
+        <li><a href="user-dashboard.php" class="sn-nav--active">Dashboard</a></li>
+        <li><a href="profile.php">Profile</a></li>
+        <li><a href="submit-request.php">Submit Request</a></li>
+        <li><a href="my-requests.php">My Requests</a></li>
+        <li><a href="logout.php" class="sn-nav--logout">Log out</a></li>
       </ul>
     </div>
   </header>
@@ -46,7 +50,7 @@
 
       <!-- Quick Actions -->
       <section class="user-dash-actions">
-        <a href="profile.html" class="user-dash-card">
+        <a href="profile.php" class="user-dash-card">
           <div class="user-dash-card__icon">👤</div>
           <h2 class="user-dash-card__title">Profile</h2>
           <p class="user-dash-card__text">
@@ -55,7 +59,7 @@
           <span class="user-dash-card__link">Go to Profile</span>
         </a>
 
-        <a href="submit-request.html" class="user-dash-card">
+        <a href="submit-request.php" class="user-dash-card">
           <div class="user-dash-card__icon">📝</div>
           <h2 class="user-dash-card__title">Submit a Request</h2>
           <p class="user-dash-card__text">
@@ -64,7 +68,7 @@
           <span class="user-dash-card__link">Create Request</span>
         </a>
 
-        <a href="my-requests.html" class="user-dash-card">
+        <a href="my-requests.php" class="user-dash-card">
           <div class="user-dash-card__icon">📋</div>
           <h2 class="user-dash-card__title">My Requests</h2>
           <p class="user-dash-card__text">

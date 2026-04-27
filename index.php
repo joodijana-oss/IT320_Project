@@ -11,15 +11,15 @@
   <!-- Navbar -->
   <header class="sn-nav">
     <div class="sn-container sn-nav__inner">
-      <a href="index.html" class="sn-nav__logo">
+      <a href="index.php" class="sn-nav__logo">
         <img src="images/slogo.png" alt="Sanad Logo" class="sn-nav__logo-img" />
         <span class="sn-nav__logo-name">Sanad</span>
       </a>
 
       <ul class="sn-nav__links"> 
-        <li><a href="index.html" class="sn-nav--active">Home</a></li>
+        <li><a href="index.php" class="sn-nav--active">Home</a></li>
        
-        <li><a href="about.html">About us</a></li>
+        <li><a href="about.php">About us</a></li>
       </ul>
     </div>
   </header>
@@ -59,9 +59,9 @@
           </p>
 
           <div class="home-hero__actions">
-            <a href="register.html" class="home-btn home-btn--primary">Register</a>
-            <a href="login.html" class="home-btn home-btn--secondary">Log in</a>
-            <a href="about.html" class="home-btn home-btn--ghost">About us</a>
+            <a href="register.php" class="home-btn home-btn--primary">Register</a>
+            <a href="login.php" class="home-btn home-btn--secondary">Log in</a>
+            <a href="about.php" class="home-btn home-btn--ghost">About us</a>
           </div>
 
           

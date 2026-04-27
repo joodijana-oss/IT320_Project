@@ -1,3 +1,7 @@
+<?php
+$required_role = 'patient'; 
+require 'session_check.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,17 +14,17 @@
   <!-- Navbar -->
   <header class="sn-nav">
     <div class="sn-container sn-nav__inner">
-      <a href="index.html" class="sn-nav__logo">
+      <a href="index.php" class="sn-nav__logo">
         <img src="images/slogo.png" alt="Sanad Logo" class="sn-nav__logo-img" />
         <span class="sn-nav__logo-name">Sanad</span>
       </a>
 
       <ul class="sn-nav__links">
-        <li><a href="user-dashboard.html">Dashboard</a></li>
-        <li><a href="profile.html">Profile</a></li>
-        <li><a href="submit-request.html" class="sn-nav--active">Submit Request</a></li>
-        <li><a href="my-requests.html">My Requests</a></li>
-        <li><a href="index.html" class="sn-nav--logout">Log out</a></li>
+        <li><a href="user-dashboard.php">Dashboard</a></li>
+        <li><a href="profile.php">Profile</a></li>
+        <li><a href="submit-request.php" class="sn-nav--active">Submit Request</a></li>
+        <li><a href="my-requests.php">My Requests</a></li>
+        <li><a href="logout.php" class="sn-nav--logout">Log out</a></li>
       </ul>
     </div>
   </header>
@@ -28,7 +32,7 @@
 
 <main class="sn-main submit-request-page">
   <div class="sn-container">
-    <a href="user-dashboard.html" class="sn-back">← Back to Dashboard</a>
+    <a href="user-dashboard.php" class="sn-back">← Back to Dashboard</a>
 
     <section class="admin-page-head admin-page-head--small">
       <span class="admin-page-head__badge">New Request</span>

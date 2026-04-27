@@ -39,31 +39,31 @@ The system allows patients to submit medication requests and receive offers from
 ## Project Structure
 
 ### General Pages
-- `index.html` → Home page
-- `about.html` → About page
-- `login.html` → Login page
-- `register.html` → Registration page
+- `index.php` → Home page
+- `about.php` → About page
+- `login.php` → Login page
+- `register.php` → Registration page
 
 ### Patient Pages
-- `user-dashboard.html`
-- `profile.html`
-- `submit-request.html`
-- `my-requests.html`
-- `user-request-details.html`
-- `patient-offers.html`
+- `user-dashboard.php`
+- `profile.php`
+- `submit-request.php`
+- `my-requests.php`
+- `user-request-details.php`
+- `patient-offers.php`
 
 ### Pharmacy Pages
-- `pharmacy-dashboard.html`
-- `pharmacy-viewRequests.html`
-- `pharmacy-request-details.html`
-- `pharmacy-offers.html`
-- `pharmacy-reports.html`
+- `pharmacy-dashboard.php`
+- `pharmacy-viewRequests.php`
+- `pharmacy-request-details.php`
+- `pharmacy-offers.php`
+- `pharmacy-reports.php`
 
 ### Admin Pages
-- `admin-dashboard.html`
-- `review-requests.html`
-- `request-details.html`
-- `manage-users.html`
+- `admin-dashboard.php`
+- `review-requests.php`
+- `request-details.php`
+- `manage-users.php`
 
 ### Scripts & Styles
 - `style.css`
@@ -76,7 +76,7 @@ The system allows patients to submit medication requests and receive offers from
 ## How to Run the Project
 1. Download or clone the repository.
 2. Open the project folder.
-3. Open `index.html` in your browser.
+3. Open `index.php` in your browser.
 
 ## Notes
 This is a front-end prototype that demonstrates the system workflow and user interface design.

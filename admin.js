@@ -57,7 +57,7 @@ function loadReviewRequests() {
           </p>
 
           <div class="request-card__actions">
-            <a href="request-details.html?id=${request.request_id}" class="admin-btn ${btnClass}">
+            <a href="request-details.php?id=${request.request_id}" class="admin-btn ${btnClass}">
               View Details
             </a>
           </div>
@@ -310,7 +310,7 @@ function loadAdminDashboard() {
               </td>
               <td><span class="ad-badge ad-badge--${req.priority_level.toLowerCase()}">${req.priority_level}</span></td>
               <td><span class="ad-badge ad-badge--pending">${req.request_status}</span></td>
-              <td><a href="request-details.html?id=${req.request_id}" class="ad-view-link">View</a></td>
+              <td><a href="request-details.php?id=${req.request_id}" class="ad-view-link">View</a></td>
             </tr>
           `;
         });

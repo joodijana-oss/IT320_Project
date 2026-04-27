@@ -1,3 +1,8 @@
+
+<?php
+$required_role = 'pharmacy'; 
+require 'session_check.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,23 +15,23 @@
 
   <header class="sn-nav">
     <div class="sn-container sn-nav__inner">
-      <a href="pharmacy-dashboard.html" class="sn-nav__logo">
+      <a href="pharmacy-dashboard.php" class="sn-nav__logo">
         <img src="images/slogo.png" alt="Sanad Logo" class="sn-nav__logo-img" />
         <span class="sn-nav__logo-name">Sanad</span>
       </a>
 
       <ul class="sn-nav__links">
-        <li><a href="pharmacy-dashboard.html">Dashboard</a></li>
-        <li><a href="pharmacy-viewRequests.html" class="sn-nav--active">Requests</a></li>
-        <li><a href="pharmacy-reports.html">Reports</a></li>
-        <li><a href="index.html" class="sn-nav--logout">Log out</a></li>
+        <li><a href="pharmacy-dashboard.php">Dashboard</a></li>
+        <li><a href="pharmacy-viewRequests.php" class="sn-nav--active">Requests</a></li>
+        <li><a href="pharmacy-reports.php">Reports</a></li>
+        <li><a href="logout.php" class="sn-nav--logout">Log out</a></li>
       </ul>
     </div>
   </header>
 
   <main class="sn-main ph-requests-page">
     <div class="sn-container">
-      <a href="pharmacy-dashboard.html" class="sn-back">← Back to Dashboard</a>
+      <a href="pharmacy-dashboard.php" class="sn-back">← Back to Dashboard</a>
 
       <section class="ph-page-head">
         <span class="ph-page-head__badge">Pharmacy Requests</span>
@@ -86,7 +91,7 @@
               <td><span class="ph-badge ph-badge--high">High</span></td>
               <td>North Riyadh</td>
               <td>10 Mar 2025</td>
-              <td><a href="pharmacy-request-details.html" class="ph-view-link">View request</a></td>
+              <td><a href="pharmacy-request-details.php" class="ph-view-link">View request</a></td>
             </tr>
 
             <tr data-med="nexium 40mg" data-id="1002" data-priority="medium" data-date="2025-03-06">
@@ -95,7 +100,7 @@
               <td><span class="ph-badge ph-badge--medium">Medium</span></td>
               <td>North Riyadh</td>
               <td>6 Mar 2025</td>
-              <td><a href="pharmacy-request-details.html" class="ph-view-link">View request</a></td>
+              <td><a href="pharmacy-request-details.php" class="ph-view-link">View request</a></td>
             </tr>
 
             <tr data-med="panadol extra 500mg" data-id="1003" data-priority="low" data-date="2025-03-02">
@@ -104,7 +109,7 @@
               <td><span class="ph-badge ph-badge--low">Low</span></td>
               <td>North Riyadh</td>
               <td>2 Mar 2025</td>
-              <td><a href="pharmacy-request-details.html" class="ph-view-link">View request</a></td>
+              <td><a href="pharmacy-request-details.php" class="ph-view-link">View request</a></td>
             </tr>
 
             <tr data-med="concor 5mg" data-id="1004" data-priority="high" data-date="2025-02-21">
@@ -113,7 +118,7 @@
               <td><span class="ph-badge ph-badge--high">High</span></td>
               <td>North Riyadh</td>
               <td>21 Feb 2025</td>
-              <td><a href="pharmacy-request-details.html" class="ph-view-link">View request</a></td>
+              <td><a href="pharmacy-request-details.php" class="ph-view-link">View request</a></td>
             </tr>
 
             <tr data-med="glucophage 850mg" data-id="1005" data-priority="medium" data-date="2025-02-16">
@@ -122,7 +127,7 @@
               <td><span class="ph-badge ph-badge--medium">Medium</span></td>
               <td>North Riyadh</td>
               <td>16 Feb 2025</td>
-              <td><a href="pharmacy-request-details.html" class="ph-view-link">View request</a></td>
+              <td><a href="pharmacy-request-details.php" class="ph-view-link">View request</a></td>
             </tr>
 
             <tr data-med="ventolin inhaler" data-id="1006" data-priority="low" data-date="2025-02-11">
@@ -131,7 +136,7 @@
               <td><span class="ph-badge ph-badge--low">Low</span></td>
               <td>North Riyadh</td>
               <td>11 Feb 2025</td>
-              <td><a href="pharmacy-request-details.html" class="ph-view-link">View request</a></td>
+              <td><a href="pharmacy-request-details.php" class="ph-view-link">View request</a></td>
             </tr>
           </tbody>
         </table>
