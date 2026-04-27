@@ -1,11 +1,22 @@
-
 <?php
-$required_role = 'patient'; 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+$required_role = 'patient';
 require 'session_check.php';
+require_once 'db.php';
+
+$patient_id = $_SESSION['user_id'];
+
+// ── FETCH THIS PATIENT'S REQUESTS ──────────────────────────
+$stmt = $conn->prepare(
+    "SELECT * FROM medicationrequest WHERE patient_id = ? ORDER BY request_date DESC"
+);
+$stmt->bind_param("i", $patient_id);
+$stmt->execute();
+$requests = $stmt->get_result();
 ?>
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,115 +54,95 @@ require 'session_check.php';
   <div class="sn-container">
     <a href="user-dashboard.php" class="sn-back">← Back to Dashboard</a>
 
-    <!-- Page header -->
     <div class="requests-page__header">
       <div>
-
         <h1 class="requests-page__title">My Requests</h1>
         <p class="requests-page__subtitle">Track your medication requests and pharmacy responses</p>
       </div>
       <a href="submit-request.php" class="req-submit-btn">+ New request</a>
     </div>
+
     <div id="success-box" class="success-box" style="display:none;"></div>
 
-    <!-- Request list -->
+    <!-- ── Request Cards ── -->
     <div id="requests-list">
 
-      <!-- Card: Pending — view + delete only -->
-      <div class="req-card" data-id="1001">
-        <div class="req-card__top">
-          <div>
-            <div class="req-card__name">Request #1001</div>
-            <div class="req-card__badges">
-              <span class="req-badge req-badge--pending">Pending</span>
-              <span class="req-badge req-badge--high">High</span>
-            </div>
-          </div>
-          <div class="req-card__actions">
-            <a href="user-request-details.php" class="req-view-link">View</a>
-            <button class="req-btn req-btn--danger" onclick="openDeleteModal(1001, 'Augmentin 625mg')">Delete</button>
-          </div>
+      <?php if ($requests->num_rows === 0): ?>
+        <div class="req-empty" id="empty-state">
+          <div class="req-empty__icon">📋</div>
+          <h2 class="req-empty__title">No requests yet</h2>
+          <p class="req-empty__text">Submit your first medication request to get started.</p>
+          <a href="submit-request.php" class="req-submit-btn">Submit a request</a>
         </div>
-        <div class="req-card__footer">
-          Augmentin 625mg
-        </div>
-      </div>
 
-      <!-- Card: Approved — offer notification, view only -->
-      <div class="req-card" data-id="1002">
-        <div class="req-card__top">
-          <div>
-            <div class="req-card__name">Request #1002</div>
-            <div class="req-card__badges">
-              <span class="req-badge req-badge--approved">Approved</span>
-              <span class="req-badge req-badge--medium">Medium</span>
-            </div>
-          </div>
-          <div class="req-card__actions">
-            <a href="user-request-details.php" class="req-view-link">View</a>
-          </div>
-        </div>
-        <div class="req-card__offer-strip">
-          <span>New pharmacy offer available</span>
-          <a href="patient-offers.php">View &amp; respond →</a>
-        </div>
-        <div class="req-card__footer">
-          Nexium 40mg
-        </div>
-      </div>
+      <?php else: ?>
+        <?php while ($req = $requests->fetch_assoc()): ?>
 
-      <!-- Card: Confirmed — view only -->
-      <div class="req-card" data-id="1003">
-        <div class="req-card__top">
-          <div>
-            <div class="req-card__name">Request #1003</div>
-            <div class="req-card__badges">
-              <span class="req-badge req-badge--confirmed">Confirmed</span>
-              <span class="req-badge req-badge--low">Low</span>
-            </div>
-          </div>
-          <div class="req-card__actions">
-            <a href="user-request-details.php" class="req-view-link">View</a>
-          </div>
-        </div>
-        <div class="req-card__footer">
-          Panadol Extra 500mg
-        </div>
-      </div>
+          <?php
+            $req_id       = $req['request_id'];
+            $status       = $req['request_status'];
+            $status_class = strtolower($status);
 
-      <!-- Card: Rejected — view only -->
-      <div class="req-card" data-id="1004">
-        <div class="req-card__top">
-          <div>
-            <div class="req-card__name">Request #1004</div>
-            <div class="req-card__badges">
-              <span class="req-badge req-badge--rejected">Rejected</span>
-              <span class="req-badge req-badge--high">High</span>
+            // Check for pending offers on approved requests
+            $has_pending_offers = false;
+            if ($status === 'Approved') {
+                $offer_check = $conn->prepare(
+                    "SELECT COUNT(*) as cnt FROM pharmacyoffer 
+                     WHERE request_id = ? AND offer_status = 'Pending'"
+                );
+                $offer_check->bind_param("i", $req_id);
+                $offer_check->execute();
+                $offer_result = $offer_check->get_result()->fetch_assoc();
+                $has_pending_offers = $offer_result['cnt'] > 0;
+            }
+          ?>
+
+          <div class="req-card" data-id="<?= $req_id ?>">
+            <div class="req-card__top">
+              <div>
+                <div class="req-card__name">Request #<?= $req_id ?></div>
+                <div class="req-card__badges">
+                  <span class="req-badge req-badge--<?= $status_class ?>">
+                    <?= htmlspecialchars($status) ?>
+                  </span>
+                  <span class="req-badge req-badge--<?= strtolower($req['priority_level']) ?>">
+                    <?= htmlspecialchars($req['priority_level']) ?>
+                  </span>
+                </div>
+              </div>
+
+              <div class="req-card__actions">
+                <a href="user-request-details.php?request_id=<?= $req_id ?>" class="req-view-link">View</a>
+
+                <?php if ($status === 'Pending'): ?>
+                  <button class="req-btn req-btn--danger"
+                    onclick="openDeleteModal(<?= $req_id ?>, '<?= htmlspecialchars($req['medication_name'], ENT_QUOTES) ?>')">
+                    Delete
+                  </button>
+                <?php endif; ?>
+              </div>
+            </div>
+
+            <?php if ($status === 'Approved' && $has_pending_offers): ?>
+            <div class="req-card__offer-strip">
+              <span>New pharmacy offer available</span>
+              <a href="patient-offers.php?request_id=<?= $req_id ?>">View &amp; respond →</a>
+            </div>
+            <?php endif; ?>
+
+            <div class="req-card__footer">
+              <?= htmlspecialchars($req['medication_name']) ?>
             </div>
           </div>
-          <div class="req-card__actions">
-            <a href="user-request-details.php" class="req-view-link">View</a>
-          </div>
-        </div>
-        <div class="req-card__footer">
-          Concor 5mg
-        </div>
-      </div>
+
+        <?php endwhile; ?>
+      <?php endif; ?>
 
     </div>
-
-    <!-- Empty state — shown when user has no requests -->
-    <div class="req-empty" id="empty-state" style="display:none">
-      <div class="req-empty__icon">📋</div>
-      <h2 class="req-empty__title">No requests yet</h2>
-      <p class="req-empty__text">Submit your first medication request to get started.</p>
-      <a href="submit-request.php" class="req-submit-btn">Submit a request</a>
-    </div>
-
   </div>
 </main>
 
-<!-- ── Delete confirmation modal ──────────────────────────── -->
+<!-- ── Delete Modal ── -->
 <div class="req-modal-overlay" id="delete-modal">
   <div class="req-modal">
     <h2 class="req-modal__title">Delete this request?</h2>
@@ -161,7 +152,10 @@ require 'session_check.php';
     </p>
     <div class="req-modal__actions">
       <button class="req-modal__cancel" onclick="closeDeleteModal()">Cancel</button>
-      <button class="req-btn req-btn--danger" onclick="confirmDelete()">Yes, delete</button>
+      <form method="POST" action="delete-request.php" style="display:inline;">
+        <input type="hidden" name="request_id" id="modal-request-id">
+        <button type="submit" class="req-btn req-btn--danger">Yes, delete</button>
+      </form>
     </div>
   </div>
 </div>
@@ -175,6 +169,17 @@ require 'session_check.php';
     </div>
   </div>
 </footer>
+
+<script>
+function openDeleteModal(id, name) {
+  document.getElementById('modal-med-name').textContent = name;
+  document.getElementById('modal-request-id').value = id;
+  document.getElementById('delete-modal').classList.add('req-modal-overlay--open');
+}
+function closeDeleteModal() {
+  document.getElementById('delete-modal').classList.remove('req-modal-overlay--open');
+}
+</script>
 
 <script src="script.js"></script>
 

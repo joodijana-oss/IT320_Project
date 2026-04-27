@@ -1,11 +1,50 @@
-
-
 <?php
-$required_role = 'patient'; 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+$required_role = 'patient';
 require 'session_check.php';
+require_once 'db.php';
+
+$patient_id = $_SESSION['user_id'];
+
+// ── GET REQUEST ID FROM URL ─────────────────────────────────
+if (!isset($_GET['request_id'])) {
+    header('Location: my-requests.php');
+    exit;
+}
+$request_id = intval($_GET['request_id']);
+
+// ── FETCH REQUEST (make sure it belongs to this patient) ────
+$req_stmt = $conn->prepare(
+    "SELECT * FROM medicationrequest WHERE request_id = ? AND patient_id = ?"
+);
+$req_stmt->bind_param("ii", $request_id, $patient_id);
+$req_stmt->execute();
+$request = $req_stmt->get_result()->fetch_assoc();
+
+if (!$request) {
+    header('Location: my-requests.php');
+    exit;
+}
+
+// ── FETCH OFFERS WITH PHARMACY INFO ────────────────────────
+// Note: pharmacyoffer has no price column in your DB — using message only
+$offers_stmt = $conn->prepare("
+    SELECT po.offer_id, po.offer_status, po.message, po.offer_date,
+           p.pharmacy_name, p.address, p.zone, p.phone
+    FROM pharmacyoffer po
+    JOIN pharmacy p ON po.pharmacy_id = p.pharmacy_id
+    WHERE po.request_id = ?
+    ORDER BY po.offer_date ASC
+");
+$offers_stmt->bind_param("i", $request_id);
+$offers_stmt->execute();
+$offers = $offers_stmt->get_result();
+
+$is_confirmed = $request['request_status'] === 'Confirmed';
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,201 +80,123 @@ require 'session_check.php';
         <span class="admin-page-head__badge">Pharmacy offers</span>
         <h1 class="admin-page-head__title">Offers for Your Request</h1>
         <p class="admin-page-head__text">
-          Review offers from pharmacies in your area and accept the one that suits you best.
+          Review offers from pharmacies and accept the one that suits you best.
         </p>
       </section>
 
       <!-- Request summary strip -->
       <div class="offer-req-strip">
         <div>
-          <div class="offer-req-strip__title">Nexium 40mg</div>
+          <div class="offer-req-strip__title"><?= htmlspecialchars($request['medication_name']) ?></div>
           <div class="offer-req-strip__meta">
-            <span>Request #1002</span>
-            <span>North Riyadh</span>
-            <span>5 Mar 2025</span>
+            <span>Request #<?= $request['request_id'] ?></span>
+            <span><?= htmlspecialchars($request['zone']) ?></span>
+            <span><?= date('j M Y', strtotime($request['request_date'])) ?></span>
           </div>
         </div>
         <div class="offer-req-strip__badges">
-          <span class="request-card__status request-card__status--approved">Approved</span>
-          <span class="request-card__status" style="background:#fff3cd;color:#8a6d1f;">Medium</span>
+          <span class="request-card__status request-card__status--<?= strtolower($request['request_status']) ?>">
+            <?= htmlspecialchars($request['request_status']) ?>
+          </span>
+          <span class="request-card__status" style="background:#fff3cd;color:#8a6d1f;">
+            <?= htmlspecialchars($request['priority_level']) ?>
+          </span>
         </div>
       </div>
 
       <!-- Confirmed bar -->
-      <div class="offer-confirmed-bar" id="confirmedBar">
+      <?php if ($is_confirmed): ?>
+      <div class="offer-confirmed-bar">
         ✓ &nbsp;You accepted an offer. This request is now <strong>Confirmed</strong> — no further offers can be accepted.
       </div>
+      <?php endif; ?>
 
       <!-- Offer cards -->
       <div id="offersList">
 
-        <!-- Offer 1 -->
-        <div class="offer-card" id="oc-1" data-status="open">
-          <div class="offer-card__top">
-            <div class="offer-pharm-row">
-              <div class="offer-pharm-avatar">
-                <img src="images/nahdi-logo.jpg" alt="Al Nahdi Pharmacy logo" class="offer-pharm-logo">
-              </div>
-              <div>
-                <div class="offer-pharm-name">Al-Nahdi Pharmacy</div>
-                <div class="offer-pharm-sub">Al-Malqa, North Riyadh</div>
-              </div>
-            </div>
-            <div id="ob-1"></div>
+        <?php if ($offers->num_rows === 0): ?>
+          <div class="offer-empty">
+            No offers yet. Pharmacies in your area haven't responded to this request.
           </div>
-          <div class="offer-data-grid">
-            <div>
-              <div class="offer-data-item__label">Price</div>
-              <div class="offer-data-item__value offer-data-item__value--price">﷼ 42.50</div>
-            </div>
-            <div>
-              <div class="offer-data-item__label">Offer date</div>
-              <div class="offer-data-item__value">6 Mar 2025</div>
-            </div>
-          </div>
-          <p class="offer-note">"We have the medication in stock and can prepare it immediately. Free delivery available for orders above ﷼50."</p>
-          <div class="offer-actions-row" id="oa-1">
-            <button class="offer-map-btn" onclick="openMap(
-              'Al Nahdi Pharmacy',
-              'Al-Malqa, Riyadh',
-              '9200 24673',
-              'https://maps.app.goo.gl/XjirZWQqrUCiXYTT9?g_st=ipc',
-              'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3621.6905107847374!2d46.624086!3d24.806049!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e2ee511e23ff88d%3A0x7f7279eb0a7a7428!2zTmFoZGkgcGhhcm1hY3kgfCDYtdmK2K_ZhNmK2Ycg2KfZhNmG2YfYr9mJ!5e0!3m2!1sen!2ssa!4v1775298375344!5m2!1sen!2ssa'
-            )">
-             📍 View on map
-            </button>
-            <div style="margin-left:auto;display:flex;gap:10px;" id="btns-1">
-              <button class="admin-btn admin-btn--approve admin-btn--sm" onclick="accept(1)">Accept Offer</button>
-              <button class="admin-btn admin-btn--secondary admin-btn--sm" onclick="dismiss(1)">Dismiss</button>
-            </div>
-          </div>
-        </div>
 
-        <!-- Offer 2 -->
-        <div class="offer-card" id="oc-2" data-status="open">
-          <div class="offer-card__top">
-            <div class="offer-pharm-row">
-              <div class="offer-pharm-avatar">
-                <img src="images/dawaa-logo.png" alt="Al Dawaa Pharmacy logo" class="offer-pharm-logo">
-              </div>
-              <div>
-                <div class="offer-pharm-name">Al-Dawaa Pharmacy</div>
-                <div class="offer-pharm-sub">Al-Qirawan, North Riyadh</div>
-              </div>
-            </div>
-            <div id="ob-2"></div>
-          </div>
-          <div class="offer-data-grid">
-            <div>
-              <div class="offer-data-item__label">Price</div>
-              <div class="offer-data-item__value offer-data-item__value--price">﷼ 38.00</div>
-            </div>
-            <div>
-              <div class="offer-data-item__label">Offer date</div>
-              <div class="offer-data-item__value">6 Mar 2025</div>
-            </div>
-          </div>
-          <p class="offer-note">"Currently on order — will be available by tomorrow morning. Best price guaranteed."</p>
-          <div class="offer-actions-row" id="oa-2">
-            <button class="offer-map-btn" onclick="openMap(
-            'Al Dawaa Pharmacy',
-            'Al-Qirawan, Riyadh',
-            '9200 12084',
-            'https://maps.app.goo.gl/kDCndB1ZbSYPjJcu9?g_st=ipc',
-            'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3621.105777189624!2d46.602388999999995!3d24.826056!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e2ee5170d9c53dd%3A0xe34979370149106c!2z2LXZitiv2YTZitipINin2YTYr9mI2KfYoQ!5e0!3m2!1sen!2ssa!4v1775299203846!5m2!1sen!2ssa'
-          )">
-             📍 View on map
-            </button>
-            <div style="margin-left:auto;display:flex;gap:10px;" id="btns-2">
-              <button class="admin-btn admin-btn--approve admin-btn--sm" onclick="accept(2)">Accept Offer</button>
-              <button class="admin-btn admin-btn--secondary admin-btn--sm" onclick="dismiss(2)">Dismiss</button>
-            </div>
-          </div>
-        </div>
+        <?php else: ?>
+          <?php while ($offer = $offers->fetch_assoc()): ?>
 
-        <!-- Offer 3 -->
-        <div class="offer-card" id="oc-3" data-status="open">
-          <div class="offer-card__top">
-            <div class="offer-pharm-row">
-              <div class="offer-pharm-avatar">
-                <img src="images/whites-logo.png" alt="Whites Pharmacy logo" class="offer-pharm-logo">
-              </div>
-              <div>
-                <div class="offer-pharm-name">Whites Pharmacy</div>
-                <div class="offer-pharm-sub">Al-Arid, North Riyadh</div>
-              </div>
-            </div>
-            <div id="ob-3"></div>
-          </div>
-          <div class="offer-data-grid">
-            <div>
-              <div class="offer-data-item__label">Price</div>
-              <div class="offer-data-item__value offer-data-item__value--price">﷼ 45.00</div>
-            </div>
-            <div>
-              <div class="offer-data-item__label">Offer date</div>
-              <div class="offer-data-item__value">7 Mar 2025</div>
-            </div>
-          </div>
-          <p class="offer-note">"Medication available. Delivery within 2 hours to North Riyadh."</p>
-          <div class="offer-actions-row" id="oa-3">
-            <button class="offer-map-btn" onclick="openMap(
-            'Whites Pharmacy',
-            'Al-Arid, Riyadh',
-            '9200 05515',
-            'https://maps.app.goo.gl/iXNwEU7ZGioFSGsL6?g_st=ipc',
-            'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3620.4701774404843!2d46.629527800000005!3d24.847786299999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e2ee500776f6371%3A0xde8129ea9e2dc9d2!2sWhites%20al%20arid!5e0!3m2!1sen!2ssa!4v1775299490386!5m2!1sen!2ssa'
-          )">
-          📍 View on map
-            </button>
-            <div style="margin-left:auto;display:flex;gap:10px;" id="btns-3">
-              <button class="admin-btn admin-btn--approve admin-btn--sm" onclick="accept(3)">Accept Offer</button>
-              <button class="admin-btn admin-btn--secondary admin-btn--sm" onclick="dismiss(3)">Dismiss</button>
-            </div>
-          </div>
-        </div>
+            <div class="offer-card">
+              <div class="offer-card__top">
+                <div class="offer-pharm-row">
+                  <div class="offer-pharm-avatar">
+                    <div style="width:44px;height:44px;border-radius:50%;background:#e8f0e9;display:flex;align-items:center;justify-content:center;font-weight:600;color:#2d6a4f;">
+                      <?= strtoupper(substr($offer['pharmacy_name'], 0, 2)) ?>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="offer-pharm-name"><?= htmlspecialchars($offer['pharmacy_name']) ?></div>
+                    <div class="offer-pharm-sub"><?= htmlspecialchars($offer['zone']) ?></div>
+                  </div>
+                </div>
 
-        <div class="offer-empty" id="emptyState" style="display:none;">
-          No offers yet. Pharmacies in your area haven't responded to this request.
-        </div>
+                <?php if ($offer['offer_status'] === 'Accepted'): ?>
+                  <span class="req-badge req-badge--confirmed">✓ Accepted</span>
+                <?php elseif ($offer['offer_status'] === 'Rejected'): ?>
+                  <span class="req-badge req-badge--rejected">Rejected</span>
+                <?php endif; ?>
+              </div>
+
+              <div class="offer-data-grid">
+                <div>
+                  <div class="offer-data-item__label">Offer date</div>
+                  <div class="offer-data-item__value">
+                    <?= date('j M Y', strtotime($offer['offer_date'])) ?>
+                  </div>
+                </div>
+              </div>
+
+              <?php if ($offer['message']): ?>
+              <p class="offer-note">"<?= htmlspecialchars($offer['message']) ?>"</p>
+              <?php endif; ?>
+
+              <!-- Accept/Reject buttons — only if offer is Pending and request not Confirmed -->
+              <?php if ($offer['offer_status'] === 'Pending' && !$is_confirmed): ?>
+              <div class="offer-actions-row">
+                <div style="margin-left:auto;display:flex;gap:10px;">
+
+                  <form method="POST" action="process-offer-response.php">
+                    <input type="hidden" name="offer_id" value="<?= $offer['offer_id'] ?>">
+                    <input type="hidden" name="request_id" value="<?= $request_id ?>">
+                    <input type="hidden" name="action" value="accept">
+                    <button type="submit" class="admin-btn admin-btn--approve admin-btn--sm">Accept Offer</button>
+                  </form>
+
+                  <form method="POST" action="process-offer-response.php">
+                    <input type="hidden" name="offer_id" value="<?= $offer['offer_id'] ?>">
+                    <input type="hidden" name="request_id" value="<?= $request_id ?>">
+                    <input type="hidden" name="action" value="reject">
+                    <button type="submit" class="admin-btn admin-btn--secondary admin-btn--sm">Reject</button>
+                  </form>
+
+                </div>
+              </div>
+              <?php endif; ?>
+
+            </div>
+
+          <?php endwhile; ?>
+        <?php endif; ?>
 
       </div>
 
     </div>
   </main>
 
-  <!-- Map modal -->
-  <div class="sn-modal-overlay" id="mapOverlay" onclick="closeMap(event)">
-    <div class="sn-modal">
-      <div class="sn-modal__head">
-        <span class="sn-modal__title" id="mapTitle">Pharmacy Location</span>
-        <button class="sn-modal__close" onclick="closeMap()">✕</button>
-      </div>
-      <div class="map-frame-wrap">
-        <iframe id="mapFrame" width="100%" height="260" style="border:0;" loading="lazy" allowfullscreen=""
-          referrerpolicy="no-referrer-when-downgrade">
-        </iframe>
-      </div>
-      <div class="map-info-row"><span>Pharmacy</span><span id="mName">—</span></div>
-      <div class="map-info-row"><span>Address</span><span id="mAddr">—</span></div>
-      <div class="map-info-row"><span>Phone</span><span id="mPhone">—</span></div>
-      <div style="margin-top:20px;">
-        <a id="mapsLink" href="#" target="_blank" class="admin-btn admin-btn--primary" style="width:100%;justify-content:center;">Open in Google Maps →</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="sn-toast-wrap" id="toasts"></div>
-
   <footer class="sn-footer">
     <div class="sn-container">
       <div class="sn-footer__inner">
-          <span class="sn-footer__logo-name">Sanad</span>
+        <span class="sn-footer__logo-name">Sanad</span>
         <span class="sn-footer__copy">© 2026 Sanad. Riyadh, Saudi Arabia.</span>
       </div>
     </div>
   </footer>
 
-  <script src="patient.js"></script>
 </body>
 </html>

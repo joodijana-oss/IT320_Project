@@ -1,6 +1,6 @@
 
 <?php
-$required_role = 'patient'; 
+$required_role = 'patient';
 require 'session_check.php';
 ?>
 
@@ -13,17 +13,17 @@ require 'session_check.php';
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
- 
+
 <!-- ── Navbar ─────────────────────────────────────────────── -->
 <nav class="sn-nav">
   <div class="sn-container">
     <div class="sn-nav__inner">
- 
+
       <a href="index.php" class="sn-nav__logo">
         <img class="sn-nav__logo-img" src="images/slogo.png" alt="Sanad logo">
         <span class="sn-nav__logo-name">Sanad</span>
       </a>
- 
+
       <ul class="sn-nav__links">
         <li><a href="user-dashboard.php">Dashboard</a></li>
         <li><a href="profile.php" class="sn-nav--active">Profile</a></li>
@@ -31,78 +31,78 @@ require 'session_check.php';
         <li><a href="my-requests.php">My Requests</a></li>
         <li><a href="logout.php" class="sn-nav--logout">Log out</a></li>
       </ul>
- 
+
     </div>
   </div>
 </nav>
- 
+
 <!-- ── Main ───────────────────────────────────────────────── -->
 <main class="sn-main">
   <div class="sn-container">
     <a href="user-dashboard.php" class="sn-back">← Back to Dashboard</a>
     <div class="profile-page">
- 
+
       <!-- Page header -->
       <h1 class="profile-page__title">My Profile</h1>
       <p class="profile-page__subtitle">Your account information</p>
- 
+
       <div class="profile-card">
- 
+
         <!-- Hero: avatar + name + role + status -->
         <div class="profile-hero">
-          <div class="profile-avatar" id="profile-avatar">SA</div>
+          <div class="profile-avatar" id="profile-avatar"></div>
           <div>
-            <div class="profile-hero__name" id="profile-name">Sara Ahmed</div>
+            <div class="profile-hero__name" id="profile-name"></div>
             <div class="profile-hero__role">Patient account</div>
-            <span class="profile-status profile-status--active" id="profile-status">Active</span>
+            <span class="profile-status" id="profile-status"></span>
           </div>
         </div>
- 
+
         <hr class="profile-divider">
- 
+
         <!-- Info grid -->
         <p class="profile-section-label">Account details</p>
         <div class="profile-info-grid">
- 
+
           <div class="profile-info-item">
             <div class="profile-info-item__label">Name</div>
-            <div class="profile-info-item__value" id="info-name">Sara Ahmed</div>
+            <div class="profile-info-item__value" id="info-name"></div>
           </div>
- 
+
           <div class="profile-info-item">
             <div class="profile-info-item__label">Email address</div>
-            <div class="profile-info-item__value" id="info-email">saraahmed@gmail.com</div>
+            <div class="profile-info-item__value" id="info-email"></div>
           </div>
- 
+
           <div class="profile-info-item">
             <div class="profile-info-item__label">Zone</div>
-            <div class="profile-info-item__value">North Riyadh</div>
+            <div class="profile-info-item__value" id="info-zone"></div>
           </div>
- 
+
           <div class="profile-info-item">
             <div class="profile-info-item__label">Phone number</div>
-            <div class="profile-info-item__value">+966 50 000 44770</div>
+            <div class="profile-info-item__value" id="info-phone"></div>
           </div>
 
           <div class="profile-info-item">
             <div class="profile-info-item__label">Date of birth</div>
-            <div class="profile-info-item__value">1 Jan 2000</div>
+            <div class="profile-info-item__value" id="info-dob"></div>
           </div>
 
           <div class="profile-info-item">
             <div class="profile-info-item__label">Account status</div>
             <div class="profile-info-item__value">
-              <span class="profile-status profile-status--active">Active</span>
+              <span class="profile-status" id="info-status"></span>
             </div>
           </div>
- 
+
         </div>
- 
+
       </div>
     </div>
   </div>
 </main>
- 
+
 <!-- ── Footer ── -->
 <footer class="sn-footer">
   <div class="sn-container">
@@ -114,6 +114,35 @@ require 'session_check.php';
 </footer>
 
 <script src="script.js"></script>
+
+<script>
+fetch('get_profile.php')
+  .then(function(res) { return res.json(); })
+  .then(function(data) {
+    if (!data.success) return;
+
+    // Avatar + hero
+    document.getElementById('profile-avatar').textContent = data.initials;
+    document.getElementById('profile-name').textContent   = data.full_name;
+
+    // Hero status badge
+    var heroStatus = document.getElementById('profile-status');
+    heroStatus.textContent = data.status;
+    heroStatus.className   = 'profile-status profile-status--' + data.status.toLowerCase();
+
+    // Info grid
+    document.getElementById('info-name').textContent  = data.full_name;
+    document.getElementById('info-email').textContent = data.email;
+    document.getElementById('info-zone').textContent  = data.zone;
+    document.getElementById('info-phone').textContent = data.phone;
+    document.getElementById('info-dob').textContent   = data.dob;
+
+    // Info status badge
+    var infoStatus = document.getElementById('info-status');
+    infoStatus.textContent = data.status;
+    infoStatus.className   = 'profile-status profile-status--' + data.status.toLowerCase();
+  });
+</script>
 
 </body>
 </html>
