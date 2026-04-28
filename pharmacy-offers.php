@@ -1,10 +1,53 @@
-
-
 <?php
-$required_role = 'pharmacy'; 
+$required_role = 'pharmacy';
 require 'session_check.php';
-?>
+require 'db.php';
 
+$pharmacy_id = $_SESSION['user_id'];
+
+// Show success flash if redirected after offer submission
+$flash = '';
+if (isset($_GET['offer_submitted']) && $_GET['offer_submitted'] === '1') {
+    $flash = 'Your offer has been submitted successfully.';
+}
+
+// Fetch all offers made by this pharmacy, joined with request info
+$stmt = $conn->prepare("
+    SELECT
+        o.offer_id,
+        o.request_id,
+        o.offer_status,
+        o.message,
+        o.offer_date,
+        r.medication_name,
+        r.priority_level
+    FROM pharmacyoffer o
+    JOIN medicationrequest r ON r.request_id = o.request_id
+    WHERE o.pharmacy_id = ?
+    ORDER BY o.offer_date DESC
+");
+$stmt->bind_param('i', $pharmacy_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$offers = $result->fetch_all(MYSQLI_ASSOC);
+$stmt->close();
+
+function statusBadge($status) {
+    $map = [
+        'Pending'  => 'ph-badge--pending',
+        'Accepted' => 'ph-badge--confirmed',
+        'Rejected' => 'ph-badge--rejected',
+    ];
+    $label = [
+        'Pending'  => 'Pending',
+        'Accepted' => 'Confirmed',
+        'Rejected' => 'Not selected',
+    ];
+    $cls = $map[$status] ?? 'ph-badge--pending';
+    $lbl = $label[$status] ?? $status;
+    return "<span class=\"ph-badge $cls\">$lbl</span>";
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,12 +86,18 @@ require 'session_check.php';
         </p>
       </section>
 
+      <?php if ($flash): ?>
+        <div style="margin-bottom:18px;padding:12px 18px;background:#f0fdf4;border:1px solid #86efac;border-radius:8px;color:#166534;font-weight:500;">
+          ✓ <?= htmlspecialchars($flash) ?>
+        </div>
+      <?php endif; ?>
+
       <div class="ph-search-wrap">
         <span class="ph-search-icon">🔍</span>
         <input type="text" id="searchInput" placeholder="Search by medication name or request ID…" oninput="filterOffers()" />
       </div>
 
-      <p class="ph-count" id="countLabel">Showing <strong>6</strong> offers</p>
+      <p class="ph-count" id="countLabel">Showing <strong><?= count($offers) ?></strong> offers</p>
 
       <div class="ph-table-wrap">
         <table class="ph-table">
@@ -57,65 +106,43 @@ require 'session_check.php';
               <th>Medication</th>
               <th>Request</th>
               <th>Date submitted</th>
-              <th>Price (SAR)</th>
+              <th>Message</th>
               <th>Outcome</th>
               <th></th>
             </tr>
           </thead>
           <tbody id="offersBody">
-            <tr data-med="augmentin 625mg" data-id="1001">
-              <td class="td-med">Augmentin 625mg</td>
-              <td class="td-id">#1001</td>
-              <td>10 Mar 2025</td>
-              <td>﷼ 42.50</td>
-              <td><span class="ph-badge ph-badge--pending">Pending</span></td>
-              <td><a href="pharmacy-request-details.php" class="ph-view-link">View request</a></td>
+            <?php foreach ($offers as $offer): ?>
+            <tr
+              data-med="<?= strtolower(htmlspecialchars($offer['medication_name'])) ?>"
+              data-id="<?= $offer['request_id'] ?>"
+            >
+              <td class="td-med"><?= htmlspecialchars($offer['medication_name']) ?></td>
+              <td class="td-id">#<?= $offer['request_id'] ?></td>
+              <td><?= date('j M Y', strtotime($offer['offer_date'])) ?></td>
+              <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="<?= htmlspecialchars($offer['message']) ?>">
+                <?= htmlspecialchars(mb_strimwidth($offer['message'], 0, 40, '…')) ?>
+              </td>
+              <td><?= statusBadge($offer['offer_status']) ?></td>
+              <td>
+                <a href="pharmacy-request-details.php?id=<?= $offer['request_id'] ?>" class="ph-view-link">
+                  View request
+                </a>
+              </td>
             </tr>
-            <tr data-med="nexium 40mg" data-id="1002">
-              <td class="td-med">Nexium 40mg</td>
-              <td class="td-id">#1002</td>
-              <td>6 Mar 2025</td>
-              <td>﷼ 55.00</td>
-              <td><span class="ph-badge ph-badge--confirmed">Confirmed</span></td>
-              <td><a href="pharmacy-request-details.php" class="ph-view-link">View request</a></td>
-            </tr>
-            <tr data-med="panadol extra 500mg" data-id="1003">
-              <td class="td-med">Panadol Extra 500mg</td>
-              <td class="td-id">#1003</td>
-              <td>2 Mar 2025</td>
-              <td>﷼ 18.75</td>
-              <td><span class="ph-badge ph-badge--confirmed">Confirmed</span></td>
-              <td><a href="pharmacy-request-details.php" class="ph-view-link">View request</a></td>
-            </tr>
-            <tr data-med="concor 5mg" data-id="1004">
-              <td class="td-med">Concor 5mg</td>
-              <td class="td-id">#1004</td>
-              <td>21 Feb 2025</td>
-              <td>﷼ 63.00</td>
-              <td><span class="ph-badge ph-badge--rejected">Not selected</span></td>
-              <td><a href="pharmacy-request-details.php" class="ph-view-link">View request</a></td>
-            </tr>
-            <tr data-med="glucophage 850mg" data-id="1005">
-              <td class="td-med">Glucophage 850mg</td>
-              <td class="td-id">#1005</td>
-              <td>16 Feb 2025</td>
-              <td>﷼ 29.00</td>
-              <td><span class="ph-badge ph-badge--confirmed">Confirmed</span></td>
-              <td><a href="pharmacy-request-details.php" class="ph-view-link">View request</a></td>
-            </tr>
-            <tr data-med="ventolin inhaler" data-id="1006">
-              <td class="td-med">Ventolin Inhaler</td>
-              <td class="td-id">#1006</td>
-              <td>11 Feb 2025</td>
-              <td>﷼ 47.50</td>
-              <td><span class="ph-badge ph-badge--rejected">Not selected</span></td>
-              <td><a href="pharmacy-request-details.php" class="ph-view-link">View request</a></td>
-            </tr>
+            <?php endforeach; ?>
           </tbody>
         </table>
+
+        <?php if (empty($offers)): ?>
+        <div class="ph-empty" id="emptyState">
+          You haven't submitted any offers yet.
+        </div>
+        <?php else: ?>
         <div class="ph-empty" id="emptyState" style="display:none;">
           No offers match your search.
         </div>
+        <?php endif; ?>
       </div>
 
     </div>
@@ -124,7 +151,7 @@ require 'session_check.php';
   <footer class="sn-footer">
     <div class="sn-container">
       <div class="sn-footer__inner">
-          <span class="sn-footer__logo-name">Sanad</span>
+        <span class="sn-footer__logo-name">Sanad</span>
         <span class="sn-footer__copy">© 2026 Sanad. Riyadh, Saudi Arabia.</span>
       </div>
     </div>

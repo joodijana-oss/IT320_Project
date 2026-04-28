@@ -1,10 +1,63 @@
-
 <?php
-$required_role = 'pharmacy'; 
+$required_role = 'pharmacy';
 require 'session_check.php';
+require 'db.php';
+
+$pharmacy_id = $_SESSION['user_id'];
+
+// Fetch pharmacy info
+$stmt = $conn->prepare("SELECT pharmacy_name, zone, city FROM pharmacy WHERE pharmacy_id = ?");
+$stmt->bind_param('i', $pharmacy_id);
+$stmt->execute();
+$stmt->bind_result($pharmacy_name, $zone, $city);
+$stmt->fetch();
+$stmt->close();
+
+// Stats
+$stmt = $conn->prepare("SELECT COUNT(*) FROM pharmacyoffer WHERE pharmacy_id = ?");
+$stmt->bind_param('i', $pharmacy_id);
+$stmt->execute();
+$stmt->bind_result($total_offers);
+$stmt->fetch();
+$stmt->close();
+
+$stmt = $conn->prepare("SELECT COUNT(*) FROM pharmacyoffer WHERE pharmacy_id = ? AND offer_status = 'Accepted'");
+$stmt->bind_param('i', $pharmacy_id);
+$stmt->execute();
+$stmt->bind_result($confirmed_offers);
+$stmt->fetch();
+$stmt->close();
+
+$stmt = $conn->prepare("SELECT COUNT(*) FROM pharmacyoffer WHERE pharmacy_id = ? AND offer_status = 'Pending'");
+$stmt->bind_param('i', $pharmacy_id);
+$stmt->execute();
+$stmt->bind_result($pending_offers);
+$stmt->fetch();
+$stmt->close();
+
+$stmt = $conn->prepare("SELECT COUNT(*) FROM medicationrequest WHERE request_status = 'Approved'");
+$stmt->execute();
+$stmt->bind_result($available_requests);
+$stmt->fetch();
+$stmt->close();
+
+// Recent approved requests (last 4)
+$recent = $conn->query("
+    SELECT request_id, medication_name, priority_level, request_date
+    FROM medicationrequest
+    WHERE request_status = 'Approved'
+    ORDER BY request_date DESC
+    LIMIT 4
+")->fetch_all(MYSQLI_ASSOC);
+
+function priorityBadge($level) {
+    $map = ['High' => 'ph-badge--high', 'Medium' => 'ph-badge--medium', 'Low' => 'ph-badge--low'];
+    $cls = $map[$level] ?? 'ph-badge--low';
+    return "<span class=\"ph-badge $cls\">$level</span>";
+}
+
+$today = date('l, j M Y');
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,28 +90,28 @@ require 'session_check.php';
         <div class="ph-hero__overlay"></div>
         <div class="ph-hero__content">
           <span class="ph-hero__badge">Pharmacy Dashboard</span>
-          <h1 class="ph-hero__title">Welcome back, Al-Nahdi Pharmacy</h1>
-          <p class="ph-hero__meta">North Riyadh &nbsp;·&nbsp; Wednesday, 1 Apr 2026</p>
+          <h1 class="ph-hero__title">Welcome back, <?= htmlspecialchars($pharmacy_name) ?></h1>
+          <p class="ph-hero__meta"><?= htmlspecialchars($zone) ?> &nbsp;·&nbsp; <?= $today ?></p>
         </div>
       </section>
 
       <div class="ph-stats">
         <div class="ph-stat-card">
-          <div class="ph-stat-card__value">24</div>
-          <div class="ph-stat-card__label">Available requests nearby</div>
+          <div class="ph-stat-card__value"><?= $available_requests ?></div>
+          <div class="ph-stat-card__label">Available requests</div>
         </div>
         <div class="ph-stat-card" style="animation-delay:0.06s;">
-          <div class="ph-stat-card__value">11</div>
+          <div class="ph-stat-card__value"><?= $total_offers ?></div>
           <div class="ph-stat-card__label">Offers submitted</div>
           <div class="ph-stat-card__period">All time</div>
         </div>
         <div class="ph-stat-card" style="animation-delay:0.12s;">
-          <div class="ph-stat-card__value">6</div>
+          <div class="ph-stat-card__value"><?= $confirmed_offers ?></div>
           <div class="ph-stat-card__label">Confirmed offers</div>
           <div class="ph-stat-card__period">All time</div>
         </div>
         <div class="ph-stat-card" style="animation-delay:0.18s;">
-          <div class="ph-stat-card__value">3</div>
+          <div class="ph-stat-card__value"><?= $pending_offers ?></div>
           <div class="ph-stat-card__label">Pending offers</div>
           <div class="ph-stat-card__period">Awaiting response</div>
         </div>
@@ -100,30 +153,19 @@ require 'session_check.php';
             </tr>
           </thead>
           <tbody>
+            <?php foreach ($recent as $req): ?>
             <tr>
-              <td><div class="td-name">Augmentin 625mg</div><div class="td-id">#1001</div></td>
-              <td><span class="ph-badge ph-badge--high">High</span></td>
-              <td>10 Mar 2025</td>
-              <td><a href="pharmacy-request-details.php" class="ph-view-link">View</a></td>
+              <td>
+                <div class="td-name"><?= htmlspecialchars($req['medication_name']) ?></div>
+                <div class="td-id">#<?= $req['request_id'] ?></div>
+              </td>
+              <td><?= priorityBadge($req['priority_level']) ?></td>
+              <td><?= date('j M Y', strtotime($req['request_date'])) ?></td>
+              <td>
+                <a href="pharmacy-request-details.php?id=<?= $req['request_id'] ?>" class="ph-view-link">View</a>
+              </td>
             </tr>
-            <tr>
-              <td><div class="td-name">Nexium 40mg</div><div class="td-id">#1002</div></td>
-              <td><span class="ph-badge ph-badge--medium">Medium</span></td>
-              <td>5 Mar 2025</td>
-              <td><a href="pharmacy-request-details.php" class="ph-view-link">View</a></td>
-            </tr>
-            <tr>
-              <td><div class="td-name">Panadol Extra 500mg</div><div class="td-id">#1003</div></td>
-              <td><span class="ph-badge ph-badge--low">Low</span></td>
-              <td>1 Mar 2025</td>
-              <td><a href="pharmacy-request-details.php" class="ph-view-link">View</a></td>
-            </tr>
-            <tr>
-              <td><div class="td-name">Concor 5mg</div><div class="td-id">#1004</div></td>
-              <td><span class="ph-badge ph-badge--high">High</span></td>
-              <td>20 Feb 2025</td>
-              <td><a href="pharmacy-request-details.php" class="ph-view-link">View</a></td>
-            </tr>
+            <?php endforeach; ?>
           </tbody>
         </table>
         <div class="ph-table-footer">
@@ -137,7 +179,7 @@ require 'session_check.php';
   <footer class="sn-footer">
     <div class="sn-container">
       <div class="sn-footer__inner">
-          <span class="sn-footer__logo-name">Sanad</span>
+        <span class="sn-footer__logo-name">Sanad</span>
         <span class="sn-footer__copy">© 2026 Sanad. Riyadh, Saudi Arabia.</span>
       </div>
     </div>

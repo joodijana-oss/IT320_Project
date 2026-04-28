@@ -1,7 +1,25 @@
-
 <?php
-$required_role = 'pharmacy'; 
+$required_role = 'pharmacy';
 require 'session_check.php';
+require 'db.php';
+
+$pharmacy_id = $_SESSION['user_id'];
+
+// Fetch approved requests (that the pharmacy hasn't already offered on, optional — shows all approved)
+$sql = "
+    SELECT r.request_id, r.medication_name, r.priority_level, r.request_date, r.city
+    FROM medicationrequest r
+    WHERE r.request_status = 'Approved'
+    ORDER BY r.request_date DESC
+";
+$result = $conn->query($sql);
+$requests = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+
+function priorityBadge($level) {
+    $map = ['High' => 'ph-badge--high', 'Medium' => 'ph-badge--medium', 'Low' => 'ph-badge--low'];
+    $cls = $map[$level] ?? 'ph-badge--low';
+    return "<span class=\"ph-badge $cls\">$level</span>";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,7 +37,6 @@ require 'session_check.php';
         <img src="images/slogo.png" alt="Sanad Logo" class="sn-nav__logo-img" />
         <span class="sn-nav__logo-name">Sanad</span>
       </a>
-
       <ul class="sn-nav__links">
         <li><a href="pharmacy-dashboard.php">Dashboard</a></li>
         <li><a href="pharmacy-viewRequests.php" class="sn-nav--active">Requests</a></li>
@@ -69,7 +86,7 @@ require 'session_check.php';
         </div>
       </div>
 
-      <p class="ph-count" id="phRequestsCount">Showing <strong>6</strong> requests</p>
+      <p class="ph-count" id="phRequestsCount">Showing <strong><?= count($requests) ?></strong> requests</p>
 
       <div class="ph-table-wrap">
         <table class="ph-table">
@@ -78,66 +95,32 @@ require 'session_check.php';
               <th>Medication</th>
               <th>Request ID</th>
               <th>Priority</th>
-              <th>Area</th>
+              <th>City</th>
               <th>Date submitted</th>
               <th></th>
             </tr>
           </thead>
 
           <tbody id="phRequestsBody">
-            <tr data-med="augmentin 625mg" data-id="1001" data-priority="high" data-date="2025-03-10">
-              <td class="td-med">Augmentin 625mg</td>
-              <td class="td-id">#1001</td>
-              <td><span class="ph-badge ph-badge--high">High</span></td>
-              <td>North Riyadh</td>
-              <td>10 Mar 2025</td>
-              <td><a href="pharmacy-request-details.php" class="ph-view-link">View request</a></td>
+            <?php foreach ($requests as $req): ?>
+            <tr
+              data-med="<?= strtolower(htmlspecialchars($req['medication_name'])) ?>"
+              data-id="<?= $req['request_id'] ?>"
+              data-priority="<?= strtolower($req['priority_level']) ?>"
+              data-date="<?= date('Y-m-d', strtotime($req['request_date'])) ?>"
+            >
+              <td class="td-med"><?= htmlspecialchars($req['medication_name']) ?></td>
+              <td class="td-id">#<?= $req['request_id'] ?></td>
+              <td><?= priorityBadge($req['priority_level']) ?></td>
+              <td><?= htmlspecialchars($req['city']) ?></td>
+              <td><?= date('j M Y', strtotime($req['request_date'])) ?></td>
+              <td>
+                <a href="pharmacy-request-details.php?id=<?= $req['request_id'] ?>" class="ph-view-link">
+                  View request
+                </a>
+              </td>
             </tr>
-
-            <tr data-med="nexium 40mg" data-id="1002" data-priority="medium" data-date="2025-03-06">
-              <td class="td-med">Nexium 40mg</td>
-              <td class="td-id">#1002</td>
-              <td><span class="ph-badge ph-badge--medium">Medium</span></td>
-              <td>North Riyadh</td>
-              <td>6 Mar 2025</td>
-              <td><a href="pharmacy-request-details.php" class="ph-view-link">View request</a></td>
-            </tr>
-
-            <tr data-med="panadol extra 500mg" data-id="1003" data-priority="low" data-date="2025-03-02">
-              <td class="td-med">Panadol Extra 500mg</td>
-              <td class="td-id">#1003</td>
-              <td><span class="ph-badge ph-badge--low">Low</span></td>
-              <td>North Riyadh</td>
-              <td>2 Mar 2025</td>
-              <td><a href="pharmacy-request-details.php" class="ph-view-link">View request</a></td>
-            </tr>
-
-            <tr data-med="concor 5mg" data-id="1004" data-priority="high" data-date="2025-02-21">
-              <td class="td-med">Concor 5mg</td>
-              <td class="td-id">#1004</td>
-              <td><span class="ph-badge ph-badge--high">High</span></td>
-              <td>North Riyadh</td>
-              <td>21 Feb 2025</td>
-              <td><a href="pharmacy-request-details.php" class="ph-view-link">View request</a></td>
-            </tr>
-
-            <tr data-med="glucophage 850mg" data-id="1005" data-priority="medium" data-date="2025-02-16">
-              <td class="td-med">Glucophage 850mg</td>
-              <td class="td-id">#1005</td>
-              <td><span class="ph-badge ph-badge--medium">Medium</span></td>
-              <td>North Riyadh</td>
-              <td>16 Feb 2025</td>
-              <td><a href="pharmacy-request-details.php" class="ph-view-link">View request</a></td>
-            </tr>
-
-            <tr data-med="ventolin inhaler" data-id="1006" data-priority="low" data-date="2025-02-11">
-              <td class="td-med">Ventolin Inhaler</td>
-              <td class="td-id">#1006</td>
-              <td><span class="ph-badge ph-badge--low">Low</span></td>
-              <td>North Riyadh</td>
-              <td>11 Feb 2025</td>
-              <td><a href="pharmacy-request-details.php" class="ph-view-link">View request</a></td>
-            </tr>
+            <?php endforeach; ?>
           </tbody>
         </table>
 
@@ -152,7 +135,7 @@ require 'session_check.php';
   <footer class="sn-footer">
     <div class="sn-container">
       <div class="sn-footer__inner">
-          <span class="sn-footer__logo-name">Sanad</span>
+        <span class="sn-footer__logo-name">Sanad</span>
         <span class="sn-footer__copy">© 2026 Sanad. Riyadh, Saudi Arabia.</span>
       </div>
     </div>
