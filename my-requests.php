@@ -11,7 +11,7 @@ $patient_id = $_SESSION['user_id'];
 
 // ── FETCH THIS PATIENT'S REQUESTS ──────────────────────────
 $stmt = $conn->prepare(
-    "SELECT * FROM medicationrequest WHERE patient_id = ? ORDER BY request_date DESC"
+    "SELECT * FROM medicationrequest WHERE patient_id = ? ORDER BY request_date ASC"
 );
 $stmt->bind_param("i", $patient_id);
 $stmt->execute();
@@ -76,6 +76,7 @@ $requests = $stmt->get_result();
         </div>
 
       <?php else: ?>
+        <?php $counter = 1; ?>
         <?php while ($req = $requests->fetch_assoc()): ?>
 
           <?php
@@ -100,7 +101,7 @@ $requests = $stmt->get_result();
           <div class="req-card" data-id="<?= $req_id ?>">
             <div class="req-card__top">
               <div>
-                <div class="req-card__name">Request #<?= $req_id ?></div>
+                <div class="req-card__name">Request #<?= $counter ?></div>
                 <div class="req-card__badges">
                   <span class="req-badge req-badge--<?= $status_class ?>">
                     <?= htmlspecialchars($status) ?>
@@ -134,7 +135,7 @@ $requests = $stmt->get_result();
               <?= htmlspecialchars($req['medication_name']) ?>
             </div>
           </div>
-
+<?php $counter++; ?>
         <?php endwhile; ?>
       <?php endif; ?>
 
@@ -183,5 +184,17 @@ function closeDeleteModal() {
 
 <script src="script.js"></script>
 
+<div class="req-modal-overlay" id="delete-modal">
 </body>
+<script>
+function openDeleteModal(id, name) {
+  document.getElementById('modal-request-id').value = id;
+  document.getElementById('modal-med-name').textContent = name;
+  document.getElementById('delete-modal').style.display = 'flex';
+}
+
+function closeDeleteModal() {
+  document.getElementById('delete-modal').style.display = 'none';
+}
+</script>
 </html>

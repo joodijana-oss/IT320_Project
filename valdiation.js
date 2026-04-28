@@ -98,8 +98,6 @@ const requestForm = document.getElementById("requestForm");
 
 if (requestForm) {
   requestForm.addEventListener("submit", function(e) {
-    e.preventDefault();
-
     let valid = true;
 
     const med = document.getElementById("medication");
@@ -129,13 +127,11 @@ if (requestForm) {
       valid = false;
     }
 
-    if (valid) {
-      localStorage.setItem("requestSuccess", "Request submitted successfully ✅");
-      window.location.href = "my-requests.php";
+    if (!valid) {
+      e.preventDefault();
     }
   });
 }
-
 
 // ── EDIT REQUEST FORM ─────────────────────────────────────
 // Bug 3 fix: wrapped in if-check so it doesn't crash on other pages
