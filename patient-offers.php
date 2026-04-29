@@ -1,13 +1,16 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
+session_start();
+
+// ── SESSION GUARD ───────────────────────────────────────────
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'patient') {
+    header('Location: login.html');
+    exit;
 }
 
-$required_role = 'patient';
-require 'session_check.php';
-require_once 'db.php';
-
 $patient_id = $_SESSION['user_id'];
+
+// ── DB CONNECTION ───────────────────────────────────────────
+require_once 'db.php';
 
 // ── GET REQUEST ID FROM URL ─────────────────────────────────
 if (!isset($_GET['request_id'])) {
@@ -17,9 +20,7 @@ if (!isset($_GET['request_id'])) {
 $request_id = intval($_GET['request_id']);
 
 // ── FETCH REQUEST (make sure it belongs to this patient) ────
-$req_stmt = $conn->prepare(
-    "SELECT * FROM medicationrequest WHERE request_id = ? AND patient_id = ?"
-);
+$req_stmt = $conn->prepare("SELECT * FROM medicationrequest WHERE request_id = ? AND patient_id = ?");
 $req_stmt->bind_param("ii", $request_id, $patient_id);
 $req_stmt->execute();
 $request = $req_stmt->get_result()->fetch_assoc();
@@ -30,10 +31,8 @@ if (!$request) {
 }
 
 // ── FETCH OFFERS WITH PHARMACY INFO ────────────────────────
-// Note: pharmacyoffer has no price column in your DB — using message only
 $offers_stmt = $conn->prepare("
-    SELECT po.offer_id, po.offer_status, po.message, po.offer_date,
-           p.pharmacy_name, p.address, p.zone, p.phone
+    SELECT po.*, p.pharmacy_name, p.address, p.zone, p.phone
     FROM pharmacyoffer po
     JOIN pharmacy p ON po.pharmacy_id = p.pharmacy_id
     WHERE po.request_id = ?
@@ -44,6 +43,13 @@ $offers_stmt->execute();
 $offers = $offers_stmt->get_result();
 
 $is_confirmed = $request['request_status'] === 'Confirmed';
+
+// ── PHARMACY LOGOS MAP ──────────────────────────────────────
+$pharmacy_logos = [
+    'Al-Nahdi Pharmacy' => 'images/nahdi-logo.jpg',
+    'Al-Dawaa Pharmacy' => 'images/dawaa-logo.png',
+    'Whites Pharmacy'   => 'images/whites-logo.png',
+];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -57,14 +63,14 @@ $is_confirmed = $request['request_status'] === 'Confirmed';
 
   <header class="sn-nav">
     <div class="sn-container sn-nav__inner">
-      <a href="index.php" class="sn-nav__logo">
+      <a href="index.html" class="sn-nav__logo">
         <img src="images/slogo.png" alt="Sanad Logo" class="sn-nav__logo-img" />
         <span class="sn-nav__logo-name">Sanad</span>
       </a>
       <ul class="sn-nav__links">
-        <li><a href="user-dashboard.php">Dashboard</a></li>
-        <li><a href="profile.php">Profile</a></li>
-        <li><a href="submit-request.php">Submit Request</a></li>
+        <li><a href="user-dashboard.html">Dashboard</a></li>
+        <li><a href="profile.html">Profile</a></li>
+        <li><a href="submit-request.html">Submit Request</a></li>
         <li><a href="my-requests.php" class="sn-nav--active">My Requests</a></li>
         <li><a href="logout.php" class="sn-nav--logout">Log out</a></li>
       </ul>
@@ -84,7 +90,7 @@ $is_confirmed = $request['request_status'] === 'Confirmed';
         </p>
       </section>
 
-      <!-- Request summary strip -->
+      <!-- ── Request Summary Strip ── -->
       <div class="offer-req-strip">
         <div>
           <div class="offer-req-strip__title"><?= htmlspecialchars($request['medication_name']) ?></div>
@@ -96,22 +102,22 @@ $is_confirmed = $request['request_status'] === 'Confirmed';
         </div>
         <div class="offer-req-strip__badges">
           <span class="request-card__status request-card__status--<?= strtolower($request['request_status']) ?>">
-            <?= htmlspecialchars($request['request_status']) ?>
+            <?= $request['request_status'] ?>
           </span>
           <span class="request-card__status" style="background:#fff3cd;color:#8a6d1f;">
-            <?= htmlspecialchars($request['priority_level']) ?>
+            <?= $request['priority_level'] ?>
           </span>
         </div>
       </div>
 
-      <!-- Confirmed bar -->
+      <!-- ── Confirmed Bar (only shown if request is Confirmed) ── -->
       <?php if ($is_confirmed): ?>
       <div class="offer-confirmed-bar">
         ✓ &nbsp;You accepted an offer. This request is now <strong>Confirmed</strong> — no further offers can be accepted.
       </div>
       <?php endif; ?>
 
-      <!-- Offer cards -->
+      <!-- ── Offer Cards ── -->
       <div id="offersList">
 
         <?php if ($offers->num_rows === 0): ?>
@@ -122,13 +128,24 @@ $is_confirmed = $request['request_status'] === 'Confirmed';
         <?php else: ?>
           <?php while ($offer = $offers->fetch_assoc()): ?>
 
+            <?php
+              $offer_status = $offer['offer_status']; // Pending, Accepted, Rejected
+            ?>
+
             <div class="offer-card">
               <div class="offer-card__top">
                 <div class="offer-pharm-row">
                   <div class="offer-pharm-avatar">
-                    <div style="width:44px;height:44px;border-radius:50%;background:#e8f0e9;display:flex;align-items:center;justify-content:center;font-weight:600;color:#2d6a4f;">
-                      <?= strtoupper(substr($offer['pharmacy_name'], 0, 2)) ?>
-                    </div>
+                    <?php if (isset($pharmacy_logos[$offer['pharmacy_name']])): ?>
+                     <img src="<?= $pharmacy_logos[$offer['pharmacy_name']] ?>"
+     alt="<?= htmlspecialchars($offer['pharmacy_name']) ?> logo"
+     class="offer-pharm-logo"
+     style="width:44px;height:44px;border-radius:50%;object-fit:cover;">
+                    <?php else: ?>
+                      <div style="width:44px;height:44px;border-radius:50%;background:#e8f0e9;display:flex;align-items:center;justify-content:center;font-weight:600;color:#2d6a4f;">
+                        <?= strtoupper(substr($offer['pharmacy_name'], 0, 2)) ?>
+                      </div>
+                    <?php endif; ?>
                   </div>
                   <div>
                     <div class="offer-pharm-name"><?= htmlspecialchars($offer['pharmacy_name']) ?></div>
@@ -136,19 +153,24 @@ $is_confirmed = $request['request_status'] === 'Confirmed';
                   </div>
                 </div>
 
-                <?php if ($offer['offer_status'] === 'Accepted'): ?>
+                <!-- Offer status badge -->
+                <?php if ($offer_status === 'Accepted'): ?>
                   <span class="req-badge req-badge--confirmed">✓ Accepted</span>
-                <?php elseif ($offer['offer_status'] === 'Rejected'): ?>
+                <?php elseif ($offer_status === 'Rejected'): ?>
                   <span class="req-badge req-badge--rejected">Rejected</span>
                 <?php endif; ?>
               </div>
 
               <div class="offer-data-grid">
                 <div>
-                  <div class="offer-data-item__label">Offer date</div>
-                  <div class="offer-data-item__value">
-                    <?= date('j M Y', strtotime($offer['offer_date'])) ?>
+                  <div class="offer-data-item__label">Price</div>
+                  <div class="offer-data-item__value offer-data-item__value--price">
+                    <?= $offer['price'] ? '﷼ ' . number_format($offer['price'], 2) : 'Not specified' ?>
                   </div>
+                </div>
+                <div>
+                  <div class="offer-data-item__label">Offer date</div>
+                  <div class="offer-data-item__value"><?= date('j M Y', strtotime($offer['offer_date'])) ?></div>
                 </div>
               </div>
 
@@ -156,11 +178,12 @@ $is_confirmed = $request['request_status'] === 'Confirmed';
               <p class="offer-note">"<?= htmlspecialchars($offer['message']) ?>"</p>
               <?php endif; ?>
 
-              <!-- Accept/Reject buttons — only if offer is Pending and request not Confirmed -->
-              <?php if ($offer['offer_status'] === 'Pending' && !$is_confirmed): ?>
+              <!-- ── Accept / Reject buttons (only if offer is Pending AND request is not Confirmed) ── -->
+              <?php if ($offer_status === 'Pending' && !$is_confirmed): ?>
               <div class="offer-actions-row">
                 <div style="margin-left:auto;display:flex;gap:10px;">
 
+                  <!-- Accept form -->
                   <form method="POST" action="process-offer-response.php">
                     <input type="hidden" name="offer_id" value="<?= $offer['offer_id'] ?>">
                     <input type="hidden" name="request_id" value="<?= $request_id ?>">
@@ -168,6 +191,7 @@ $is_confirmed = $request['request_status'] === 'Confirmed';
                     <button type="submit" class="admin-btn admin-btn--approve admin-btn--sm">Accept Offer</button>
                   </form>
 
+                  <!-- Reject form -->
                   <form method="POST" action="process-offer-response.php">
                     <input type="hidden" name="offer_id" value="<?= $offer['offer_id'] ?>">
                     <input type="hidden" name="request_id" value="<?= $request_id ?>">
