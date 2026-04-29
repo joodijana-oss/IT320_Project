@@ -130,10 +130,12 @@ $pharmacy_logos = [
                 <div class="offer-pharm-row">
                   <div class="offer-pharm-avatar">
                     <?php if (isset($pharmacy_logos[$offer['pharmacy_name']])): ?>
-                     <img src="<?= $pharmacy_logos[$offer['pharmacy_name']] ?>"
+                     
+                    <img src="<?= $pharmacy_logos[$offer['pharmacy_name']] ?>"
      alt="<?= htmlspecialchars($offer['pharmacy_name']) ?> logo"
-     class="offer-pharm-logo"
-     style="width:44px;height:44px;border-radius:50%;object-fit:cover;">
+     class="offer-pharm-logo">  
+                      
+                      
                     <?php else: ?>
                       <div style="width:44px;height:44px;border-radius:50%;background:#e8f0e9;display:flex;align-items:center;justify-content:center;font-weight:600;color:#2d6a4f;">
                         <?= strtoupper(substr($offer['pharmacy_name'], 0, 2)) ?>
