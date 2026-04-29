@@ -142,32 +142,26 @@ function loadRequestDetails() {
           <span class="ad-details-item__label">Medication Name</span>
           <span class="ad-details-item__value">${data.medication_name}</span>
         </div>
-
         <div class="ad-details-item">
           <span class="ad-details-item__label">Priority</span>
           <span class="ad-details-item__value">${data.priority_level}</span>
         </div>
-
         <div class="ad-details-item">
           <span class="ad-details-item__label">Request Date</span>
           <span class="ad-details-item__value">${formatDate(data.request_date)}</span>
         </div>
-
         <div class="ad-details-item">
           <span class="ad-details-item__label">Patient Name</span>
           <span class="ad-details-item__value">${data.patient_name}</span>
         </div>
-
         <div class="ad-details-item">
           <span class="ad-details-item__label">City</span>
           <span class="ad-details-item__value">${data.city}</span>
         </div>
-
         <div class="ad-details-item">
           <span class="ad-details-item__label">Zone</span>
           <span class="ad-details-item__value">${data.zone}</span>
         </div>
-
         <div class="ad-details-item ad-details-item--full">
           <span class="ad-details-item__label">Submitted Note</span>
           <span class="ad-details-item__value">${data.notes ? data.notes : "No note provided."}</span>
@@ -181,13 +175,8 @@ function loadRequestDetails() {
       const approveBtn = document.querySelector(".admin-btn--approve");
       const rejectBtn = document.querySelector(".admin-btn--reject");
 
-      approveBtn.onclick = function () {
-        submitDecision(requestId, "Approved");
-      };
-
-      rejectBtn.onclick = function () {
-        submitDecision(requestId, "Rejected");
-      };
+      approveBtn.onclick = function () { submitDecision(requestId, "Approved"); };
+      rejectBtn.onclick = function () { submitDecision(requestId, "Rejected"); };
     });
 }
 
@@ -200,10 +189,7 @@ function submitDecision(requestId, status) {
   formData.append("status", status);
   formData.append("reason", reason);
 
-  fetch("update_request_status.php", {
-    method: "POST",
-    body: formData
-  })
+  fetch("update_request_status.php", { method: "POST", body: formData })
     .then(res => res.json())
     .then(data => {
       if (data.success) {
@@ -244,7 +230,7 @@ function loadManageUsers() {
             </span>
           </td>
           <td>
-            <button 
+            <button
               class="admin-btn ${isBlocked ? "admin-btn--secondary" : "admin-btn--danger"} admin-btn--sm toggle-user-btn"
               data-id="${user.patient_id}">
               ${isBlocked ? "Unblock" : "Block"}
@@ -261,17 +247,11 @@ function loadManageUsers() {
           const formData = new FormData();
           formData.append("patient_id", patientId);
 
-          fetch("toggle_patient_status.php", {
-            method: "POST",
-            body: formData
-          })
+          fetch("toggle_patient_status.php", { method: "POST", body: formData })
             .then(res => res.json())
             .then(result => {
-              if (result.success) {
-                loadManageUsers();
-              } else {
-                alert(result.message);
-              }
+              if (result.success) { loadManageUsers(); }
+              else { alert(result.message); }
             });
         });
       });
