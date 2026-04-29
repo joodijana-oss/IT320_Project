@@ -5,8 +5,6 @@ document.addEventListener("DOMContentLoaded", function () {
   loadAdminDashboard();
 });
 
-
-
 function loadReviewRequests() {
   const requestList = document.getElementById("requestList");
   if (!requestList) return;
@@ -168,7 +166,12 @@ function loadRequestDetails() {
 
       document.querySelector(".ad-prescription-box__info h4").textContent = data.prescription_file;
       document.querySelector(".ad-prescription-box__info p").textContent = "Uploaded " + formatDate(data.request_date);
-      document.querySelector(".ad-prescription-box__info a").setAttribute("href", "images/" + data.prescription_file);
+
+      const isSeeded = data.prescription_file === 'prescription.png';
+      const prescPath = isSeeded
+        ? "images/prescription.png"
+        : "uploads/prescriptions/" + data.prescription_file;
+      document.querySelector(".ad-prescription-box__info a").setAttribute("href", prescPath);
 
       if (data.request_status === 'Pending') {
         const approveBtn = document.querySelector(".admin-btn--approve");
