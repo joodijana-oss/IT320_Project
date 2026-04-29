@@ -23,10 +23,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_offer'])) {
     } else {
         $check->close();
         $stmt = $conn->prepare(
-            "INSERT INTO pharmacyoffer (request_id, pharmacy_id, offer_status, message, offer_date)
-             VALUES (?, ?, 'Pending', ?, NOW())"
+            "INSERT INTO pharmacyoffer (request_id, pharmacy_id, offer_status, message, price, offer_date)
+             VALUES (?, ?, 'Pending', ?, ?, NOW())"
         );
-        $stmt->bind_param('iis', $request_id, $pharmacy_id, $message);
+        $stmt->bind_param('iisd', $request_id, $pharmacy_id, $message, $price);
         if ($stmt->execute()) {
             $stmt->close();
             header('Location: pharmacy-reports.php?offer_submitted=1');
@@ -46,7 +46,7 @@ if ($request_id > 0) {
                 p.full_name AS patient_name
          FROM medicationrequest r
          JOIN patient p ON p.patient_id = r.patient_id
-         WHERE r.request_id = ? AND r.request_status = 'Approved'"
+         WHERE r.request_id = ?"
     );
     $stmt->bind_param('i', $request_id);
     $stmt->execute();
@@ -65,6 +65,9 @@ if ($request_id > 0) {
     $already_offered = $chk->num_rows > 0;
     $chk->close();
 }
+
+// Offer form should only be shown if request is still Approved and not yet offered
+$can_offer = $request && $request['request_status'] === 'Approved' && !$already_offered;
 
 function priorityBadge($level) {
     $map = [
@@ -199,7 +202,7 @@ function priorityBadge($level) {
             </div>
           </div>
 
-          <?php else: ?>
+          <?php elseif ($can_offer): ?>
           <!-- Offer form -->
           <div class="ph-offer-panel" id="offerForm">
             <h2 class="ph-offer-panel__title">Submit an Offer</h2>
@@ -223,6 +226,17 @@ function priorityBadge($level) {
                 <a href="pharmacy-viewRequests.php" class="ph-btn ph-btn--cancel">Cancel</a>
               </div>
             </form>
+          </div>
+
+          <?php else: ?>
+          <!-- Request no longer open for offers -->
+          <div class="ph-offer-panel" id="offerClosed">
+            <div class="ph-offer-panel__title">Request Closed</div>
+            <p class="ph-offer-panel__sub">This request is no longer accepting new offers.</p>
+            <div class="ph-closed-notice">
+              <strong>Already fulfilled</strong>
+              <p>The patient has selected a pharmacy for this request.</p>
+            </div>
           </div>
           <?php endif; ?>
 

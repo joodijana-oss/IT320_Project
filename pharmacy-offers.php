@@ -5,11 +5,13 @@ require 'db.php';
 
 $pharmacy_id = $_SESSION['user_id'];
 
+// Show success flash if redirected after offer submission
 $flash = '';
 if (isset($_GET['offer_submitted']) && $_GET['offer_submitted'] === '1') {
     $flash = 'Your offer has been submitted successfully.';
 }
 
+// Fetch all offers made by this pharmacy, joined with request info
 $stmt = $conn->prepare("
     SELECT
         o.offer_id,
@@ -17,6 +19,7 @@ $stmt = $conn->prepare("
         o.offer_status,
         o.message,
         o.offer_date,
+        o.price,
         r.medication_name,
         r.priority_level
     FROM pharmacyoffer o
@@ -105,7 +108,8 @@ function statusBadge($status) {
               <th>Request</th>
               <th>Date submitted</th>
               <th>Message</th>
-              <th>Outcome</th>
+              <th>Price (SAR)</th>
+              <th>Status</th>
               <th></th>
             </tr>
           </thead>
@@ -121,6 +125,7 @@ function statusBadge($status) {
               <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="<?= htmlspecialchars($offer['message']) ?>">
                 <?= htmlspecialchars(mb_strimwidth($offer['message'], 0, 40, '…')) ?>
               </td>
+              <td><?= $offer['price'] !== null ? number_format($offer['price'], 2) . ' SAR' : '—' ?></td>
               <td><?= statusBadge($offer['offer_status']) ?></td>
               <td>
                 <a href="pharmacy-request-details.php?id=<?= $offer['request_id'] ?>" class="ph-view-link">
