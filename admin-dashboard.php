@@ -33,8 +33,8 @@ require 'session_check.php';
   <main class="sn-main ad-dashboard-page">
     <div class="sn-container">
 
-      <section class="ad-hero">
-        <div class="ad-hero__overlay"></div>
+        <section class="ad-hero"  > 
+                <div class="ad-hero__overlay"></div>
         <div class="ad-hero__content">
           <span class="ad-hero__badge">Admin Dashboard</span>
           <h1 class="ad-hero__title">Good morning, Admin</h1>
