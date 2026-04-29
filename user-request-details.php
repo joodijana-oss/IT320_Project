@@ -16,7 +16,6 @@ if (!isset($_GET['request_id'])) {
 
 $request_id = intval($_GET['request_id']);
 
-/* UPDATE REQUEST - only if Pending */
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $medication_name = trim($_POST['medication_name'] ?? '');
     $priority_level  = trim($_POST['priority_level'] ?? '');
@@ -79,7 +78,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-/* FETCH REQUEST */
 $stmt = $conn->prepare("SELECT * FROM medicationrequest WHERE request_id = ? AND patient_id = ?");
 $stmt->bind_param("ii", $request_id, $patient_id);
 $stmt->execute();

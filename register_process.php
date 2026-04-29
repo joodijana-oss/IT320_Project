@@ -18,7 +18,6 @@ $zone             = trim($_POST['zone'] ?? '');
 $password         = $_POST['password'] ?? '';
 $confirm_password = $_POST['confirm_password'] ?? '';
 
-// --- Validation ---
 if (strlen($full_name) < 3) {
     echo json_encode(['success' => false, 'message' => 'Enter a valid full name.']);
     exit;
@@ -55,7 +54,6 @@ if ($password !== $confirm_password) {
     exit;
 }
 
-// --- Check duplicate email ---
 $stmt = $conn->prepare("SELECT patient_id FROM patient WHERE email = ?");
 $stmt->bind_param('s', $email);
 $stmt->execute();
@@ -67,10 +65,6 @@ if ($stmt->num_rows > 0) {
 }
 $stmt->close();
 
-// --- Insert ---
-// NOTE: your DB stores plain passwords. We use password_hash() for security.
-// You will need to update the existing sample rows to hashed passwords too,
-// or switch the login check to plain comparison for now (see login.php note).
 $hashed = password_hash($password, PASSWORD_BCRYPT);
 
 $stmt = $conn->prepare(

@@ -89,11 +89,10 @@ if (form) {
           }
         });
     }
-  }); // ← Bug 1 fix: this closing was missing
+  }); 
 }
 
 
-// ── SUBMIT REQUEST FORM ───────────────────────────────────
 const requestForm = document.getElementById("requestForm");
 
 if (requestForm) {
@@ -133,8 +132,6 @@ if (requestForm) {
   });
 }
 
-// ── EDIT REQUEST FORM ─────────────────────────────────────
-// Bug 3 fix: wrapped in if-check so it doesn't crash on other pages
 const editRequestForm = document.getElementById("editRequestForm");
 
 if (editRequestForm) {
@@ -161,9 +158,6 @@ if (editRequestForm) {
   });
 }
 
-
-// ── FILE PREVIEW ──────────────────────────────────────────
-// Bug 4 fix: wrapped in if-check so it doesn't crash on other pages
 const fileInput = document.getElementById("file");
 
 if (fileInput) {
@@ -179,8 +173,6 @@ if (fileInput) {
   });
 }
 
-
-// ── HELPERS ───────────────────────────────────────────────
 function showError(input, message) {
   const error = input.nextElementSibling;
   error.textContent = message;
@@ -190,7 +182,6 @@ function clearErrors() {
   document.querySelectorAll(".error-msg").forEach(e => e.textContent = "");
 }
 
-// Bug 5 fix: removed duplicate enableEdit — kept the better version
 function enableEdit(icon) {
   const box = icon.parentElement;
   const input = box.querySelector("input, select, textarea");
@@ -212,7 +203,6 @@ function deleteRequest() {
   );
 }
 
-// Bug 6 fix: added missing closing brace
 function showModal(title, message, onConfirm) {
   const overlay = document.createElement("div");
   overlay.style.position = "fixed";

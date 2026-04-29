@@ -9,7 +9,6 @@ require_once 'db.php';
 
 $patient_id = $_SESSION['user_id'];
 
-// ── FETCH THIS PATIENT'S REQUESTS ──────────────────────────
 $stmt = $conn->prepare(
     "SELECT * FROM medicationrequest WHERE patient_id = ? ORDER BY request_date ASC"
 );

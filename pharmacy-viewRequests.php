@@ -5,7 +5,6 @@ require 'db.php';
 
 $pharmacy_id = $_SESSION['user_id'];
 
-// Fetch approved requests (that the pharmacy hasn't already offered on, optional — shows all approved)
 $sql = "
     SELECT r.request_id, r.medication_name, r.priority_level, r.request_date, r.city
     FROM medicationrequest r

@@ -5,7 +5,6 @@ require 'db.php';
 
 $pharmacy_id = $_SESSION['user_id'];
 
-// Period filter — default 30d
 $period = $_GET['period'] ?? '30d';
 if (!in_array($period, ['7d','30d','90d','all'])) $period = '30d';
 

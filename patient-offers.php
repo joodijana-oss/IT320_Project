@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// ── SESSION GUARD ───────────────────────────────────────────
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'patient') {
     header('Location: login.html');
     exit;
@@ -9,17 +8,14 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'patient') {
 
 $patient_id = $_SESSION['user_id'];
 
-// ── DB CONNECTION ───────────────────────────────────────────
 require_once 'db.php';
 
-// ── GET REQUEST ID FROM URL ─────────────────────────────────
 if (!isset($_GET['request_id'])) {
     header('Location: my-requests.php');
     exit;
 }
 $request_id = intval($_GET['request_id']);
 
-// ── FETCH REQUEST (make sure it belongs to this patient) ────
 $req_stmt = $conn->prepare("SELECT * FROM medicationrequest WHERE request_id = ? AND patient_id = ?");
 $req_stmt->bind_param("ii", $request_id, $patient_id);
 $req_stmt->execute();
@@ -30,7 +26,6 @@ if (!$request) {
     exit;
 }
 
-// ── FETCH OFFERS WITH PHARMACY INFO ────────────────────────
 $offers_stmt = $conn->prepare("
     SELECT po.*, p.pharmacy_name, p.address, p.zone, p.phone
     FROM pharmacyoffer po
@@ -44,7 +39,6 @@ $offers = $offers_stmt->get_result();
 
 $is_confirmed = $request['request_status'] === 'Confirmed';
 
-// ── PHARMACY LOGOS MAP ──────────────────────────────────────
 $pharmacy_logos = [
     'Al-Nahdi Pharmacy' => 'images/nahdi-logo.jpg',
     'Al-Dawaa Pharmacy' => 'images/dawaa-logo.png',
@@ -110,7 +104,6 @@ $pharmacy_logos = [
         </div>
       </div>
 
-      <!-- ── Confirmed Bar (only shown if request is Confirmed) ── -->
       <?php if ($is_confirmed): ?>
       <div class="offer-confirmed-bar">
         ✓ &nbsp;You accepted an offer. This request is now <strong>Confirmed</strong> — no further offers can be accepted.
@@ -178,7 +171,6 @@ $pharmacy_logos = [
               <p class="offer-note">"<?= htmlspecialchars($offer['message']) ?>"</p>
               <?php endif; ?>
 
-              <!-- ── Accept / Reject buttons (only if offer is Pending AND request is not Confirmed) ── -->
               <?php if ($offer_status === 'Pending' && !$is_confirmed): ?>
               <div class="offer-actions-row">
                 <div style="margin-left:auto;display:flex;gap:10px;">

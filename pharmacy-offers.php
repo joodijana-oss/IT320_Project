@@ -5,13 +5,11 @@ require 'db.php';
 
 $pharmacy_id = $_SESSION['user_id'];
 
-// Show success flash if redirected after offer submission
 $flash = '';
 if (isset($_GET['offer_submitted']) && $_GET['offer_submitted'] === '1') {
     $flash = 'Your offer has been submitted successfully.';
 }
 
-// Fetch all offers made by this pharmacy, joined with request info
 $stmt = $conn->prepare("
     SELECT
         o.offer_id,

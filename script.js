@@ -1,22 +1,13 @@
-/* ============================================================
-   script.js — shared JavaScript for all Member 3 pages
-   PHP phase: remove login submit handler and add
-   method="POST" action="login.php" to the login form.
-   ============================================================ */
 
-
-/* ── LOGIN PAGE ──────────────────────────────────────────── */
 (function () {
 
     var pwInput = document.getElementById('login-password');
     var pwToggle = document.getElementById('login-pw-toggle');
     var form = document.getElementById('login-form');
 
-    /* Only run if we are on the login page */
     if (!form)
         return;
 
-    /* ── Show / hide password ── */
     pwToggle.addEventListener('click', function () {
         var isPassword = pwInput.type === 'password';
         pwInput.type = isPassword ? 'text' : 'password';
@@ -24,26 +15,21 @@
         document.getElementById('icon-eye-hide').style.display = isPassword ? 'block' : 'none';
     });
 
-    /* ── Clear role error when user selects ── */
     document.getElementById('login-role').addEventListener('change', function () {
         this.style.borderColor = '';
         document.getElementById('login-role-error').style.display = 'none';
     });
 
-    /* ── Clear email error when user starts retyping ── */
     document.getElementById('login-email').addEventListener('input', function () {
         this.style.borderColor = '';
         document.getElementById('login-email-error').style.display = 'none';
     });
 
-    /* ── Clear password error when user starts retyping ── */
     pwInput.addEventListener('input', function () {
         this.style.borderColor = '';
         document.getElementById('login-password-error').style.display = 'none';
     });
 
-    /* ── On submit: validate role, email and password then redirect ── */
-    /* PHP phase: remove this handler and add method="POST" action="login.php" to the form */
     form.addEventListener('submit', function (e) {
         e.preventDefault();
 
@@ -82,7 +68,6 @@
         if (!valid)
             return;
 
-        // Show spinner
         document.getElementById('login-submit-btn').disabled = true;
         document.querySelector('.login-btn-text').textContent = 'Signing in…';
 
@@ -119,7 +104,6 @@
 })();
 
 
-/* ── PROFILE & MY REQUESTS PAGES ─────────────────────────── */
 (function () {
 
     var logoutLink = document.getElementById('logout-link');
@@ -136,14 +120,10 @@
 })();
 
 
-/* ── MY REQUESTS PAGE ────────────────────────────────────── */
-/* PHP phase: remove this entire section — delete is handled
- server-side by posting to delete_request.php             */
 (function () {
 
     var deleteModal = document.getElementById('delete-modal');
 
-    /* Only run if we are on the my-requests page */
     if (!deleteModal)
         return;
 
@@ -167,7 +147,6 @@
         if (!pendingDeleteId)
             return;
 
-        /* PHP phase: POST to delete_request.php with request_id */
         var card = document.querySelector('[data-id="' + pendingDeleteId + '"]');
         if (card) {
             card.style.transition = 'opacity 0.2s, transform 0.2s';
@@ -175,7 +154,6 @@
             card.style.transform = 'translateY(-6px)';
             setTimeout(function () {
                 card.remove();
-                /* Show empty state if no cards remain */
                 var remaining = document.querySelectorAll('.req-card');
                 if (remaining.length === 0) {
                     document.getElementById('empty-state').style.display = 'block';
@@ -185,13 +163,11 @@
         closeDeleteModal();
     }
 
-    /* Close modal when clicking the overlay background */
     deleteModal.addEventListener('click', function (e) {
         if (e.target === this)
             closeDeleteModal();
     });
 
-    /* Expose functions used by onclick in HTML */
     window.openDeleteModal = openDeleteModal;
     window.closeDeleteModal = closeDeleteModal;
     window.confirmDelete = confirmDelete;
@@ -199,7 +175,6 @@
 })();
 
 
-/* ── SUCCESS MESSAGE ─────────────────────────────────────── */
 window.addEventListener('load', function () {
     var msg = localStorage.getItem('successMessage');
     if (msg) {
@@ -226,7 +201,6 @@ window.addEventListener('DOMContentLoaded', function () {
 });
 
 
-/* ── DELETED REQUEST ─────────────────────────────────────── */
 window.addEventListener('DOMContentLoaded', function () {
   var deletedId = localStorage.getItem('deletedRequestId');
   if (deletedId) {

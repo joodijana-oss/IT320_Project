@@ -26,7 +26,6 @@ if (empty($password)) {
     exit;
 }
 
-// Helper: checks hashed OR plain-text password (remove plain-text check after re-seeding)
 function verifyPassword($input, $stored) {
     if (password_verify($input, $stored)) return true;   // hashed (new registrations)
     if ($input === $stored)              return true;    // plain text (existing seed data)

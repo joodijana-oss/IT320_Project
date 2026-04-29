@@ -5,9 +5,6 @@ document.addEventListener("DOMContentLoaded", function () {
   loadAdminDashboard();
 });
 
-/* =========================
-   REVIEW REQUESTS PAGE
-   ========================= */
 function loadReviewRequests() {
   const requestList = document.getElementById("requestList");
   if (!requestList) return;
@@ -45,17 +42,14 @@ function loadReviewRequests() {
             </div>
             <span class="request-card__status ${statusClass}">${request.request_status}</span>
           </div>
-
           <div class="request-card__meta">
             <span><strong>Patient:</strong> ${request.patient_name}</span>
             <span><strong>Priority:</strong> ${request.priority_level}</span>
             <span><strong>Submitted:</strong> ${formatDate(request.request_date)}</span>
           </div>
-
           <p class="request-card__text">
             ${request.notes ? request.notes : "No note provided."}
           </p>
-
           <div class="request-card__actions">
             <a href="request-details.php?id=${request.request_id}" class="admin-btn ${btnClass}">
               View Details
@@ -83,7 +77,6 @@ function setupReviewFilters() {
     const selectedStatus = statusFilter.value.toLowerCase();
     const selectedPriority = priorityFilter.value.toLowerCase();
     const searchValue = searchInput.value.trim().toLowerCase();
-
     let visibleCount = 0;
 
     cards.forEach(card => {
@@ -115,13 +108,9 @@ function setupReviewFilters() {
   statusFilter.addEventListener("change", filterRequests);
   priorityFilter.addEventListener("change", filterRequests);
   searchInput.addEventListener("input", filterRequests);
-
   filterRequests();
 }
 
-/* =========================
-   REQUEST DETAILS PAGE
-   ========================= */
 function loadRequestDetails() {
   const titleEl = document.querySelector(".admin-page-head__title");
   if (!titleEl || !window.location.search.includes("id=")) return;
@@ -133,6 +122,13 @@ function loadRequestDetails() {
     .then(res => res.json())
     .then(data => {
       if (data.error) return;
+
+      if (data.request_status !== 'Pending') {
+        document.getElementById("reviewForm").style.display = "none";
+        document.getElementById("reviewDone").style.display = "block";
+        document.getElementById("finalDecision").textContent = data.request_status;
+        document.getElementById("decisionText").textContent = "This request has already been " + data.request_status + " and cannot be changed.";
+      }
 
       document.querySelector(".admin-page-head__title").textContent =
         "Medication Request #" + data.request_id;
@@ -172,11 +168,12 @@ function loadRequestDetails() {
       document.querySelector(".ad-prescription-box__info p").textContent = "Uploaded " + formatDate(data.request_date);
       document.querySelector(".ad-prescription-box__info a").setAttribute("href", "images/" + data.prescription_file);
 
-      const approveBtn = document.querySelector(".admin-btn--approve");
-      const rejectBtn = document.querySelector(".admin-btn--reject");
-
-      approveBtn.onclick = function () { submitDecision(requestId, "Approved"); };
-      rejectBtn.onclick = function () { submitDecision(requestId, "Rejected"); };
+      if (data.request_status === 'Pending') {
+        const approveBtn = document.querySelector(".admin-btn--approve");
+        const rejectBtn = document.querySelector(".admin-btn--reject");
+        approveBtn.onclick = function () { submitDecision(requestId, "Approved"); };
+        rejectBtn.onclick = function () { submitDecision(requestId, "Rejected"); };
+      }
     });
 }
 
@@ -198,14 +195,14 @@ function submitDecision(requestId, status) {
         document.getElementById("finalDecision").textContent = status;
         document.getElementById("decisionText").textContent = data.message;
       } else {
-        alert(data.message);
+        document.getElementById("reviewForm").style.display = "none";
+        document.getElementById("reviewDone").style.display = "block";
+        document.getElementById("finalDecision").textContent = "Cannot Update";
+        document.getElementById("decisionText").textContent = data.message;
       }
     });
 }
 
-/* =========================
-   MANAGE USERS PAGE
-   ========================= */
 function loadManageUsers() {
   const tbody = document.querySelector(".users-table tbody");
   if (!tbody) return;
@@ -258,9 +255,6 @@ function loadManageUsers() {
     });
 }
 
-/* =========================
-   ADMIN DASHBOARD
-   ========================= */
 function loadAdminDashboard() {
   const hero = document.querySelector(".ad-dashboard-page");
   if (!hero) return;
@@ -314,10 +308,6 @@ function loadAdminDashboard() {
     });
 }
 
-
-/* =========================
-   HELPERS
-   ========================= */
 function formatDate(dateString) {
   const date = new Date(dateString);
   return date.toLocaleDateString("en-GB", {

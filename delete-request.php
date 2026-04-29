@@ -15,7 +15,6 @@ require_once 'db.php';
 
 $patient_id = $_SESSION['user_id'];
 
-/* تأكد فيه request_id */
 if (!isset($_POST['request_id'])) {
     header('Location: my-requests.php');
     exit;
@@ -23,7 +22,6 @@ if (!isset($_POST['request_id'])) {
 
 $request_id = intval($_POST['request_id']);
 
-/* تأكد الطلب حق نفس اليوزر وحالته Pending */
 $stmt = $conn->prepare("
     SELECT request_status 
     FROM medicationrequest 
@@ -35,7 +33,6 @@ $stmt->execute();
 $result = $stmt->get_result();
 $request = $result->fetch_assoc();
 
-/* إذا ما لقي الطلب */
 if (!$request) {
     header('Location: my-requests.php');
     exit;
@@ -47,7 +44,6 @@ if ($request['request_status'] !== 'Pending') {
     exit;
 }
 
-/* حذف */
 $stmt = $conn->prepare("
     DELETE FROM medicationrequest 
     WHERE request_id = ? AND patient_id = ?

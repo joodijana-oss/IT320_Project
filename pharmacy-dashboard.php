@@ -41,7 +41,6 @@ $stmt->bind_result($available_requests);
 $stmt->fetch();
 $stmt->close();
 
-// Recent approved requests (last 4)
 $recent = $conn->query("
     SELECT request_id, medication_name, priority_level, request_date
     FROM medicationrequest

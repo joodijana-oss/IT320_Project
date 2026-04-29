@@ -1,8 +1,5 @@
 
 
-/* ─────────────────────────────────────────────────────────────
-   SHARED UTILITY
-───────────────────────────────────────────────────────────── */
 
 function phToast(msg, cls) {
   const wrap = document.getElementById('toasts');
@@ -14,10 +11,6 @@ function phToast(msg, cls) {
   setTimeout(() => t.remove(), 4000);
 }
 
-
-/* ─────────────────────────────────────────────────────────────
-   PHARMACY REPORTS
-───────────────────────────────────────────────────────────── */
 
 (function initReports() {
   if (!document.getElementById('actChart')) return;
@@ -123,9 +116,6 @@ function phToast(msg, cls) {
 })();
 
 
-/* ─────────────────────────────────────────────────────────────
-   PHARMACY OFFERS
-───────────────────────────────────────────────────────────── */
 
 (function initOffers() {
   if (!document.getElementById('offersBody')) return;
@@ -146,10 +136,6 @@ function phToast(msg, cls) {
 })();
 
 
-/* ─────────────────────────────────────────────────────────────
-   PHARMACY REQUEST DETAILS
-───────────────────────────────────────────────────────────── */
-
 (function initRequestDetails() {
   if (!document.getElementById('offerForm')) return;
 
@@ -167,10 +153,6 @@ function phToast(msg, cls) {
 })();
 
 
-
-/* ─────────────────────────────────────────────────────────────
-  PHARMCY  VIEW REQUESTS JAVA SCRIPT
-───────────────────────────────────────────────────────────── */
 
 
 function filterPharmacyRequests() {

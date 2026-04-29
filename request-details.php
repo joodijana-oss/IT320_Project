@@ -45,7 +45,6 @@ require 'session_check.php';
 
       <div class="ad-details-layout">
 
-        <!-- Left: request info -->
         <div>
 
           <div class="ad-details-card" style="margin-bottom:22px;">
@@ -108,7 +107,6 @@ require 'session_check.php';
 
         </div>
 
-        <!-- Right: admin review panel -->
         <div>
 
           <div class="ad-review-panel" id="reviewForm">

@@ -5,16 +5,13 @@ require 'db.php';
 
 $pharmacy_id = $_SESSION['user_id'];
 
-// Get request_id from URL
 $request_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
-// Handle offer submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_offer'])) {
     $price   = floatval($_POST['price'] ?? 0);
     $notes   = trim($_POST['notes'] ?? '');
     $message = $notes !== '' ? $notes : 'The medication is available at our pharmacy.';
 
-    // Check if pharmacy already submitted an offer for this request
     $check = $conn->prepare("SELECT offer_id FROM pharmacyoffer WHERE request_id = ? AND pharmacy_id = ?");
     $check->bind_param('ii', $request_id, $pharmacy_id);
     $check->execute();
@@ -41,7 +38,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_offer'])) {
     }
 }
 
-// Fetch request details
 $request = null;
 if ($request_id > 0) {
     $stmt = $conn->prepare(
@@ -70,7 +66,6 @@ if ($request_id > 0) {
     $chk->close();
 }
 
-// Priority badge helper
 function priorityBadge($level) {
     $map = [
         'High'   => 'ph-badge--high',
@@ -192,11 +187,9 @@ function priorityBadge($level) {
 
         </div>
 
-        <!-- Right: offer panel -->
         <div>
 
           <?php if ($already_offered): ?>
-          <!-- Already submitted -->
           <div class="ph-offer-panel" id="offerSent">
             <div class="ph-offer-panel__title">Offer Submitted</div>
             <p class="ph-offer-panel__sub">Your offer has been sent to the patient.</p>
