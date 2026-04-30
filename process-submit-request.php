@@ -1,265 +1,76 @@
 <?php
-$required_role = 'pharmacy';
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+$required_role = 'patient';
 require 'session_check.php';
-require 'db.php';
-
-$pharmacy_id = $_SESSION['user_id'];
-
-$request_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_offer'])) {
-    $price   = floatval($_POST['price'] ?? 0);
-    $notes   = trim($_POST['notes'] ?? '');
-    $message = $notes !== '' ? $notes : 'The medication is available at our pharmacy.';
-
-    $check = $conn->prepare("SELECT offer_id FROM pharmacyoffer WHERE request_id = ? AND pharmacy_id = ?");
-    $check->bind_param('ii', $request_id, $pharmacy_id);
-    $check->execute();
-    $check->store_result();
-
-    if ($check->num_rows > 0) {
-        $check->close();
-        $error = 'You have already submitted an offer for this request.';
-    } else {
-        $check->close();
-        $stmt = $conn->prepare(
-            "INSERT INTO pharmacyoffer (request_id, pharmacy_id, offer_status, message, price, offer_date)
-             VALUES (?, ?, 'Pending', ?, ?, NOW())"
-        );
-        $stmt->bind_param('iisd', $request_id, $pharmacy_id, $message, $price);
-        if ($stmt->execute()) {
-            $stmt->close();
-            header('Location: pharmacy-reports.php?offer_submitted=1');
-            exit;
-        } else {
-            $stmt->close();
-            $error = 'Failed to submit offer. Please try again.';
-        }
-    }
+require_once 'db.php';
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header('Location: submit-request.php');
+    exit;
 }
-
-$request = null;
-if ($request_id > 0) {
-    $stmt = $conn->prepare(
-        "SELECT r.request_id, r.medication_name, r.priority_level, r.request_date,
-                r.city, r.notes, r.prescription_file, r.request_status,
-                p.full_name AS patient_name
-         FROM medicationrequest r
-         JOIN patient p ON p.patient_id = r.patient_id
-         WHERE r.request_id = ?"
-    );
-    $stmt->bind_param('i', $request_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $request = $result->fetch_assoc();
-    $stmt->close();
+$patient_id = $_SESSION['user_id'];
+$medication_name = trim($_POST['medication_name'] ?? '');
+$priority_level  = trim($_POST['priority_level'] ?? '');
+$notes           = trim($_POST['notes'] ?? '');
+$city            = 'Riyadh';
+$zone            = trim($_POST['zone'] ?? '');
+if ($medication_name === '' || $priority_level === '' || $zone === '') {
+    header('Location: submit-request.php?error=' . urlencode('Please fill all required fields.'));
+    exit;
 }
-
-// Check if already offered
-$already_offered = false;
-if ($request_id > 0) {
-    $chk = $conn->prepare("SELECT offer_id FROM pharmacyoffer WHERE request_id = ? AND pharmacy_id = ?");
-    $chk->bind_param('ii', $request_id, $pharmacy_id);
-    $chk->execute();
-    $chk->store_result();
-    $already_offered = $chk->num_rows > 0;
-    $chk->close();
+if (!in_array($priority_level, ['High', 'Medium', 'Low'])) {
+    header('Location: submit-request.php?error=' . urlencode('Invalid priority selected.'));
+    exit;
 }
-
-// Offer form should only be shown if request is still Approved and not yet offered
-$can_offer = $request && $request['request_status'] === 'Approved' && !$already_offered;
-
-function priorityBadge($level) {
-    $map = [
-        'High'   => 'ph-badge--high',
-        'Medium' => 'ph-badge--medium',
-        'Low'    => 'ph-badge--low',
-    ];
-    $cls = $map[$level] ?? 'ph-badge--low';
-    return "<span class=\"ph-badge $cls\">$level</span>";
+if (!in_array($zone, ['North Riyadh', 'South Riyadh', 'East Riyadh', 'West Riyadh'])) {
+    header('Location: submit-request.php?error=' . urlencode('Invalid zone selected.'));
+    exit;
+}
+if (!isset($_FILES['prescription_file']) || $_FILES['prescription_file']['error'] !== UPLOAD_ERR_OK) {
+    header('Location: submit-request.php?error=' . urlencode('Please upload a valid prescription file.'));
+    exit;
+}
+$allowed_ext = ['jpg', 'jpeg', 'png', 'pdf'];
+$original_name = $_FILES['prescription_file']['name'];
+$tmp_name = $_FILES['prescription_file']['tmp_name'];
+$ext = strtolower(pathinfo($original_name, PATHINFO_EXTENSION));
+if (!in_array($ext, $allowed_ext)) {
+    header('Location: submit-request.php?error=' . urlencode('Only JPG, PNG, and PDF files are allowed.'));
+    exit;
+}
+$upload_dir = 'uploads/prescriptions/';
+if (!is_dir($upload_dir)) {
+    mkdir($upload_dir, 0777, true);
+}
+$new_file_name = 'prescription_' . $patient_id . '_' . time() . '.' . $ext;
+$target_path = $upload_dir . $new_file_name;
+if (!move_uploaded_file($tmp_name, $target_path)) {
+    header('Location: submit-request.php?error=' . urlencode('File upload failed. Please try again.'));
+    exit;
+}
+$request_status = 'Pending';
+$stmt = $conn->prepare("
+    INSERT INTO medicationrequest
+    (patient_id, admin_id, medication_name, priority_level, request_status, notes, prescription_file, request_date, city, zone)
+    VALUES (?, NULL, ?, ?, ?, ?, ?, NOW(), ?, ?)
+");
+$stmt->bind_param(
+    "isssssss",
+    $patient_id,
+    $medication_name,
+    $priority_level,
+    $request_status,
+    $notes,
+    $new_file_name,
+    $city,
+    $zone
+);
+if ($stmt->execute()) {
+    header('Location: my-requests.php?success=' . urlencode('Request submitted successfully.'));
+    exit;
+} else {
+    header('Location: submit-request.php?error=' . urlencode('Could not submit request. Please try again.'));
+    exit;
 }
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sanad | Request Details</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-
-  <header class="sn-nav">
-    <div class="sn-container sn-nav__inner">
-      <a href="pharmacy-dashboard.php" class="sn-nav__logo">
-        <img src="images/slogo.png" alt="Sanad Logo" class="sn-nav__logo-img" />
-        <span class="sn-nav__logo-name">Sanad</span>
-      </a>
-      <ul class="sn-nav__links">
-        <li><a href="pharmacy-dashboard.php">Dashboard</a></li>
-        <li><a href="pharmacy-viewRequests.php" class="sn-nav--active">Requests</a></li>
-        <li><a href="pharmacy-reports.php">Reports</a></li>
-        <li><a href="logout.php" class="sn-nav--logout">Log out</a></li>
-      </ul>
-    </div>
-  </header>
-
-  <main class="sn-main ph-rd-page">
-    <div class="sn-container">
-
-      <a href="pharmacy-viewRequests.php" class="sn-back">← Back to Requests</a>
-
-      <?php if (!$request): ?>
-        <section class="ph-page-head">
-          <h1 class="ph-page-head__title">Request Not Found</h1>
-          <p class="ph-page-head__text">This request does not exist or is not available.</p>
-        </section>
-      <?php else: ?>
-
-      <!-- Page hero header -->
-      <section class="ph-page-head">
-        <span class="ph-page-head__badge">Request details</span>
-        <h1 class="ph-page-head__title">Medication Request #<?= $request['request_id'] ?></h1>
-        <p class="ph-page-head__text">
-          Review the request information and submit an offer if the medication is available.
-        </p>
-      </section>
-
-      <?php if (isset($error)): ?>
-        <div class="ph-alert ph-alert--error" style="margin-bottom:16px;padding:12px 16px;background:#fff0f0;border:1px solid #fca5a5;border-radius:8px;color:#b91c1c;">
-          <?= htmlspecialchars($error) ?>
-        </div>
-      <?php endif; ?>
-
-      <div class="ph-details-layout">
-
-        <!-- Left: request info -->
-        <div>
-
-          <div class="ph-details-card" style="margin-bottom:22px;">
-            <h2 class="ph-details-card__title">Request Information</h2>
-            <div class="ph-details-grid">
-
-              <div class="ph-details-item">
-                <span class="ph-details-item__label">Medication Name</span>
-                <span class="ph-details-item__value"><?= htmlspecialchars($request['medication_name']) ?></span>
-              </div>
-
-              <div class="ph-details-item">
-                <span class="ph-details-item__label">Priority</span>
-                <span class="ph-details-item__value">
-                  <?= priorityBadge($request['priority_level']) ?>
-                </span>
-              </div>
-
-              <div class="ph-details-item">
-                <span class="ph-details-item__label">Request Date</span>
-                <span class="ph-details-item__value">
-                  <?= date('j M Y', strtotime($request['request_date'])) ?>
-                </span>
-              </div>
-
-              <div class="ph-details-item">
-                <span class="ph-details-item__label">City</span>
-                <span class="ph-details-item__value"><?= htmlspecialchars($request['city']) ?></span>
-              </div>
-
-              <div class="ph-details-item ph-details-item--full">
-                <span class="ph-details-item__label">Notes</span>
-                <span class="ph-details-item__value">
-                  <?= htmlspecialchars($request['notes']) ?>
-                </span>
-              </div>
-
-            </div>
-          </div>
-
-          <?php if ($request['prescription_file']): ?>
-          <div class="ph-details-card">
-            <h2 class="ph-details-card__title">Prescription</h2>
-            <div class="ph-prescription-box">
-              <div class="ph-prescription-box__icon">📄</div>
-              <div class="ph-prescription-box__info">
-                <h4><?= htmlspecialchars($request['prescription_file']) ?></h4>
-                <p>Uploaded <?= date('j M Y', strtotime($request['request_date'])) ?> · Verified by admin</p>
-                <a href="uploads/prescriptions/<?= htmlspecialchars($request['prescription_file']) ?>" target="_blank">View prescription →</a>
-              </div>
-            </div>
-          </div>
-          <?php endif; ?>
-
-        </div>
-
-        <div>
-
-          <?php if ($already_offered): ?>
-          <div class="ph-offer-panel" id="offerSent">
-            <div class="ph-offer-panel__title">Offer Submitted</div>
-            <p class="ph-offer-panel__sub">Your offer has been sent to the patient.</p>
-            <div class="ph-closed-notice">
-              <strong>Awaiting patient response</strong>
-              <p>You'll be notified once the patient reviews all offers.</p>
-            </div>
-          </div>
-
-          <?php elseif ($can_offer): ?>
-          <!-- Offer form -->
-          <div class="ph-offer-panel" id="offerForm">
-            <h2 class="ph-offer-panel__title">Submit an Offer</h2>
-            <p class="ph-offer-panel__sub">Respond to this request with your availability and price.</p>
-
-            <form method="POST" action="pharmacy-request-details.php?id=<?= $request_id ?>">
-              <input type="hidden" name="submit_offer" value="1" />
-
-              <div class="ph-form-field">
-                <label>Price (SAR)</label>
-                <input type="number" name="price" id="priceInput" placeholder="0.00" min="0" step="0.01" required />
-              </div>
-
-              <div class="ph-form-field">
-                <label>Notes <span style="color:var(--ph-text-faint);font-weight:300;">(optional)</span></label>
-                <textarea name="notes" id="notesInput" rows="3" placeholder="Any additional information for the patient…"></textarea>
-              </div>
-
-              <div class="ph-offer-actions">
-                <button type="submit" class="ph-btn ph-btn--submit">Submit Offer</button>
-                <a href="pharmacy-viewRequests.php" class="ph-btn ph-btn--cancel">Cancel</a>
-              </div>
-            </form>
-          </div>
-
-          <?php else: ?>
-          <!-- Request no longer open for offers -->
-          <div class="ph-offer-panel" id="offerClosed">
-            <div class="ph-offer-panel__title">Request Closed</div>
-            <p class="ph-offer-panel__sub">This request is no longer accepting new offers.</p>
-            <div class="ph-closed-notice">
-              <strong>Already fulfilled</strong>
-              <p>The patient has selected a pharmacy for this request.</p>
-            </div>
-          </div>
-          <?php endif; ?>
-
-        </div>
-
-      </div>
-
-      <?php endif; ?>
-
-    </div>
-  </main>
-
-  <div class="ph-toast-wrap" id="toasts"></div>
-
-  <footer class="sn-footer">
-    <div class="sn-container">
-      <div class="sn-footer__inner">
-        <span class="sn-footer__logo-name">Sanad</span>
-        <span class="sn-footer__copy">© 2026 Sanad. Riyadh, Saudi Arabia.</span>
-      </div>
-    </div>
-  </footer>
-
-  <script src="pharmacy.js"></script>
-</body>
-</html>

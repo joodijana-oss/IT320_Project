@@ -55,6 +55,16 @@ if ($request_id > 0) {
     $stmt->close();
 }
 
+// Resolve prescription file path — same logic as patient page
+$prescription_path = '';
+if ($request && $request['prescription_file']) {
+    $file = $request['prescription_file'];
+    $prescription_path = 'uploads/prescriptions/' . $file;
+    if (!file_exists($prescription_path)) {
+        $prescription_path = 'images/' . $file;
+    }
+}
+
 // Check if already offered
 $already_offered = false;
 if ($request_id > 0) {
@@ -182,7 +192,7 @@ function priorityBadge($level) {
               <div class="ph-prescription-box__info">
                 <h4><?= htmlspecialchars($request['prescription_file']) ?></h4>
                 <p>Uploaded <?= date('j M Y', strtotime($request['request_date'])) ?> · Verified by admin</p>
-                <a href="uploads/prescriptions/<?= htmlspecialchars($request['prescription_file']) ?>" target="_blank">View prescription →</a>
+                <a href="<?= htmlspecialchars($prescription_path) ?>" target="_blank">View prescription →</a>
               </div>
             </div>
           </div>

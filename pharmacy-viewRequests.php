@@ -7,7 +7,7 @@ $pharmacy_id = $_SESSION['user_id'];
 
 // Fetch requests matching the pharmacy's zone only
 $stmt = $conn->prepare("
-    SELECT r.request_id, r.medication_name, r.priority_level, r.request_date, r.city
+    SELECT r.request_id, r.medication_name, r.priority_level, r.request_date, r.zone
     FROM medicationrequest r
     JOIN pharmacy ph ON ph.pharmacy_id = ?
     WHERE r.request_status = 'Approved'
@@ -100,7 +100,7 @@ function priorityBadge($level) {
               <th>Medication</th>
               <th>Request ID</th>
               <th>Priority</th>
-              <th>City</th>
+              <th>Zone</th>
               <th>Date submitted</th>
               <th></th>
             </tr>
@@ -117,7 +117,7 @@ function priorityBadge($level) {
               <td class="td-med"><?= htmlspecialchars($req['medication_name']) ?></td>
               <td class="td-id">#<?= $req['request_id'] ?></td>
               <td><?= priorityBadge($req['priority_level']) ?></td>
-              <td><?= htmlspecialchars($req['city']) ?></td>
+              <td><?= htmlspecialchars($req['zone']) ?></td>
               <td><?= date('j M Y', strtotime($req['request_date'])) ?></td>
               <td>
                 <a href="pharmacy-request-details.php?id=<?= $req['request_id'] ?>" class="ph-view-link">
