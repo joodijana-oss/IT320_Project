@@ -5,14 +5,20 @@ require 'db.php';
 
 $pharmacy_id = $_SESSION['user_id'];
 
-$sql = "
+// Fetch requests matching the pharmacy's zone only
+$stmt = $conn->prepare("
     SELECT r.request_id, r.medication_name, r.priority_level, r.request_date, r.city
     FROM medicationrequest r
+    JOIN pharmacy ph ON ph.pharmacy_id = ?
     WHERE r.request_status = 'Approved'
+      AND r.zone = ph.zone
     ORDER BY r.request_date DESC
-";
-$result = $conn->query($sql);
-$requests = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+");
+$stmt->bind_param('i', $pharmacy_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$requests = $result->fetch_all(MYSQLI_ASSOC);
+$stmt->close();
 
 function priorityBadge($level) {
     $map = ['High' => 'ph-badge--high', 'Medium' => 'ph-badge--medium', 'Low' => 'ph-badge--low'];

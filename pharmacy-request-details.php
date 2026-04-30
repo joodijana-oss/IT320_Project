@@ -42,7 +42,7 @@ $request = null;
 if ($request_id > 0) {
     $stmt = $conn->prepare(
         "SELECT r.request_id, r.medication_name, r.priority_level, r.request_date,
-                r.city, r.notes, r.prescription_file, r.request_status,
+                r.city, r.zone, r.notes, r.prescription_file, r.request_status,
                 p.full_name AS patient_name
          FROM medicationrequest r
          JOIN patient p ON p.patient_id = r.patient_id
@@ -160,8 +160,8 @@ function priorityBadge($level) {
               </div>
 
               <div class="ph-details-item">
-                <span class="ph-details-item__label">City</span>
-                <span class="ph-details-item__value"><?= htmlspecialchars($request['city']) ?></span>
+                <span class="ph-details-item__label">Zone</span>
+                <span class="ph-details-item__value"><?= htmlspecialchars($request['zone']) ?></span>
               </div>
 
               <div class="ph-details-item ph-details-item--full">
@@ -182,7 +182,7 @@ function priorityBadge($level) {
               <div class="ph-prescription-box__info">
                 <h4><?= htmlspecialchars($request['prescription_file']) ?></h4>
                 <p>Uploaded <?= date('j M Y', strtotime($request['request_date'])) ?> · Verified by admin</p>
-                <a href="uploads/<?= htmlspecialchars($request['prescription_file']) ?>" target="_blank">View prescription →</a>
+                <a href="uploads/prescriptions/<?= htmlspecialchars($request['prescription_file']) ?>" target="_blank">View prescription →</a>
               </div>
             </div>
           </div>

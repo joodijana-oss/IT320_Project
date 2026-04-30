@@ -35,19 +35,28 @@ $stmt->bind_result($pending_offers);
 $stmt->fetch();
 $stmt->close();
 
-$stmt = $conn->prepare("SELECT COUNT(*) FROM medicationrequest WHERE request_status = 'Approved'");
+// Count only requests in this pharmacy's zone
+$stmt = $conn->prepare("SELECT COUNT(*) FROM medicationrequest WHERE request_status = 'Approved' AND zone = ?");
+$stmt->bind_param('s', $zone);
 $stmt->execute();
 $stmt->bind_result($available_requests);
 $stmt->fetch();
 $stmt->close();
 
-$recent = $conn->query("
+// Recent requests in this pharmacy's zone only
+$stmt = $conn->prepare("
     SELECT request_id, medication_name, priority_level, request_date
     FROM medicationrequest
     WHERE request_status = 'Approved'
+      AND zone = ?
     ORDER BY request_date DESC
     LIMIT 4
-")->fetch_all(MYSQLI_ASSOC);
+");
+$stmt->bind_param('s', $zone);
+$stmt->execute();
+$result = $stmt->get_result();
+$recent = $result->fetch_all(MYSQLI_ASSOC);
+$stmt->close();
 
 function priorityBadge($level) {
     $map = ['High' => 'ph-badge--high', 'Medium' => 'ph-badge--medium', 'Low' => 'ph-badge--low'];
